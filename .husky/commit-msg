@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo ""
+echo "🐶 커밋 메시지 검사 중..."
+echo "------------------------------------------"
+echo "허용 타입: build, chore, ci, docs, feat, fix, refactor, style, test, rename, !HOTFIX"
+echo "------------------------------------------"
+
+yarn commitlint --edit "$1"
