@@ -94,3 +94,13 @@ $RECYCLE.BIN/
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,yarn,react
+
+### vscode ### 
+.vscode
+
+### env ### 
+.env.*
+
+
+### build ###
+dist/
