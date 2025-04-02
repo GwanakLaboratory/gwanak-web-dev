@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🐶 commit 이전 lint 적용합니다..."
+
+if npx lint-staged; then
+  echo "✅ 모든 lint 규칙이 성공적으로 적용되었습니다."
+else
+  echo "❌ lint 규칙 검사에서 오류가 발생했습니다."
+  exit 1
+fi
