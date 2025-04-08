@@ -15,6 +15,7 @@ import AnalysisResultPage from './pages/analysis/result';
 import RejectAuth from './hoc/RejectAuth';
 import LoginPage from './pages/auth/login';
 import SignUpPage from './pages/auth/signup';
+import NotFoundPage from './pages/system/not-found';
 
 const App = () => {
   const router = createBrowserRouter([
@@ -58,6 +59,10 @@ const App = () => {
           ],
         },
       ],
+    },
+    {
+      path: '*',
+      element: <NotFoundPage />,
     },
   ]);
 
