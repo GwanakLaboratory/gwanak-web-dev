@@ -1,6 +1,7 @@
 import type { KyInstance, ResponsePromise } from 'ky';
 
 import { TargetEndpoint } from '../types';
+import { HTTPError } from 'ky';
 
 type RequestMeta = {
   accessToken?: string;
@@ -17,6 +18,22 @@ export class BaseClient {
       const response = await this.getResponse<T>(endpoint, meta);
       return response.json();
     } catch (e) {
+      if (e instanceof HTTPError) {
+        const status = e.response.status;
+        if (status === 401) {
+          try {
+            const accessToken = await this.refreshAcceessToken();
+            const newMeta = { ...meta, accessToken: accessToken };
+            const response = await this.getResponse<T>(endpoint, newMeta);
+            return response.json();
+          } catch (e) {
+            window.dispatchEvent(new Event('FORCE_LOGOUT'));
+            throw new Error(`API_ERROR: ${e}`);
+          }
+        } else if (status === 403) {
+          throw new Error(`API_ERROR: ${e}`);
+        }
+      }
       throw new Error(`API_ERROR: ${e}`);
     }
   }
@@ -30,6 +47,22 @@ export class BaseClient {
       const response = await this.getResponse(endpoint, meta);
       return statusCodes.includes(response.status);
     } catch (e) {
+      if (e instanceof HTTPError) {
+        const status = e.response.status;
+        if (status === 401) {
+          try {
+            const accessToken = await this.refreshAcceessToken();
+            const newMeta = { ...meta, accessToken: accessToken };
+            const response = await this.getResponse(endpoint, newMeta);
+            return statusCodes.includes(response.status);
+          } catch (e) {
+            window.dispatchEvent(new Event('FORCE_LOGOUT'));
+            throw new Error(`API_ERROR: ${e}`);
+          }
+        } else if (status === 403) {
+          throw new Error(`API_ERROR: ${e}`);
+        }
+      }
       throw new Error(`API_ERROR: ${e}`);
     }
   }
@@ -72,5 +105,14 @@ export class BaseClient {
       retry: endpoint.config.retry ?? 3,
       timeout: endpoint.config.timeout ?? 3000,
     });
+  }
+
+  private async refreshAcceessToken(): Promise<string> {
+    const endpoint = new TargetEndpoint('/account/refresh/', {
+      method: 'post',
+    });
+    const res = await this.getResponse(endpoint);
+    const json: { detail: { access_token: string } } = await res.json();
+    return json.detail.access_token;
   }
 }
