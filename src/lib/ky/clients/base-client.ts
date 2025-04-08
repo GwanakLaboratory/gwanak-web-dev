@@ -2,6 +2,7 @@ import type { KyInstance, ResponsePromise } from 'ky';
 
 import { TargetEndpoint } from '../types';
 import { HTTPError } from 'ky';
+import { accessTokenAtom, jotaiStore } from '../../../store/auth';
 
 type RequestMeta = {
   accessToken?: string;
@@ -23,6 +24,7 @@ export class BaseClient {
         if (status === 401) {
           try {
             const accessToken = await this.refreshAcceessToken();
+            jotaiStore.set(accessTokenAtom, accessToken);
             const newMeta = { ...meta, accessToken: accessToken };
             const response = await this.getResponse<T>(endpoint, newMeta);
             return response.json();
@@ -52,6 +54,7 @@ export class BaseClient {
         if (status === 401) {
           try {
             const accessToken = await this.refreshAcceessToken();
+            jotaiStore.set(accessTokenAtom, accessToken);
             const newMeta = { ...meta, accessToken: accessToken };
             const response = await this.getResponse(endpoint, newMeta);
             return statusCodes.includes(response.status);
