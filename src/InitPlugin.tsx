@@ -10,12 +10,14 @@ const InitPlugin = ({ children }: { children: React.ReactNode }) => {
   const setAccessToken = useSetAtom(accessTokenAtom);
   const navigate = useNavigate();
 
+  // 최초 접속 혹은 새로고침 시 토큰 처리
   useEffect(() => {
     refreshMutation.mutateAsync().finally(() => {
       setIsReady(true);
     });
   }, []);
 
+  // 이벤트 리스너 등록
   useEffect(() => {
     const addLogOutEventListner = () => {
       window.addEventListener('FORCE_LOGOUT', () => {
