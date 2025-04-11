@@ -110,7 +110,7 @@ export class BaseClient {
     });
   }
 
-  private async refreshAcceessToken(): Promise<string> {
+  async refreshAcceessToken(): Promise<string> {
     const endpoint = new TargetEndpoint('/account/refresh/', {
       method: 'post',
     });
