@@ -39,3 +39,12 @@ export const useSignUpMutation = () =>
     mutationFn: (data: AuthSignUpRequest) =>
       authClient.statusCode(AuthEndpoint.singUp(data), [200]),
   });
+
+export const useRefreshTokenMutation = () => {
+  const setAccessToken = useSetAtom(accessTokenAtom);
+  return useMutation<string>({
+    mutationKey: ['auth', 'token'],
+    mutationFn: () => authClient.refreshAcceessToken(),
+    onSuccess: (data) => setAccessToken(data),
+  });
+};
