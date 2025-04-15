@@ -2,7 +2,7 @@ const FONT_SIZES = {
   xxl: '3.2rem',
   xl: '2.4rem',
   lg: '2.0rem',
-  md: '1.6rem',
+  md: '1.8rem',
   sm: '1.4rem',
   xs: '1.2rem',
 } as const;
