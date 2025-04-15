@@ -16,53 +16,59 @@ import RejectAuth from './hoc/RejectAuth';
 import LoginPage from './pages/auth/login';
 import SignUpPage from './pages/auth/signup';
 import NotFoundPage from './pages/system/not-found';
+import EventListenerManager from './EventListenerManager';
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <BasicLayout />,
-      children: [
-        { path: '/', element: <HomeMainPage /> },
-        { path: 'about', element: <AboutPage /> },
-        { path: 'service', element: <ServicePage /> },
-        { path: 'tech', element: <TechPage /> },
-      ],
-    },
-    {
-      path: '/auth',
-      element: <RequireAuth />,
+      element: <EventListenerManager />,
       children: [
         {
           element: <BasicLayout />,
           children: [
-            { path: 'portfolios', element: <PortfolioListPage /> },
-            { path: 'portfolios/create', element: <CreatePortfolioPage /> },
-            { path: 'portfolios/result', element: <PortfolioResultPage /> },
-            { path: 'analysis', element: <AnalysisMainPage /> },
-            { path: 'analysis/result', element: <AnalysisResultPage /> },
+            { path: '/', element: <HomeMainPage /> },
+            { path: 'about', element: <AboutPage /> },
+            { path: 'service', element: <ServicePage /> },
+            { path: 'tech', element: <TechPage /> },
           ],
         },
-      ],
-    },
-    {
-      path: '/',
-      element: <RejectAuth />,
-      children: [
         {
-          element: <BasicLayout />,
+          path: '/auth',
+          element: <RequireAuth />,
           children: [
-            { path: 'login', element: <LoginPage /> },
-            { path: 'signup', element: <SignUpPage /> },
-            { path: 'forgot-email', element: <ForgotEmailPage /> },
-            { path: 'forgot-password', element: <ForgotPasswordPage /> },
+            {
+              element: <BasicLayout />,
+              children: [
+                { path: 'portfolios', element: <PortfolioListPage /> },
+                { path: 'portfolios/create', element: <CreatePortfolioPage /> },
+                { path: 'portfolios/result', element: <PortfolioResultPage /> },
+                { path: 'analysis', element: <AnalysisMainPage /> },
+                { path: 'analysis/result', element: <AnalysisResultPage /> },
+              ],
+            },
           ],
         },
+        {
+          path: '/',
+          element: <RejectAuth />,
+          children: [
+            {
+              element: <BasicLayout />,
+              children: [
+                { path: 'login', element: <LoginPage /> },
+                { path: 'signup', element: <SignUpPage /> },
+                { path: 'forgot-email', element: <ForgotEmailPage /> },
+                { path: 'forgot-password', element: <ForgotPasswordPage /> },
+              ],
+            },
+          ],
+        },
+        {
+          path: '*',
+          element: <NotFoundPage />,
+        },
       ],
-    },
-    {
-      path: '*',
-      element: <NotFoundPage />,
     },
   ]);
 
