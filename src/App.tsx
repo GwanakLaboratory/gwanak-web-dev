@@ -17,6 +17,7 @@ import LoginPage from './pages/auth/login';
 import SignUpPage from './pages/auth/signup';
 import NotFoundPage from './pages/system/not-found';
 import EventListenerManager from './EventListenerManager';
+import './lib/assets/styles/index.css';
 
 const App = () => {
   const router = createBrowserRouter([
