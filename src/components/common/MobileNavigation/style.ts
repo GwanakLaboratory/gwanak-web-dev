@@ -40,7 +40,7 @@ export const S = {
     background-color: inherit;
   `,
   NestedItem: styled.li`
-    padding-right: 20px;
+    padding: 10px 20px 0px 0px;
   `,
   Overlay: styled.div<{ isOpen: boolean }>`
     position: fixed;
