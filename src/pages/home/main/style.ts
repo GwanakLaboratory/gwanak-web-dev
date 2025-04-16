@@ -23,6 +23,8 @@ export const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    text-align: center;
   `,
   JumboText: styled.span`
     color: ${COLOR.White};
@@ -45,7 +47,7 @@ export const S = {
 
     margin: 0 auto;
     padding: 4rem 2rem;
-    gap: 16px;
+    gap: 32px;
 
     max-width: 1400px;
     min-height: 800px;
@@ -64,10 +66,12 @@ export const S = {
     width: 100%;
     height: 100vh;
 
-    background-image: url(${ReportJPG});
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${ReportJPG});
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    overflow-x: hidden;
   `,
   TextWrapper: styled.div`
     width: 100%;
