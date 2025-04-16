@@ -13,7 +13,7 @@ export const S = {
     width: 100%;
   `,
   InnerStyle: styled.div`
-    postion: relative;
+    position: relative;
     top: 0px;
 
     display: flex;
@@ -21,6 +21,7 @@ export const S = {
     align-items: center;
 
     width: 100%;
+    min-height: 100vh;
 
     // @media (max-width: ${BREAKPOINT.tablet}) {
     //   min-height: calc(100vh - 300px);

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Navigation from '../Navigation';
 import { S } from './style';
+import Footer from '../Footer';
 
 const navList = [
   { name: '회사소개', link: 'about' },
@@ -29,7 +30,10 @@ const BasicLayout = () => {
     <S.OuterStyle>
       <S.InnerStyle>
         <Navigation navList={navList} />
-        <Outlet />
+        <div style={{ flex: 1, width: '100%' }}>
+          <Outlet />
+        </div>
+        <Footer />
       </S.InnerStyle>
     </S.OuterStyle>
   );
