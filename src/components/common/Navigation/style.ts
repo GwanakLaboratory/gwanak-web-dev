@@ -23,7 +23,6 @@ export const S = {
   `,
   NavItemsContainer: styled.ul`
     display: flex;
-    line-height: 70px;
     list-style-type: none;
 
     @media (max-width: ${BREAKPOINT.tablet}) {
@@ -39,23 +38,22 @@ export const S = {
     }
   `,
   NestedItemsContainer: styled.ul`
-    padding: 5px 50px;
     position: absolute;
+    transform: translate(-50%, 0px);
+    left: 50%;
 
     display: flex;
     gap: 20px;
     width: max-content;
     height: 50px;
+    padding: 5px 50px;
 
-    transform: translate(-50%, 0px);
-    margin-left: 50%;
     list-style-type: none;
 
     border-radius: 30px;
     background-color: #151515;
   `,
   NestedItem: styled.li`
-    line-height: 1;
     display: flex;
     align-items: center;
   `,
@@ -71,7 +69,7 @@ export const S = {
       border-radius: 5px;
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: ${BREAKPOINT.tablet}) {
       display: flex;
     }
   `,

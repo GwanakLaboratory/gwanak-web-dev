@@ -28,7 +28,7 @@ const Navigation = ({ navList }: { navList: NavigationItemProps[] }) => {
         isActive ? 'active' : isPending ? 'pending' : ''
       }
     >
-      <Text color="White" typograph="lg_regular">
+      <Text color="White" typograph="lg_regular" style={{ lineHeight: '200%' }}>
         {label}
       </Text>
     </NavLink>
@@ -53,7 +53,11 @@ const Navigation = ({ navList }: { navList: NavigationItemProps[] }) => {
           onMouseLeave={() => setHoveredItem(null)}
         >
           <Link to="#">
-            <Text color="White" typograph="lg_regular">
+            <Text
+              color="White"
+              typograph="lg_regular"
+              style={{ lineHeight: '200%' }}
+            >
               {item.name}
             </Text>
           </Link>
