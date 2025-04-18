@@ -1,5 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import {
+  AuthKaKaoInfoResponse,
+  AuthKaKaoInfoViewModel,
+  AuthKaKaoValidateRequest,
   AuthSignInRequest,
   AuthSignInResponse,
   AuthSignUpRequest,
@@ -48,3 +51,16 @@ export const useRefreshTokenMutation = () => {
     onSuccess: (data) => setAccessToken(data),
   });
 };
+
+export const useKaKaoInfoCheckMutation = () =>
+  useMutation<AuthKaKaoInfoResponse, Error, AuthKaKaoInfoViewModel>({
+    mutationKey: ['auth', 'kakao'],
+    mutationFn: (data) => authClient.json(AuthEndpoint.kakaoInfoCheck(data)),
+  });
+
+export const useKaKaoValidateMutation = () =>
+  useMutation({
+    mutationKey: ['auth', 'kakao'],
+    mutationFn: (data: AuthKaKaoValidateRequest) =>
+      authClient.statusCode(AuthEndpoint.kakaoValidate(data), [200]),
+  });
