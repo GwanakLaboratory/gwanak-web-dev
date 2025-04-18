@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import {
   AuthKaKaoInfoResponse,
   AuthKaKaoInfoViewModel,
@@ -6,10 +6,9 @@ import {
   AuthSignInRequest,
   AuthSignInResponse,
   AuthSignUpViewModel,
-  AuthUserInfoResponse,
 } from './auth.model';
 import { authClient, AuthEndpoint } from './auth.client';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { accessTokenAtom } from '../../store/auth';
 import { encodeSignUpRequest } from './auth.transform';
 
@@ -69,15 +68,3 @@ export const useKaKaoValidateMutation = () =>
     mutationFn: (data: AuthKaKaoValidateRequest) =>
       authClient.statusCode(AuthEndpoint.kakaoValidate(data), [200]),
   });
-
-export const useGetUserInfoQuery = () => {
-  const accessToken = useAtomValue(accessTokenAtom);
-  return useQuery<AuthUserInfoResponse>({
-    queryKey: ['userInfo'],
-    queryFn: () =>
-      authClient.json(AuthEndpoint.getUserInfo(), {
-        accessToken: accessToken,
-      }),
-    enabled: !!accessToken,
-  });
-};

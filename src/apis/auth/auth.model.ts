@@ -52,14 +52,3 @@ export type AuthKaKaoInfoViewModel = {
 export type AuthKaKaoValidateRequest = {
   certId: string;
 };
-
-export type AuthUserInfoResponse = {
-  detail: {
-    email: string;
-    full_name: string;
-    gender: string;
-    nick_name: string;
-    phone_num: string;
-    propensity: null | number;
-  };
-};

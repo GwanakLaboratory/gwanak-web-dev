@@ -37,8 +37,4 @@ export class AuthEndpoint extends TargetEndpoint {
       method: 'post',
       data: data,
     });
-  public static getUserInfo = () =>
-    new AuthEndpoint('/account/info', {
-      method: 'get',
-    });
 }
