@@ -105,6 +105,7 @@ const MobileNavigation = ({
             logoutMutation.mutate();
             setIsModalOpen(false);
             setIsMobileMenuOpen(false);
+            window.dispatchEvent(new Event('FORCE_LOGOUT'));
           }}
           onClose={() => setIsModalOpen(false)}
         ></Modal>
