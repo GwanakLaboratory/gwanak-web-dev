@@ -10,9 +10,9 @@ export const encodeSignUpRequest = (
 ): AuthSignUpRequest => ({
   email: viewModel.email,
   password: viewModel.password,
-  username: viewModel.username,
-  nickname: viewModel.nickname,
-  phoneNumber: viewModel.phoneNumber,
+  full_name: viewModel.username,
+  nick_name: viewModel.nickname,
+  phone_num: viewModel.phoneNumber,
   sex: viewModel.sex,
   age: viewModel.age,
 });

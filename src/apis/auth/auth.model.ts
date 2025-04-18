@@ -11,9 +11,9 @@ export type AuthSignInResponse = {
 export type AuthSignUpRequest = {
   email: string;
   password: string;
-  username: string;
-  nickname: string;
-  phoneNumber: string;
+  full_name: string;
+  nick_name: string;
+  phone_num: string;
   sex?: string;
   age?: string;
 };

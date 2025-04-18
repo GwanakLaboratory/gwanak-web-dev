@@ -5,11 +5,12 @@ import {
   AuthKaKaoValidateRequest,
   AuthSignInRequest,
   AuthSignInResponse,
-  AuthSignUpRequest,
+  AuthSignUpViewModel,
 } from './auth.model';
 import { authClient, AuthEndpoint } from './auth.client';
 import { useAtom, useSetAtom } from 'jotai';
 import { accessTokenAtom } from '../../store/auth';
+import { encodeSignUpRequest } from './auth.transform';
 
 export const useSignInMutation = () => {
   const setAccessToken = useSetAtom(accessTokenAtom);
@@ -18,6 +19,7 @@ export const useSignInMutation = () => {
     mutationFn: (data: AuthSignInRequest) =>
       authClient.json(AuthEndpoint.signIn(data)),
     onSuccess: (data) => {
+      console.log(data);
       setAccessToken(data.detail.access_token);
     },
   });
@@ -39,8 +41,10 @@ export const useSignOutMutation = () => {
 export const useSignUpMutation = () =>
   useMutation({
     mutationKey: ['auth', 'signup'],
-    mutationFn: (data: AuthSignUpRequest) =>
-      authClient.statusCode(AuthEndpoint.singUp(data), [200]),
+    mutationFn: (data: AuthSignUpViewModel) =>
+      authClient.statusCode(AuthEndpoint.singUp(encodeSignUpRequest(data)), [
+        200,
+      ]),
   });
 
 export const useRefreshTokenMutation = () => {
