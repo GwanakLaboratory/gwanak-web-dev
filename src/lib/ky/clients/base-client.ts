@@ -5,7 +5,7 @@ import { HTTPError } from 'ky';
 import { accessTokenAtom, jotaiStore } from '../../../store/auth';
 
 type RequestMeta = {
-  accessToken?: string;
+  accessToken: null | string;
   locale?: string;
   deviceId?: string;
   platform?: 'web' | 'ios' | 'android';
