@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-export interface AnalysisForm {
+export type AnalysisForm = {
   ageGroup: number; // 연령대 (1: 29세 이하, 2: 30세 ~ 39세, 3: 40세 ~ 49세, 4: 50세 ~ 59세, 5: 60세 이상)
   householdSize: number; // 가구원 수 (1: 1명, 2: 2명, 3: 3명 이상)
   incomeChangeLevel: number; // 연간 수입원이 어떻게 변화할 것인지 (1: 현재 수입이 있으며 안정, 2: 현재 수입이 있으며 불안정, 3: 현재 수입이 없음)
@@ -14,7 +14,7 @@ export interface AnalysisForm {
   preferStock: number; // 선호하는 주식 (1: 대형주, 2: 소형주)
   investPlanLevel: number; // 예시에 대해 어떻게 투자할 것인지 (1: 높은 수준 추가 매수, 2: 낮은 수준 추가 매수, 3: 관망, 4: 낮은 수준 매도, 5: 높은 수준 매도)
   targetStockPrice: number; // 기대하는 최소 주가 수준 (1: 3만원, 2: 5만원, 3: 7만원, 4: 10만원, 5: 15만원)
-}
+};
 
 const useAnalysisForm = () => {
   const {

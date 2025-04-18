@@ -245,7 +245,7 @@ const AnalysisMainPage = () => {
     <>
       <DescriptionBox
         title="금융성향분석"
-        subtitle={['포트폴리오', '포트폴리오 만들기']}
+        subtitle={['포트폴리오', ' > 포트폴리오 만들기']}
       />
       <S.AnalysisPageForm
         className="layout-padding"
