@@ -16,7 +16,7 @@ export const S = {
     font-weight: 700;
     color: ${COLOR.Black};
     &::placeholder {
-      color: ${COLOR.Grey600};
+      color: ${COLOR.Grey550};
     }
   `,
 };
