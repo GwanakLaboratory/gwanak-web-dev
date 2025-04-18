@@ -31,7 +31,6 @@ const LoginPage = () => {
       <DescriptionBox title="로그인" />
       <S.LoginContainer
         onSubmit={handleSubmit((data) => {
-          console.log(data);
           loginMutation.mutate(data, {
             onSuccess: () => {
               navigate('/auth/portfolios');

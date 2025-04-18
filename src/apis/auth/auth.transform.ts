@@ -20,11 +20,6 @@ export const encodeSignUpRequest = (
 export const encodeKaKaoValidateRequest = (
   viewModel: AuthKaKaoInfoViewModel,
 ): AuthKaKaoInfoRequest => {
-  console.log({
-    phone_number: viewModel.phoneNumber,
-    full_name: viewModel.fullName,
-    birthday: viewModel.birthday,
-  });
   return {
     phone_number: viewModel.phoneNumber,
     full_name: viewModel.fullName,

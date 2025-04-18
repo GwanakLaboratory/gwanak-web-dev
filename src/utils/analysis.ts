@@ -29,41 +29,6 @@ const getAnalysisScore = (data: AnalysisForm) => {
   const investPlanLevelScore = scoreArray[10][data.investPlanLevel - 1];
   const targetStockPriceScore = scoreArray[11][data.targetStockPrice - 1];
 
-  console.log(`1번 문항 ${data.ageGroup}을 골랐음. 점수는 ${ageGroupScore}`);
-  console.log(
-    `2번 문항 ${data.householdSize}을 골랐음. 점수는 ${householdSizeScore}`,
-  );
-  console.log(
-    `3번 문항 ${data.incomeChangeLevel}을 골랐음. 점수는 ${incomeChangeLevelScore}`,
-  );
-  console.log(
-    `4번 문항 ${data.investmentRatio}을 골랐음. 점수는 ${investmentRatioScore}`,
-  );
-  console.log(
-    `5번 문항 ${data.investmentPurpose}을 골랐음. 점수는 ${investmentPurposeScore}`,
-  );
-  console.log(
-    `6번 문항 ${data.investmentExperience}을 골랐음. 점수는 ${investmentExperienceScore}`,
-  );
-  console.log(
-    `7번 문항 ${data.investmentKnowledge}을 골랐음. 점수는 ${investmentKnowledgeScore}`,
-  );
-  console.log(
-    `8번 문항 ${data.investmentPeriod}을 골랐음. 점수는 ${investmentPeriodScore}`,
-  );
-  console.log(
-    `9번 문항 ${data.riskTolerance}을 골랐음. 고른것은 ${riskToleranceChoice}`,
-  );
-  console.log(
-    `10번 문항 ${data.preferStock}을 골랐음. 점수는 ${preferStockScore}`,
-  );
-  console.log(
-    `11번 문항 ${data.investPlanLevel}을 골랐음. 점수는 ${investPlanLevelScore}`,
-  );
-  console.log(
-    `12번 문항 ${data.targetStockPrice}을 골랐음. 점수는 ${targetStockPriceScore}`,
-  );
-
   const resultScore =
     ageGroupScore +
     householdSizeScore +
@@ -77,7 +42,6 @@ const getAnalysisScore = (data: AnalysisForm) => {
     investPlanLevelScore +
     targetStockPriceScore;
 
-  console.log(`총점수 : ${resultScore}`);
   if (riskToleranceChoice === 0 && resultScore <= 20) return 0;
   else if (riskToleranceChoice === 0 && resultScore > 20) return 21;
   else return resultScore;

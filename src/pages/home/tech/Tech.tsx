@@ -41,7 +41,7 @@ const TechPage = () => {
     <S.TechPageContainer>
       <DescriptionBox
         title="관악연구소만의 테크/특허"
-        subtitle={['기술과 서비스', '테크 / 특허']}
+        subtitle={['기술과 서비스', '> 테크 / 특허']}
       />
       <S.TechPageTextWrapper className="layout-padding">
         <S.TechPageTitleText>

@@ -112,10 +112,8 @@ const AnalysisResultPage = () => {
   const userInfoQuery = useGetUserInfoQuery();
   useEffect(() => {
     if (!location.state) {
-      console.log('location : ', location);
       navigate('/auth/analysis', { replace: true });
     } else {
-      console.log('location : ', location);
       const analysisScore = getAnalysisScore(location.state);
       setAnalysisScore(analysisScore);
       const summary = getAnalysisResult(location.state);
@@ -148,7 +146,6 @@ const AnalysisResultPage = () => {
   const typeDetail = typeDetails[type];
 
   const onSubmitHandler: SubmitHandler<AnalysisResultFormType> = (data) => {
-    console.log(data.agreement);
     if (data.agreement) {
       propensityMutation.mutate(
         { score: analysisScore },

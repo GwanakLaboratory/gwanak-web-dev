@@ -19,7 +19,6 @@ export const useSignInMutation = () => {
     mutationFn: (data: AuthSignInRequest) =>
       authClient.json(AuthEndpoint.signIn(data)),
     onSuccess: (data) => {
-      console.log(data);
       setAccessToken(data.detail.access_token);
     },
   });
