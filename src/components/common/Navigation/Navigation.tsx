@@ -88,7 +88,7 @@ const Navigation = ({ navList }: { navList: NavigationItemProps[] }) => {
         <Text
           color="White"
           typograph="lg_regular"
-          style={{ cursor: 'pointer' }}
+          style={{ lineHeight: '200%', cursor: 'pointer' }}
         >
           로그아웃
         </Text>
