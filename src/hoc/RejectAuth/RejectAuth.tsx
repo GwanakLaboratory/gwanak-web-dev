@@ -1,11 +1,14 @@
 import { useAtomValue } from 'jotai';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { accessTokenAtom } from '../../store/auth';
+import { useEffect } from 'react';
 
 const RejectAuth = () => {
   const accessToken = useAtomValue(accessTokenAtom);
   const navigate = useNavigate();
-  if (accessToken) navigate(-1);
+  useEffect(() => {
+    if (accessToken) navigate('/portfolios', { replace: true });
+  }, []);
   return <Outlet />;
 };
 
