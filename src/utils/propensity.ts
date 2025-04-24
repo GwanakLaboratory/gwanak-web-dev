@@ -36,4 +36,15 @@ const getPropensity = (typeNum: number | null) => {
   return propensityList[typeNum - 1];
 };
 
+export const getPropensityTableData = () => {
+  const transformedList = propensityList
+    .map(({ typeNum, name, cashRatio }) => {
+      const stockStr = `최대 ${(1 - cashRatio) * 100}`;
+      const cashStr = `최소 ${cashRatio * 100}`;
+      return { typeNum, name, stockStr, cashStr };
+    })
+    .reverse();
+
+  return transformedList;
+};
 export { getPropensity };
