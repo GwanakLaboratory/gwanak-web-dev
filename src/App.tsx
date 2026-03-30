@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomeMainPage from './pages/home/main';
+import LandingPage from './pages/home/landing';
 import AboutPage from './pages/home/about';
 import ServicePage from './pages/home/service';
 import TechPage from './pages/home/tech';
@@ -25,10 +25,10 @@ const App = () => {
       path: '/',
       element: <EventListenerManager />,
       children: [
+        { index: true, element: <LandingPage /> },
         {
           element: <BasicLayout />,
           children: [
-            { path: '/', element: <HomeMainPage /> },
             { path: 'about', element: <AboutPage /> },
             { path: 'service', element: <ServicePage /> },
             { path: 'tech', element: <TechPage /> },
