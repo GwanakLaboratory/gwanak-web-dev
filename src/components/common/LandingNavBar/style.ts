@@ -96,6 +96,9 @@ export const NavShell = styled.div`
   }
 
   .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 8px 22px;
     border-radius: 8px;
     background: var(--primary);
@@ -106,6 +109,7 @@ export const NavShell = styled.div`
     cursor: pointer;
     transition: all 0.25s;
     font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+    text-decoration: none;
   }
 
   .nav-cta:hover {

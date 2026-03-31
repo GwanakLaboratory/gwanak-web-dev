@@ -79,13 +79,9 @@ const LandingNavBar = (props: LandingNavBarProps) => {
 
         <div className="nav-actions">
           {!isAuth && (
-            <button
-              type="button"
-              className="nav-cta"
-              onClick={() => props.scrollTo('service')}
-            >
+            <Link className="nav-cta" to="/glab-start">
               시작하기
-            </button>
+            </Link>
           )}
           <Link className="nav-auth-btn nav-auth-soft" to="/auth/portfolios">
             포트폴리오
