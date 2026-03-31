@@ -1,4 +1,4 @@
-import { COLORS, TYPOGRAPHY } from '../constants';
+import { COLOR, TYPOGRAPHY } from '../constants';
 
-export type ColorsType = keyof typeof COLORS;
-export type TypographsType = keyof typeof TYPOGRAPHY;
+export type ColorType = keyof typeof COLOR;
+export type TypographyType = keyof typeof TYPOGRAPHY;

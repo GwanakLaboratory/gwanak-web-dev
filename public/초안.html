@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>관악연구소 — State 기반 AI 의사결정 엔진</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FAFBFE;
+  --bg-dark:#0B1023;
+  --bg-card:#FFFFFF;
+  --bg-card-alt:#F3F6FC;
+  --text:#1A1D2B;
+  --text-muted:#5C6178;
+  --text-dim:#9196AB;
+  --primary:#2956E0;
+  --primary-light:#4A72F5;
+  --primary-dark:#1D3FAB;
+  --primary-bg:rgba(41,86,224,0.06);
+  --primary-glow:rgba(41,86,224,0.15);
+  --accent:#00C9A7;
+  --accent-bg:rgba(0,201,167,0.08);
+  --orange:#F5852B;
+  --border:rgba(41,86,224,0.08);
+  --border-strong:rgba(41,86,224,0.15);
+  --font-display:'Outfit',sans-serif;
+  --font-body:'Noto Sans KR','Outfit',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(250,251,254,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all .3s}
+.nav-logo{font-family:var(--font-display);font-weight:800;font-size:1.3rem;color:var(--primary);letter-spacing:-0.02em;display:flex;align-items:center;gap:.4rem}
+.nav-logo span{background:var(--primary);color:#fff;font-size:.6rem;padding:.12rem .4rem;border-radius:3px;font-weight:600;letter-spacing:.04em}
+.nav-links{display:flex;gap:2.2rem;align-items:center}
+.nav-links a{font-size:.82rem;font-weight:500;color:var(--text-muted);transition:color .2s}
+.nav-links a:hover{color:var(--primary)}
+.nav-cta{padding:.5rem 1.4rem;border-radius:8px;background:var(--primary);color:#fff;font-weight:600;font-size:.78rem;border:none;cursor:pointer;transition:all .25s;font-family:var(--font-body)}
+.nav-cta:hover{background:var(--primary-dark);box-shadow:0 4px 20px var(--primary-glow)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-20%;right:-15%;width:55vw;height:55vw;background:radial-gradient(circle,rgba(41,86,224,0.06) 0%,transparent 65%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem 1rem;border-radius:100px;background:var(--primary-bg);border:1px solid var(--border-strong);font-size:.76rem;color:var(--primary);font-weight:500;width:fit-content;margin-bottom:2rem;animation:fadeUp .7s ease both}
+.hero-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.6rem,6vw,4.5rem);font-weight:800;line-height:1.1;letter-spacing:-0.04em;max-width:820px;animation:fadeUp .7s ease .05s both}
+.hero h1 .accent{color:var(--primary)}
+.hero-sub{font-size:1.08rem;line-height:1.75;color:var(--text-muted);font-weight:400;max-width:540px;margin-top:1.5rem;animation:fadeUp .7s ease .1s both}
+.hero-actions{display:flex;gap:.75rem;margin-top:2.5rem;animation:fadeUp .7s ease .15s both;flex-wrap:wrap}
+.btn-primary{padding:.85rem 2rem;border-radius:10px;background:var(--primary);color:#fff;font-weight:600;font-size:.92rem;border:none;cursor:pointer;transition:all .25s;font-family:var(--font-body)}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 6px 30px var(--primary-glow);transform:translateY(-1px)}
+.btn-outline{padding:.85rem 2rem;border-radius:10px;background:transparent;color:var(--primary);font-weight:600;font-size:.92rem;border:1.5px solid var(--border-strong);cursor:pointer;transition:all .25s;font-family:var(--font-body)}
+.btn-outline:hover{border-color:var(--primary);background:var(--primary-bg)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* METRICS RIBBON */
+.metrics{padding:0 3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.metric{padding:2.5rem 1.5rem;text-align:center;border-right:1px solid var(--border);transition:background .3s}
+.metric:last-child{border-right:none}
+.metric:hover{background:var(--primary-bg)}
+.metric-value{font-family:var(--font-display);font-size:2.4rem;font-weight:700;color:var(--primary);letter-spacing:-0.03em}
+.metric-label{font-size:.73rem;color:var(--text-dim);margin-top:.35rem;font-weight:400}
+
+/* SECTIONS */
+section{padding:6rem 3rem}
+.section-label{font-family:var(--font-display);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:.75rem}
+.section-title{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;line-height:1.2;letter-spacing:-0.03em;max-width:650px;color:var(--text)}
+.section-desc{color:var(--text-muted);font-size:1rem;line-height:1.75;max-width:520px;margin-top:1rem;font-weight:400}
+
+/* ABOUT */
+.about-section{background:var(--bg-card-alt)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start}
+.about-text h3{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:.6rem;margin-top:1.5rem;color:var(--text)}
+.about-text h3:first-child{margin-top:0}
+.about-text p{font-size:.9rem;color:var(--text-muted);line-height:1.75}
+.engine-steps{display:flex;flex-direction:column;gap:.75rem}
+.engine-step{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:all .3s}
+.engine-step:hover{border-color:var(--border-strong);transform:translateX(4px)}
+.step-num{font-family:var(--font-display);font-size:.6rem;font-weight:700;color:#fff;background:var(--primary);padding:.2rem .5rem;border-radius:4px;flex-shrink:0;margin-top:2px}
+.engine-step h4{font-family:var(--font-display);font-size:.92rem;font-weight:600;margin-bottom:.2rem}
+.engine-step p{font-size:.8rem;color:var(--text-muted);line-height:1.55}
+
+/* GLAB SERVICE */
+.service-dual{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem}
+.service-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:2rem;transition:all .3s}
+.service-card:hover{border-color:var(--border-strong);transform:translateY(-3px);box-shadow:0 8px 30px rgba(41,86,224,0.06)}
+.service-card.wide{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;background:linear-gradient(135deg,var(--bg-card) 0%,rgba(41,86,224,0.02) 100%)}
+.service-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem}
+.service-icon.blue{background:var(--primary-bg);border:1px solid var(--border-strong)}
+.service-icon.green{background:var(--accent-bg);border:1px solid rgba(0,201,167,.15)}
+.service-card h3{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.service-card p{font-size:.88rem;color:var(--text-muted);line-height:1.7}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+.tag{padding:.25rem .7rem;border-radius:100px;font-size:.68rem;border:1px solid var(--border-strong);color:var(--text-muted);font-weight:500}
+.demo-box{background:var(--bg-card-alt);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.demo-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.demo-title{font-family:var(--font-display);font-size:.8rem;font-weight:600;color:var(--primary)}
+.demo-live{font-size:.6rem;padding:.15rem .5rem;border-radius:100px;background:rgba(0,201,167,.1);color:var(--accent);font-weight:600}
+.chat-msgs{display:flex;flex-direction:column;gap:.5rem}
+.chat-msg{padding:.6rem .9rem;border-radius:10px;font-size:.78rem;line-height:1.55;max-width:88%}
+.chat-msg.user{background:var(--primary);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.chat-msg.ai{background:var(--bg-card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
+.chat-msg .label{font-size:.6rem;font-weight:600;color:var(--primary);margin-bottom:.15rem;display:block}
+.b2b-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+.b2b-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all .3s}
+.b2b-card:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+.b2b-status{font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:3px;display:inline-block;margin-bottom:.75rem;font-family:var(--font-display);letter-spacing:.03em}
+.b2b-status.done{background:rgba(0,201,167,.1);color:#00a88a}
+.b2b-status.wip{background:rgba(41,86,224,.08);color:var(--primary)}
+.b2b-status.plan{background:rgba(245,133,43,.08);color:var(--orange)}
+.b2b-card h4{font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:.3rem}
+.b2b-card p{font-size:.82rem;color:var(--text-muted);line-height:1.6}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem}
+.project-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s;cursor:default}
+.project-card:hover{border-color:var(--border-strong);transform:translateY(-3px);box-shadow:0 8px 30px rgba(41,86,224,0.06)}
+.project-thumb{height:140px;display:flex;align-items:center;justify-content:center;position:relative}
+.project-thumb .big-num{font-family:var(--font-display);font-size:4rem;font-weight:800;opacity:.04;position:absolute}
+.project-thumb .icon{font-size:2rem;position:relative;z-index:1}
+.project-body{padding:1.5rem}
+.project-cat{font-size:.65rem;font-weight:700;color:var(--primary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.5rem;font-family:var(--font-display)}
+.project-card h3{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-0.01em}
+.project-card p{font-size:.82rem;color:var(--text-muted);line-height:1.6}
+.project-meta{display:flex;gap:.75rem;margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--border);font-size:.7rem;color:var(--text-dim)}
+
+/* ACHIEVEMENTS */
+.ach-section{background:var(--bg-card-alt)}
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem}
+.ach-group h4{font-family:var(--font-display);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
+.ach-item{display:flex;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border);transition:all .2s}
+.ach-item:hover{padding-left:.3rem}
+.ach-marker{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:6px;opacity:.4}
+.ach-content h5{font-size:.9rem;font-weight:500;margin-bottom:.1rem}
+.ach-content p{font-size:.78rem;color:var(--text-muted);line-height:1.45}
+
+/* PARTNERS */
+.partner-row{display:flex;gap:2.5rem;align-items:center;flex-wrap:wrap;margin-top:2.5rem}
+.partner-name{font-family:var(--font-display);font-weight:700;font-size:.9rem;color:var(--text-dim);opacity:.45;transition:opacity .3s;padding:.5rem 1.2rem;border:1px solid var(--border);border-radius:8px}
+.partner-name:hover{opacity:.7}
+
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+.team-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .3s}
+.team-card:hover{border-color:var(--border-strong)}
+.team-role{font-size:.62rem;font-weight:700;color:var(--primary);background:var(--primary-bg);padding:.15rem .5rem;border-radius:3px;display:inline-block;margin-bottom:.6rem;font-family:var(--font-display);letter-spacing:.03em}
+.team-card h4{font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:.15rem}
+.team-card .affil{font-size:.78rem;color:var(--primary);font-weight:500;margin-bottom:.5rem}
+.team-card p{font-size:.78rem;color:var(--text-muted);line-height:1.55}
+
+/* CTA */
+.cta-section{text-align:center;display:flex;flex-direction:column;align-items:center;background:var(--bg-dark);color:#fff}
+.cta-section .section-label{color:var(--accent)}
+.cta-section .section-title{color:#fff;text-align:center;max-width:550px}
+.cta-section .section-desc{color:rgba(255,255,255,.5);text-align:center;margin-left:auto;margin-right:auto}
+.cta-actions{display:flex;gap:.75rem;margin-top:2rem;flex-wrap:wrap;justify-content:center}
+.btn-white{padding:.85rem 2rem;border-radius:10px;background:#fff;color:var(--primary);font-weight:600;font-size:.92rem;border:none;cursor:pointer;transition:all .25s;font-family:var(--font-body)}
+.btn-white:hover{box-shadow:0 6px 30px rgba(255,255,255,.15);transform:translateY(-1px)}
+.btn-ghost{padding:.85rem 2rem;border-radius:10px;background:transparent;color:#fff;font-weight:500;font-size:.92rem;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:all .25s;font-family:var(--font-body)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.04)}
+
+/* FOOTER */
+footer{padding:2.5rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--text-dim);flex-wrap:wrap;gap:.5rem}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a:hover{color:var(--text-muted)}
+
+/* REVEAL */
+.reveal{animation:revealUp .7s ease both}
+@keyframes revealUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.reveal:nth-child(1){animation-delay:0s}
+.reveal:nth-child(2){animation-delay:.08s}
+.reveal:nth-child(3){animation-delay:.16s}
+.reveal:nth-child(4){animation-delay:.24s}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:.8rem 1.2rem}
+  .nav-links{display:none}
+  section,.hero{padding-left:1.2rem;padding-right:1.2rem}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .metric{border-right:none;border-bottom:1px solid var(--border)}
+  .about-grid,.service-dual,.ach-grid{grid-template-columns:1fr}
+  .service-card.wide{grid-template-columns:1fr}
+  .projects-grid,.b2b-cards{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">관악연구소 <span>GWANAK LAB</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#service">glab 서비스</a>
+    <a href="#projects">Projects</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('service').scrollIntoView({behavior:'smooth'})">시작하기</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag"><span class="dot"></span>State 기반 AI 의사결정 엔진</div>
+  <h1>금융 의사결정을<br><span class="accent">구조화</span>합니다.</h1>
+  <p class="hero-sub">
+    AI는 예측하지만, "무엇을 해야 하는가"는 여전히 사람의 감에 의존합니다.
+    관악연구소는 상태(State)를 정의하고, 변화를 예측하며, 판단 기준을 구조화하여
+    금융 전반의 의사결정 인프라를 만듭니다.
+  </p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="document.getElementById('service').scrollIntoView({behavior:'smooth'})">GLAB 체험하기</button>
+    <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">기업 도입 문의 →</button>
+  </div>
+</section>
+
+<!-- METRICS -->
+<div class="metrics">
+  <div class="metric reveal">
+    <div class="metric-value">82.5%</div>
+    <div class="metric-label">하락 예측 정확도 (Specificity)</div>
+  </div>
+  <div class="metric reveal">
+    <div class="metric-value">특허 등록</div>
+    <div class="metric-label">투자 비율 결정 장치 및 방법</div>
+  </div>
+  <div class="metric reveal">
+    <div class="metric-value">RA 심사 통과</div>
+    <div class="metric-label">로보어드바이저 운용심사</div>
+  </div>
+  <div class="metric reveal">
+    <div class="metric-value">IBK PoC</div>
+    <div class="metric-label">금융기관 실증 진행중</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="reveal">
+    <div class="section-label">About</div>
+    <h2 class="section-title">합리적인 의사결정은<br>지금의 상태를 이해하는 것에서 시작됩니다</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h3>우리가 해결하는 문제</h3>
+      <p>금융 산업 전반에 데이터와 AI가 넘쳐나지만, 의사결정 자동화율은 여전히 약 5%에 불과합니다. 같은 10% 수익률이어도 상승장 초입과 하락장 반등은 완전히 다른 상황이지만, 기존 AI는 숫자를 예측할 뿐 맥락을 이해하지 못합니다.</p>
+      <h3>우리의 접근</h3>
+      <p>관악연구소는 서울대·서울시립대 통계학과 연구실과 공동연구를 수행하며, 투자 · 카드 · 보험 등 금융 도메인 전반에 적용 가능한 State 기반 AI 의사결정 엔진을 개발합니다. 하나의 엔진으로 영역을 넘나드는 의사결정 인프라를 구축하고 있습니다.</p>
+    </div>
+    <div class="engine-steps reveal">
+      <div class="engine-step">
+        <span class="step-num">01</span>
+        <div>
+          <h4>상태 표현 계층</h4>
+          <p>TabLLM 기반으로 Raw Data를 맥락을 포함한 상태 벡터로 변환. 변수가 바뀌어도 문장만 변경하면 됩니다.</p>
+        </div>
+      </div>
+      <div class="engine-step">
+        <span class="step-num">02</span>
+        <div>
+          <h4>상태 전이 예측</h4>
+          <p>TFT(Temporal Fusion Transformer) 기반으로 다음 값이 아닌 상태의 가능성을 예측합니다.</p>
+        </div>
+      </div>
+      <div class="engine-step">
+        <span class="step-num">03</span>
+        <div>
+          <h4>판단 기준 구조화</h4>
+          <p>예측 결과에 리스크 요소를 반영한 명시적 판단 기준을 적용하여 최종 의사결정을 도출합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLAB SERVICE -->
+<section id="service">
+  <div class="reveal">
+    <div class="section-label">glab 서비스</div>
+    <h2 class="section-title">하나의 엔진, 두 개의 시장</h2>
+    <p class="section-desc">투자 영역에서 검증된 기술을 리테일 투자자(GLAB)와 기관 고객(GLOV) 양쪽에 제공합니다.</p>
+  </div>
+
+  <!-- B2C -->
+  <div class="service-dual">
+    <div class="service-card wide reveal">
+      <div>
+        <div class="service-icon blue">💬</div>
+        <h3>GLAB — 1:1 AI 디지털 PB</h3>
+        <p>유저 성향과 심리를 실시간 분석하여 맞춤형 투자 가이드를 제안합니다.
+          범용 LLM이 정보를 나열하고 판단을 유보하는 데 그치는 반면,
+          GLAB은 시장 상태를 정의하고 구체적인 행동 지침까지 제시합니다.</p>
+        <div class="tags">
+          <span class="tag">국내주식</span>
+          <span class="tag">미국주식 (예정)</span>
+          <span class="tag">가상자산 (예정)</span>
+          <span class="tag">개인화 코칭</span>
+          <span class="tag">투자교육</span>
+        </div>
+        <p style="font-size:.78rem;color:var(--primary);font-weight:600;margin-top:1rem">2026년 2분기 MVP 출시 · 구독 Basic 50,000원/연, Premium 100,000원/연</p>
+      </div>
+      <div class="demo-box">
+        <div class="demo-header">
+          <span class="demo-title">GLAB 대화 예시</span>
+          <span class="demo-live">AI PB</span>
+        </div>
+        <div class="chat-msgs">
+          <div class="chat-msg user">요즘 시장이 불안한데, 추가 매수해도 돼?</div>
+          <div class="chat-msg ai">
+            <span class="label">GLAB</span>
+            지금은 달려들 때가 아닙니다. 변동성 확대 국면이라 현금을 챙기며 관망할 때입니다.
+          </div>
+          <div class="chat-msg user">현대차 -20% 물렸어. 물타기 해도 될까?</div>
+          <div class="chat-msg ai">
+            <span class="label">GLAB</span>
+            이미 많이 오른 뒤 꺾인 상태입니다. 단순 저점이 아니니 물타기를 자제하고, 추가 하락 여부를 먼저 확인하세요.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon green">📊</div>
+      <h3>포트폴리오 엔진</h3>
+      <p>TFT 기반 종목 예측과 Pessimistic 리스크 최소화를 결합. 극단적 손실 확률을 최소화하는 포트폴리오를 자동으로 구성하고 리밸런싱합니다.</p>
+      <div class="tags">
+        <span class="tag">TFT 시계열 예측</span>
+        <span class="tag">CVaR 최소화</span>
+        <span class="tag">자동 리밸런싱</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon blue">🎓</div>
+      <h3>투자교육 · AI 커뮤니티</h3>
+      <p>유저의 대화 내역으로 투자 성향과 지식수준을 분석하여 맞춤 교육 콘텐츠를 제공합니다. 투자 대가의 전략을 학습한 AI Agent와 토론하는 커뮤니티도 준비 중입니다.</p>
+      <div class="tags">
+        <span class="tag">개인화 학습</span>
+        <span class="tag">AI Agent 커뮤니티</span>
+        <span class="tag">수익률 리그</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2B -->
+  <div style="margin-top:4rem" class="reveal">
+    <div class="section-label">GLOV — B2B</div>
+    <p style="font-size:1rem;color:var(--text-muted);max-width:500px;margin-top:.5rem">기관을 통해 검증된 전략을 리테일에 적용하고, 리테일 유저 데이터로 엔진을 고도화하는 플라이휠 구조입니다.</p>
+  </div>
+  <div class="b2b-cards">
+    <div class="b2b-card reveal">
+      <span class="b2b-status done">검증 완료</span>
+      <h4>증권 / 자산운용</h4>
+      <p>사모펀드 B2B 자문 운용 중. TFT + 리스크최소화 포트폴리오로 PB 의사결정을 지원합니다.</p>
+    </div>
+    <div class="b2b-card reveal">
+      <span class="b2b-status wip">PoC 진행중</span>
+      <h4>카드 (IBK 1st LAB)</h4>
+      <p>고객 상태 정의 + 이탈 원인별 리텐션 의사결정. KB카드와도 검증 진행 예정입니다.</p>
+    </div>
+    <div class="b2b-card reveal">
+      <span class="b2b-status plan">확장 예정</span>
+      <h4>은행 / 보험</h4>
+      <p>동일 엔진으로 미납/해지 리텐션, 손해율 추세 기반 의사결정으로 확장합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--bg-card-alt)">
+  <div class="reveal">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">우리가 만들어온 것들</h2>
+    <p class="section-desc">State 기반 의사결정 엔진을 다양한 금융 도메인에 적용하고 검증해왔습니다.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb" style="background:linear-gradient(135deg,rgba(41,86,224,0.04),rgba(41,86,224,0.01))">
+        <span class="big-num">01</span>
+        <span class="icon">🧠</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">Robo Advisor</div>
+        <h3>TFT 기반 포트폴리오 운용</h3>
+        <p>DART 재무제표를 활용하여 기업 펀더멘탈을 예측하고, Pessimistic 알고리즘으로 리스크를 최소화하는 포트폴리오를 운용합니다.</p>
+        <div class="project-meta">
+          <span>운용심사 통과</span>
+          <span>특허 등록</span>
+          <span>Specificity 82.5%</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb" style="background:linear-gradient(135deg,rgba(0,201,167,0.04),rgba(0,201,167,0.01))">
+        <span class="big-num">02</span>
+        <span class="icon">💳</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">Financial PoC</div>
+        <h3>카드 고객 이탈방지 모형</h3>
+        <p>IBK 1st LAB에서 TFT 모델을 카드 고객 이탈예측에 적용. 이탈 원인별 차별화된 리텐션 전략을 자동으로 도출합니다.</p>
+        <div class="project-meta">
+          <span>IBK 1st LAB</span>
+          <span>PoC 진행중</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb" style="background:linear-gradient(135deg,rgba(245,133,43,0.04),rgba(245,133,43,0.01))">
+        <span class="big-num">03</span>
+        <span class="icon">💬</span>
+      </div>
+      <div class="project-body">
+        <div class="project-cat">AI Digital PB</div>
+        <h3>GLAB 1:1 디지털 PB</h3>
+        <p>투자종목 데이터와 사용자 대화를 결합하여 상태를 정의하고, 개인 성향에 따른 초개인화 투자 가이드를 제공합니다.</p>
+        <div class="project-meta">
+          <span>2026 Q2 MVP</span>
+          <span>금융 Vertical LLM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="ach-section" id="achievements" style="background:var(--bg)">
+  <div class="reveal">
+    <div class="section-label">Achievements</div>
+    <h2 class="section-title">관악연구소의 발자취</h2>
+  </div>
+  <div class="ach-grid">
+    <div class="reveal">
+      <h4>기술 검증 · IP</h4>
+      <div class="ach-item">
+        <span class="ach-marker"></span>
+        <div class="ach-content">
+          <h5>로보어드바이저 운용심사 통과</h5>
+          <p>테스트베드 정기심사 완료 · 4개 알고리즘 운용심사 확인증</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-marker"></span>
+        <div class="ach-content">
+          <h5>투자 비율 결정 장치 및 방법 특허</h5>
+          <p>특허 제10-2803037호 등록</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-marker"></span>
+        <div class="ach-content">
+          <h5>Specificity 82.5% 달성</h5>
+          <p>하락 예측 정확도 업계 최고 수준 기록</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-marker"></span>
+        <div class="ach-content">
+          <h5>LG CNS COP 프로젝트 납품</h5>
+          <p>타이트한 QA 테스트 한 번에 통과</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h4>기관 선정 · 파트너십</h4>
+      <div class="ach-item">
+        <span class="ach-marker"></span>
+        <div class="ach-content">
+          <h5>서울핀테크랩 선정</h5>
+          <p>핀테크 생태계 핵심 기관 지원사업</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-marker"></span>
+        <div class="ach-content">
+          <h5>IBK 1st LAB 오픈이노베이션</h5>
+          <p>현업 금융기관 엑셀러레이팅 선정</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-marker"></span>
+        <div class="ach-content">
+          <h5>한국핀테크지원센터 선정</h5>
+          <p>핀테크 스타트업 지원 프로그램</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-marker"></span>
+        <div class="ach-content">
+          <h5>기술보증기금 · BNK 부산은행</h5>
+          <p>기술력 기반 보증 및 금융사 파트너십</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM (within Achievements flow) -->
+  <div style="margin-top:5rem" class="reveal">
+    <div class="section-label">Team</div>
+    <h2 class="section-title">금융 · 통계 · AI 핵심 분야의 연구진과 실행 조직</h2>
+  </div>
+  <div class="team-grid">
+    <!-- 대표 -->
+    <div class="team-card reveal">
+      <span class="team-role">대표</span>
+      <h4>CEO</h4>
+      <div class="affil">서울대 재료공학 학/석사 · 기술경영경제정책 박사과정</div>
+      <p>5년 개발경력 (C++, Flutter), 2년 금융경력 (사모펀드 운영). 스타트업 앱서비스 직접 개발·운영 경험.</p>
+    </div>
+    <!-- 공동연구 -->
+    <div class="team-card reveal">
+      <span class="team-role">공동연구</span>
+      <h4>IDEA Lab.</h4>
+      <div class="affil">서울대학교 통계학과</div>
+      <p>대규모 통계 모델의 안정성·해석 가능성 검증. Survival Analysis, Bayesian Statistics, Statistical ML, Fair AI.</p>
+    </div>
+    <div class="team-card reveal">
+      <span class="team-role">공동연구</span>
+      <h4>OPTIM. Lab.</h4>
+      <div class="affil">서울시립대학교 통계학과</div>
+      <p>금융 시계열·최적화 모델의 산업 적용 설계. Financial AI, Knowledge Graph, Synthetic Data Generation.</p>
+    </div>
+    <!-- 연구원 -->
+    <div class="team-card reveal">
+      <span class="team-role">연구원</span>
+      <h4>AI/ML 연구원</h4>
+      <div class="affil">서울시립대 통계데이터사이언스 석사</div>
+      <p>분자독성 네트워크 기반 예측 모델, 멀티모달 AI 진단서비스, 도메인 특화 파운데이션 모델 연구.</p>
+    </div>
+    <!-- 개발팀 -->
+    <div class="team-card reveal">
+      <span class="team-role">개발</span>
+      <h4>10년차 풀스택 개발자</h4>
+      <div class="affil">광운대 컴퓨터소프트웨어공학</div>
+      <p>LG CNS SaaS 서비스 개발리드. PC App, Mobile App, Web 등 모든 서비스 형태의 개발 경력.</p>
+    </div>
+    <div class="team-card reveal">
+      <span class="team-role">개발</span>
+      <h4>7년차 풀스택 개발자</h4>
+      <div class="affil">연세대 공과대학 석사 · Computer Vision</div>
+      <p>LG CNS SaaS 서비스 백엔드리드. MAU 30만 앱서비스 CTO 경험. 데이터베이스 전문.</p>
+    </div>
+    <div class="team-card reveal">
+      <span class="team-role">개발</span>
+      <h4>5년차 프론트엔드 개발자</h4>
+      <div class="affil">아주대 시스템보안</div>
+      <p>LG CNS SaaS 서비스 프론트엔드. 이미지 편집 플랫폼 다수 개발. 레거시 전환 및 성능 최적화 전문.</p>
+    </div>
+    <div class="team-card reveal">
+      <span class="team-role">개발</span>
+      <h4>4년차 풀스택 개발자</h4>
+      <div class="affil">Oregon 주립대 컴퓨터공학</div>
+      <p>LG CNS SaaS 서비스 풀스택. 자동매매 알고리즘 해커톤 입상, 오픈소스 기여. 유저 친화 설계.</p>
+    </div>
+    <div class="team-card reveal">
+      <span class="team-role">개발</span>
+      <h4>4년차 풀스택 개발자</h4>
+      <div class="affil">한양대 컴퓨터소프트웨어학부</div>
+      <p>LG CNS SaaS 서비스 풀스택. AI 기술 활용 서비스 CTO 경험. 정보올림피아드 경시 은상.</p>
+    </div>
+    <div class="team-card reveal">
+      <span class="team-role">개발</span>
+      <h4>4년차 풀스택 개발자</h4>
+      <div class="affil">서울시립대 통계학과</div>
+      <p>로보어드바이저 시스템 개발. Web 서비스 개발 전문. 새로운 기술 스택 도입 및 리팩토링 역량.</p>
+    </div>
+    <div class="team-card reveal">
+      <span class="team-role">개발</span>
+      <h4>3년차 풀스택 개발자</h4>
+      <div class="affil">광운대 데이터사이언스</div>
+      <p>LG CNS SaaS 서비스 프론트엔드. 실사용 중심 기능 개발. 학부생 특허·논문, 다수 공모전 입상.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-section" id="contact">
+  <div class="reveal">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">합리적인 의사결정,<br>지금 시작하세요.</h2>
+    <p class="section-desc">개인 투자자는 GLAB으로, 기업은 맞춤 상담으로 시작할 수 있습니다.</p>
+    <div class="cta-actions">
+      <button class="btn-white">GLAB 체험하기</button>
+      <button class="btn-ghost">기업 도입 상담 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="nav-logo" style="font-size:.95rem">관악연구소 <span style="font-size:.55rem">GWANAK LAB</span></div>
+  <div class="footer-links">
+    <a href="#">이용약관</a>
+    <a href="#">개인정보처리방침</a>
+    <a href="/cdn-cgi/l/email-protection#0d6e6263796c6e794d6a7a6c636c66616c6f236e6260"><span class="__cf_email__" data-cfemail="c4a7abaab0a5a7b084a3b3a5aaa5afa8a5a6eaa7aba9">[email&#160;protected]</span></a>
+  </div>
+  <div>© 2026 GWANAK LAB. All rights reserved.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const observer=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add('visible')})},{threshold:.08,rootMargin:'0p

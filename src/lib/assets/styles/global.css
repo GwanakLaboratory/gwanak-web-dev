@@ -1,0 +1,22 @@
+html {
+  /* 16px * 0.625 = 10px */
+  font-size: 62.5%;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Spoqa Han Sans Neo', 'Apple SD Gothic Neo', sans-serif;
+  word-break: keep-all;
+}
+
+.layout-padding {
+  padding: 0 10%;
+
+  @media screen and (max-width: 768px) {
+    padding: 0 5%;
+  }
+}
