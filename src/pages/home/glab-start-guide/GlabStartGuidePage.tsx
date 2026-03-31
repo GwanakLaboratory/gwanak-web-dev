@@ -47,12 +47,10 @@ const GlabStartGuidePage = () => {
     scrollTrackTo(0);
   }, [isMobileNav, scrollTrackTo]);
 
-  const Wide = isMobileNav ? GuideWideContent : LayoutS.WideContent;
-
   return (
     <LayoutS.Shell>
       {isMobileNav ? <GlabGuideMobileNav /> : <LandingNavBar variant="auth" />}
-      <Wide
+      <GuideWideContent
         as="section"
         style={{
           paddingLeft: 0,
@@ -101,7 +99,7 @@ const GlabStartGuidePage = () => {
             </S.Panel>
           </S.HorizontalTrack>
         )}
-      </Wide>
+      </GuideWideContent>
     </LayoutS.Shell>
   );
 };

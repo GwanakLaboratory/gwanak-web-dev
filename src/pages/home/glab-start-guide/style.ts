@@ -53,10 +53,11 @@ export const S = {
   HorizontalTrack: styled.div`
     display: flex;
     flex-direction: row;
+    align-items: stretch;
     width: 100%;
     flex: 1;
-    min-height: calc(100dvh - 96px);
     height: 100%;
+    min-height: 0;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
@@ -71,16 +72,20 @@ export const S = {
     }
 
     @media (max-width: 900px) {
-      min-height: calc(100dvh - max(4px, env(safe-area-inset-top, 0px)));
+      height: auto;
+      min-height: 0;
     }
   `,
 
   Panel: styled.section`
     flex: 0 0 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     width: 100vw;
     min-width: 100vw;
-    height: 100%;
-    min-height: 0;
+    height: calc(100dvh - 96px);
+    min-height: calc(100dvh - 96px);
     scroll-snap-align: start;
     scroll-snap-stop: always;
     overflow: hidden;
@@ -89,6 +94,8 @@ export const S = {
     overflow-wrap: break-word;
 
     @media (max-width: 900px) {
+      height: auto;
+      min-height: auto;
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
@@ -97,6 +104,7 @@ export const S = {
   `,
 
   Hero: styled.div`
+    height: 100%;
     min-height: 100%;
     display: flex;
     flex-direction: column;
@@ -139,6 +147,7 @@ export const S = {
     }
 
     @media (max-width: 900px) {
+      height: auto;
       justify-content: flex-start;
       min-height: calc(100dvh - max(4px, env(safe-area-inset-top, 0px)));
       padding: 12px 16px;
@@ -253,6 +262,7 @@ export const S = {
 
   Step: styled.div`
     display: grid;
+    height: 100%;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
     grid-template-areas: 'visual content';
     gap: clamp(24px, 4vw, 56px);
@@ -269,6 +279,7 @@ export const S = {
     }
 
     @media (max-width: 900px) {
+      height: auto;
       min-height: auto;
       grid-template-columns: 1fr;
       grid-template-areas: 'visual' 'content';
@@ -442,17 +453,30 @@ export const S = {
     }
   `,
 
+  CtaPanel: styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
+    background: linear-gradient(180deg, ${glab.light} 0%, #eef1fa 100%);
+
+    @media (max-width: 900px) {
+      height: auto;
+      min-height: auto;
+    }
+  `,
+
   Cta: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-height: 100%;
+    flex: 1;
+    min-height: 0;
     padding: clamp(48px, 10vh, 72px) clamp(20px, 5vw, 44px);
     padding-top: max(48px, env(safe-area-inset-top, 0px));
     padding-bottom: max(48px, env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(180deg, ${glab.light} 0%, #eef1fa 100%);
     box-sizing: border-box;
     font-family:
       'Noto Sans KR',
@@ -461,6 +485,72 @@ export const S = {
 
     @media (max-width: 900px) {
       min-height: auto;
+    }
+  `,
+
+  CtaFooter: styled.div`
+    width: 100%;
+    flex-shrink: 0;
+
+    .landing-footer {
+      padding: 40px 48px;
+      border-top: 1px solid rgba(26, 29, 43, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(26, 29, 43, 0.58);
+      flex-wrap: wrap;
+      gap: 8px;
+      background: linear-gradient(180deg, #eef1f8 0%, #e4e9f4 100%);
+      font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+    }
+
+    .landing-footer .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      color: #2956e0;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .landing-footer .nav-logo span {
+      background: #2956e0;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: rgba(26, 29, 43, 0.78);
+    }
+
+    @media (max-width: 900px) {
+      .landing-footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 19px;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px 20px;
+      }
     }
   `,
 
@@ -539,7 +629,18 @@ export const S = {
 
 /** 모바일 가이드: 고정 네비 제거에 맞춰 상단 패딩 최소화 */
 export const GuideWideContent = styled(LayoutS.WideContent)`
+  box-sizing: border-box;
+
+  @media (min-width: 901px) {
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+
   @media (max-width: 900px) {
     padding-top: max(4px, env(safe-area-inset-top, 0px));
+    height: auto;
+    max-height: none;
+    overflow: visible;
   }
 `;
