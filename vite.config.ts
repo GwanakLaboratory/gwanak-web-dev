@@ -7,9 +7,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/v1': {
-        target: 'https://api.gwanaklab.com',
+        // 로컬 서버를 쓸 경우: VITE_API_TARGET=http://localhost:8000 yarn dev
+        target: process.env.VITE_API_TARGET || 'https://api.gwanaklab.com',
         changeOrigin: true,
-        secure: true,
+        secure: (process.env.VITE_API_TARGET || 'https://api.gwanaklab.com').startsWith(
+          'https://',
+        ),
       },
     },
   },

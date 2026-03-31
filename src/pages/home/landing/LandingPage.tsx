@@ -1,5 +1,6 @@
 import { useEffect, useCallback, useRef, useState } from 'react';
 import { S } from './style';
+import LandingNavBar from '../../../components/common/LandingNavBar';
 import AboutSection from './components/AboutSection';
 import AchievementsSection from './components/AchievementsSection';
 import ContactSection from './components/ContactSection';
@@ -9,18 +10,10 @@ import LegacyHeroSection from './components/LegacyHeroSection';
 import ProjectsSection from './components/ProjectsSection';
 import ServiceSection from './components/ServiceSection';
 import TeamSection from './components/TeamSection';
-
-const NAV_SCROLL_IDS = [
-  'intro',
-  'about',
-  'service',
-  'projects',
-  'achievements',
-  'team',
-  'contact',
-] as const;
-
-type NavScrollId = (typeof NAV_SCROLL_IDS)[number];
+import {
+  NAV_SCROLL_IDS,
+  type NavScrollId,
+} from './landingNavConstants';
 
 function topWithinScroller(scroller: HTMLElement, el: HTMLElement): number {
   return (
@@ -129,95 +122,13 @@ const LandingPage = () => {
 
   return (
     <S.LandingWrapper ref={wrapperRef}>
-      <nav>
-        <a
-          className="nav-logo"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            wrapperRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        >
-          관악연구소 <span>GWANAK LAB</span>
-        </a>
-
-        <div className="nav-links">
-          <a
-            className={navLinkClass('intro')}
-            href="#intro"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo('intro');
-            }}
-          >
-            홈
-          </a>
-          <a
-            className={navLinkClass('about')}
-            href="#about"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo('about');
-            }}
-          >
-            About
-          </a>
-          <a
-            className={navLinkClass('service')}
-            href="#service"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo('service');
-            }}
-          >
-            glab 서비스
-          </a>
-          <a
-            className={navLinkClass('projects')}
-            href="#projects"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo('projects');
-            }}
-          >
-            Projects
-          </a>
-          <a
-            className={navLinkClass('achievements')}
-            href="#achievements"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo('achievements');
-            }}
-          >
-            Achievements
-          </a>
-          <a
-            className={navLinkClass('team')}
-            href="#team"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo('team');
-            }}
-          >
-            Team
-          </a>
-          <a
-            className={navLinkClass('contact')}
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo('contact');
-            }}
-          >
-            Contact
-          </a>
-        </div>
-
-        <button className="nav-cta" onClick={() => scrollTo('service')}>
-          시작하기
-        </button>
-      </nav>
+      <LandingNavBar
+        variant="landing"
+        wrapperRef={wrapperRef}
+        activeSection={activeSection}
+        scrollTo={scrollTo}
+        navLinkClass={navLinkClass}
+      />
 
       <div id="intro" className="landing-intro">
         <LegacyHeroSection />

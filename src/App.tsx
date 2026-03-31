@@ -1,11 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LandingPage from './pages/home/landing';
-import AboutPage from './pages/home/about';
-import ServicePage from './pages/home/service';
-import TechPage from './pages/home/tech';
 import ForgotEmailPage from './pages/auth/forgot-email';
 import ForgotPasswordPage from './pages/auth/forgot-password';
 import BasicLayout from './components/common/BasicLayout';
+import AuthLandingLayout from './components/layout/AuthLandingLayout/AuthLandingLayout';
 import RequireAuth from './hoc/RequireAuth';
 import PortfolioListPage from './pages/portfolio/list';
 import CreatePortfolioPage from './pages/portfolio/create';
@@ -27,14 +25,6 @@ const App = () => {
       children: [
         { index: true, element: <LandingPage /> },
         {
-          element: <BasicLayout />,
-          children: [
-            { path: 'about', element: <AboutPage /> },
-            { path: 'service', element: <ServicePage /> },
-            { path: 'tech', element: <TechPage /> },
-          ],
-        },
-        {
           path: '/auth',
           element: <RequireAuth />,
           children: [
@@ -55,7 +45,7 @@ const App = () => {
           element: <RejectAuth />,
           children: [
             {
-              element: <BasicLayout />,
+              element: <AuthLandingLayout />,
               children: [
                 { path: 'login', element: <LoginPage /> },
                 { path: 'signup', element: <SignUpPage /> },

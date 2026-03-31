@@ -8,7 +8,7 @@ const RequireAuth = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!accessToken) navigate('/login', { replace: true });
-  }, []);
+  }, [accessToken, navigate]);
   return <Outlet />;
 };
 

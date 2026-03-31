@@ -13,14 +13,10 @@ import { accessTokenAtom } from '../../store/auth';
 import { encodeSignUpRequest } from './auth.transform';
 
 export const useSignInMutation = () => {
-  const setAccessToken = useSetAtom(accessTokenAtom);
   return useMutation<AuthSignInResponse, Error, AuthSignInRequest>({
     mutationKey: ['auth', 'signin'],
     mutationFn: (data: AuthSignInRequest) =>
       authClient.json(AuthEndpoint.signIn(data)),
-    onSuccess: (data) => {
-      setAccessToken(data.detail.access_token);
-    },
   });
 };
 

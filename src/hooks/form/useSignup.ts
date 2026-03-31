@@ -1,14 +1,23 @@
 import { useMemo, MouseEvent, useState, useEffect } from 'react';
 import { SubmitHandler, useWatch } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useSetAtom } from 'jotai';
 import {
   AuthSignUpViewModel,
   useKaKaoInfoCheckMutation,
   useKaKaoValidateMutation,
+  useSignInMutation,
   useSignUpMutation,
 } from '../../apis';
+import { accessTokenAtom } from '../../store/auth';
 import useCustomForm from '../useCustomForm';
 
+/** 테스트용: 휴대폰 카카오 본인인증 생략. 배포 전 `false`로 되돌릴 것 */
+const SKIP_PHONE_VERIFICATION = true;
+
 const useSignUpForm = () => {
+  const navigate = useNavigate();
+  const setAccessToken = useSetAtom(accessTokenAtom);
   const {
     register,
     handleSubmit,
@@ -18,6 +27,7 @@ const useSignUpForm = () => {
   } = useCustomForm<AuthSignUpViewModel>();
 
   const signupMutation = useSignUpMutation();
+  const signInMutation = useSignInMutation();
   const kakaoInfoCheckMutation = useKaKaoInfoCheckMutation();
   const verificationMutation = useKaKaoValidateMutation();
 
@@ -49,7 +59,8 @@ const useSignUpForm = () => {
   const [certId, setCertId] = useState<string | null>(null);
 
   const userValid =
-    verificationMutation.isSuccess && !verificationMutation.isPending;
+    SKIP_PHONE_VERIFICATION ||
+    (verificationMutation.isSuccess && !verificationMutation.isPending);
 
   useEffect(() => {
     setCertId(null);
@@ -87,7 +98,25 @@ const useSignUpForm = () => {
 
   const onSubmitHandler: SubmitHandler<AuthSignUpViewModel> = (data) => {
     if (userValid) {
-      signupMutation.mutate(data);
+      signupMutation.mutate(data, {
+        onSuccess: () => {
+          signInMutation.mutate(
+            { email: data.email, password: data.password },
+            {
+              onSuccess: (res) => {
+                setAccessToken(res.detail.access_token);
+                navigate('/auth/portfolios', { replace: true });
+              },
+              onError: () => {
+                alert(
+                  '회원가입은 완료되었습니다. 로그인 페이지에서 다시 시도해 주세요.',
+                );
+                navigate('/login', { replace: true });
+              },
+            },
+          );
+        },
+      });
     } else {
       alert('본인 인증을 다시 진행해주세요');
     }
@@ -95,6 +124,9 @@ const useSignUpForm = () => {
 
   const verificationButtonHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (SKIP_PHONE_VERIFICATION) {
+      return;
+    }
 
     const username = getValues('username');
     const phoneNumber = getValues('phoneNumber');

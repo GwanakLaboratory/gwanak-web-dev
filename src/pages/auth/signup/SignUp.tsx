@@ -1,6 +1,5 @@
 import Checkbox from '../../../components/common/Checkbox';
-import Text from '../../../components/common/Text';
-import DescriptionBox from '../../../components/feature/DescriptionBox';
+import { Link } from 'react-router-dom';
 import useSignUpForm from '../../../hooks/form/useSignup';
 import { S } from './style';
 
@@ -16,80 +15,80 @@ const SignUpPage = () => {
     signupButtonFlag,
     validateButtonFlag,
   } = useSignUpForm();
+  const canSubmit = userValid && signupButtonFlag;
   return (
-    <>
-      <DescriptionBox title="회원가입" />
-      <S.SignupContainer onSubmit={handleSubmit(onSubmitHandler)}>
+    <S.AuthCard>
+      <S.AuthPageTitle>회원가입</S.AuthPageTitle>
+      <S.AuthSubtitle>
+        관악연구소 서비스 이용을 위해 정보를 입력해 주세요.
+      </S.AuthSubtitle>
+      <S.SignupForm onSubmit={handleSubmit(onSubmitHandler)}>
         <S.InputContainer>
-          <Text typograph="lg_bold" color="Black">
-            이메일
-          </Text>
+          <S.Label>이메일</S.Label>
           <S.SignUpInput
             {...register('email')}
             type="email"
             placeholder="이메일 주소를 입력해주세요"
           />
-          {errors.email && <p>{errors.email.message}</p>}
+          {errors.email && <S.FieldError>{errors.email.message}</S.FieldError>}
         </S.InputContainer>
         <S.InputContainer>
-          <Text typograph="lg_bold" color="Black">
-            비밀번호
-          </Text>
+          <S.Label>비밀번호</S.Label>
           <S.SignUpInput
             {...register('password')}
             type="password"
             placeholder="영문/숫자/특수문자가 포함된 8자리 이상"
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && (
+            <S.FieldError>{errors.password.message}</S.FieldError>
+          )}
         </S.InputContainer>
         <S.InputContainer>
-          <Text typograph="lg_bold" color="Black">
-            비밀번호 확인
-          </Text>
+          <S.Label>비밀번호 확인</S.Label>
           <S.SignUpInput
             {...register('passwordConfirm')}
             type="password"
             placeholder="다시 한 번 입력해주세요"
           />
-          {errors.passwordConfirm && <p>{errors.passwordConfirm.message}</p>}
+          {errors.passwordConfirm && (
+            <S.FieldError>{errors.passwordConfirm.message}</S.FieldError>
+          )}
         </S.InputContainer>
         <S.InputContainer>
-          <Text typograph="lg_bold" color="Black">
-            이름
-          </Text>
+          <S.Label>이름</S.Label>
           <S.SignUpInput
             {...register('username')}
             type="text"
             placeholder="예) 홍길동"
           />
-          {errors.username && <p>{errors.username.message}</p>}
+          {errors.username && (
+            <S.FieldError>{errors.username.message}</S.FieldError>
+          )}
         </S.InputContainer>
         <S.InputContainer>
-          <Text typograph="lg_bold" color="Black">
-            생일
-          </Text>
+          <S.Label>생일</S.Label>
           <S.SignUpInput
             {...register('birthday')}
             type="text"
             placeholder="예) 20010529"
           />
-          {errors.birthday && <p>{errors.birthday.message}</p>}
+          {errors.birthday && (
+            <S.FieldError>{errors.birthday.message}</S.FieldError>
+          )}
         </S.InputContainer>
         <S.InputContainer>
-          <Text typograph="lg_bold" color="Black">
-            닉네임
-          </Text>
+          <S.Label>닉네임</S.Label>
           <S.SignUpInput
             {...register('nickname')}
             type="text"
             placeholder="최대 8글자"
           />
-          {errors.nickname && <p>{errors.nickname.message}</p>}
+          {errors.nickname && (
+            <S.FieldError>{errors.nickname.message}</S.FieldError>
+          )}
         </S.InputContainer>
         <S.InputContainer>
-          <Text typograph="lg_bold" color="Black">
-            휴대폰번호
-          </Text>
+          <S.Label>휴대폰번호</S.Label>
           <S.InputWrapper>
             <S.horizontalInput
               {...register('phoneNumber', {
@@ -103,9 +102,10 @@ const SignUpPage = () => {
               placeholder="숫자만 입력해주세요."
             />
             <S.horizontalButton
+              type="button"
               onClick={verificationButtonHandler}
               disabled={userValid || !validateButtonFlag}
-              flag={validateButtonFlag && !userValid}
+              $active={validateButtonFlag && !userValid}
             >
               {certId ? '인증완료' : '인증'}
             </S.horizontalButton>
@@ -123,17 +123,25 @@ const SignUpPage = () => {
           value="1"
           label="이용약관 및 개인정보수집방침에 동의합니다."
           {...register('agreement', { required: true })}
-          style={{ textDecoration: 'underline' }}
+          labelStyle={{
+            fontSize: '14px',
+            color: '#5c6178',
+            lineHeight: '1.45',
+            textDecoration: 'underline',
+          }}
         />
-        <S.LoginButton
+        <S.SubmitButton
           type="submit"
-          flag={userValid && signupButtonFlag}
-          disabled={!userValid || !signupButtonFlag}
+          disabled={!canSubmit}
+          $active={canSubmit}
         >
           가입하기
-        </S.LoginButton>
-      </S.SignupContainer>
-    </>
+        </S.SubmitButton>
+        <S.FooterLink>
+          이미 계정이 있으신가요? <Link to="/login">로그인</Link>
+        </S.FooterLink>
+      </S.SignupForm>
+    </S.AuthCard>
   );
 };
 export default SignUpPage;

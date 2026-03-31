@@ -1,78 +1,148 @@
 import styled from '@emotion/styled';
-import Input from '../../../components/common/Input';
+import { AuthCard, AuthPageTitle, AuthSubtitle } from '../authSharedStyle';
 
 export const S = {
-  SignupContainer: styled.form`
+  AuthCard,
+  AuthPageTitle,
+  AuthSubtitle,
+  SignupForm: styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    gap: 30px;
-    margin: 50px 0px;
+    gap: 0;
   `,
   InputContainer: styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
-    width: 35%;
-    min-width: 350px;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 18px;
+  `,
+  Label: styled.span`
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1d2b;
+  `,
+  FieldError: styled.p`
+    font-size: 12px;
+    color: #d92d20;
+    margin: 0;
+    word-wrap: break-word;
+  `,
+  SignUpInput: styled.input`
+    border-radius: 10px;
+    border: 1px solid rgba(41, 86, 224, 0.08);
+    padding: 12px 14px;
+    font-size: 15px;
+    font-weight: 400;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fafbfe;
+    color: #1a1d2b;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+
+    &::placeholder {
+      color: #9196ab;
+    }
+
+    &:focus {
+      border-color: rgba(41, 86, 224, 0.45);
+      box-shadow: 0 0 0 3px rgba(41, 86, 224, 0.06);
+    }
   `,
   InputWrapper: styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
   `,
-  InputErrorStyle: styled.p`
-    font-size: 12px;
-    color: #ff0000;
-    word-wrap: break-word;
-  `,
-
-  SignUpInput: styled(Input)`
-    border-radius: 5px;
-    border: 1px solid #eaeaea;
-    padding: 10px;
-    font-size: 1.4rem;
-    width: 100%;
-    outline: none;
-  `,
-
   horizontalInput: styled.input`
-    border-radius: 5px 0px 0px 5px;
-    border: 1px solid #eaeaea;
-    padding: 10px 10px;
-    font-size: 14px;
+    border-radius: 10px 0 0 10px;
+    border: 1px solid rgba(41, 86, 224, 0.08);
+    border-right: none;
+    padding: 12px 14px;
+    font-size: 15px;
     vertical-align: middle;
     width: 100%;
     outline: none;
-  `,
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fafbfe;
+    color: #1a1d2b;
 
-  horizontalButton: styled.button<{ flag: boolean }>`
-    font-size: 14px;
-    width: 140px;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 0px 5px 5px 0px;
-    background: ${(props) => (props.flag ? '#474747' : '#eaeaea')};
-    transform: translateX(-1px);
-    color: ${(props) => (props.flag ? '#fff' : '#ccc')};
-    cursor: pointer;
+    &:focus {
+      border-color: rgba(41, 86, 224, 0.45);
+      z-index: 1;
+    }
   `,
-  LoginButton: styled.button<{ flag: boolean }>`
+  horizontalButton: styled.button<{ $active: boolean }>`
+    font-size: 13px;
+    font-weight: 600;
+    width: 120px;
+    flex-shrink: 0;
+    border: 1px solid rgba(41, 86, 224, 0.08);
+    border-radius: 0 10px 10px 0;
+    padding: 0 12px;
+    background: ${(p) => (p.$active ? '#2956e0' : 'rgba(41, 86, 224, 0.08)')};
+    color: ${(p) => (p.$active ? '#fff' : '#9196ab')};
+    cursor: ${(p) => (p.$active ? 'pointer' : 'not-allowed')};
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background 0.2s, color 0.2s;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    &:hover:not(:disabled) {
+      background: ${(p) => (p.$active ? '#1d3fab' : 'rgba(41, 86, 224, 0.12)')};
+    }
+  `,
+  InputErrorStyle: styled.p`
+    font-size: 12px;
+    color: #d92d20;
+    word-wrap: break-word;
+    margin: 4px 0 0;
+  `,
+  SubmitButton: styled.button<{ $active: boolean }>`
     width: 100%;
-    max-width: 800px;
-    background-color: ${(props) => (props.flag ? '#474747' : '#f2f2f2')};
-    color: ${(props) => (props.flag ? '#ffffff' : '#aaaaaa')};
-    font-size: 2.5rem;
-    text-align: center;
-    padding: 20px 0px;
+    margin-top: 8px;
+    padding: 16px 20px;
+    border-radius: 10px;
     border: none;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+    cursor: ${(p) => (p.$active ? 'pointer' : 'not-allowed')};
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    background: ${(p) => (p.$active ? '#2956e0' : 'rgba(41, 86, 224, 0.12)')};
+    color: ${(p) => (p.$active ? '#fff' : '#9196ab')};
+    box-shadow: ${(p) =>
+      p.$active ? '0 4px 16px rgba(41, 86, 224, 0.25)' : 'none'};
 
-    cursor: pointer;
+    &:hover {
+      background: ${(p) => (p.$active ? '#1d3fab' : 'rgba(41, 86, 224, 0.12)')};
+    }
+  `,
+  FooterLink: styled.p`
+    text-align: center;
+    margin: 20px 0 0;
+    font-size: 14px;
+    color: #5c6178;
+
+    a {
+      color: #2956e0;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   `,
 };
