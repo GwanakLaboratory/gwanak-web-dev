@@ -1,9 +1,8 @@
 type HeroSectionProps = {
-  onStart: () => void;
   onContact: () => void;
 };
 
-const HeroSection = ({ onStart, onContact }: HeroSectionProps) => {
+const HeroSection = ({ onContact }: HeroSectionProps) => {
   return (
     <section className="hero">
       <div className="hero-tag">
@@ -21,11 +20,8 @@ const HeroSection = ({ onStart, onContact }: HeroSectionProps) => {
         기준을 구조화하여 금융 전반의 의사결정 인프라를 만듭니다.
       </p>
       <div className="hero-actions">
-        <button className="btn-primary" onClick={onStart}>
-          GLAB 체험하기
-        </button>
         <button className="btn-outline" onClick={onContact}>
-          기업 도입 문의 →
+          문의하기
         </button>
       </div>
       <div className="metrics">

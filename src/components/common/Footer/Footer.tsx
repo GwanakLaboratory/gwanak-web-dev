@@ -1,12 +1,12 @@
 import { S } from './style';
-import LogoGreySVG from '../../../lib/assets/images/logo_grey.svg';
+import LogoPNG from '../../../lib/assets/images/logo_transparent.png';
 
 const Footer = () => {
   return (
     <S.FooterContainer className="layout-padding">
       <S.FooterHeaderRow>
         <S.LogoContainer>
-          <img src={LogoGreySVG} alt="logo" style={{ width: '100%' }} />
+          <img src={LogoPNG} alt="logo" style={{ width: '100%' }} />
         </S.LogoContainer>
       </S.FooterHeaderRow>
       <S.FooterDescriptionWrapper>
@@ -22,7 +22,7 @@ const Footer = () => {
         </S.DefaultStyle>
         <S.DefaultStyle>
           <S.CellSpanStyle>문의</S.CellSpanStyle>
-          |&nbsp;&nbsp;gwanaklab@gmail.com
+          |&nbsp;&nbsp;support@gwanaklab.co.kr
         </S.DefaultStyle>
         <S.DefaultStyle>
           <S.CellSpanStyle>연락처</S.CellSpanStyle>|&nbsp;&nbsp;070-4101-6132

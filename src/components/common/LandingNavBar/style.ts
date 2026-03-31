@@ -25,10 +25,11 @@ export const NavShell = styled.div`
     left: 0;
     right: 0;
     z-index: 100;
-    padding: 16px 48px;
-    display: flex;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: 24px;
     align-items: center;
-    justify-content: space-between;
     background: rgba(250, 251, 254, 0.96);
     border-bottom: 1px solid var(--border);
     transition: all 0.3s;
@@ -57,12 +58,18 @@ export const NavShell = styled.div`
     letter-spacing: 0.04em;
   }
 
+  .nav-logo img {
+    height: 60px;
+    width: auto;
+    display: block;
+  }
+
   .nav-links {
     display: flex;
     gap: 35px;
     align-items: center;
-    flex: 1;
     justify-content: center;
+    width: 100%;
     min-width: 0;
   }
 
@@ -167,19 +174,87 @@ export const NavShell = styled.div`
     background: rgba(41, 86, 224, 0.12);
   }
 
+  @media (max-width: 1180px) and (min-width: 901px) {
+    nav {
+      padding: 14px 20px;
+      padding-left: max(20px, env(safe-area-inset-left, 0px));
+      padding-right: max(20px, env(safe-area-inset-right, 0px));
+      column-gap: 14px;
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      gap: 4px;
+    }
+
+    .nav-logo span {
+      font-size: 9px;
+      padding: 2px 5px;
+    }
+
+    .nav-logo img {
+      height: 30px;
+    }
+
+    .nav-links {
+      gap: 18px;
+      justify-content: flex-start;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 2px 6px;
+      mask-image: linear-gradient(
+        90deg,
+        transparent,
+        #000 12px,
+        #000 calc(100% - 12px),
+        transparent
+      );
+    }
+
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-links a {
+      flex-shrink: 0;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    .nav-actions {
+      gap: 6px;
+    }
+
+    .nav-cta {
+      padding: 8px 14px;
+      font-size: 11px;
+    }
+
+    .nav-auth-btn {
+      padding: 0 10px;
+      min-height: 32px;
+      font-size: 11px;
+    }
+  }
+
   @media (max-width: 900px) {
     nav {
       padding: 12px 14px;
       padding-left: max(14px, env(safe-area-inset-left, 0px));
       padding-right: max(14px, env(safe-area-inset-right, 0px));
       padding-top: max(12px, env(safe-area-inset-top, 0px));
-      gap: 10px;
-      flex-wrap: nowrap;
+      column-gap: 10px;
     }
 
     .nav-logo {
       font-size: 17px;
       flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 26px;
     }
 
     .nav-links {

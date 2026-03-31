@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
-import MainPNG from '../../../lib/assets/images/bg_blue_gradient.png';
+import MainPNG from '../../../lib/assets/images/bg_blue_gradient.webp';
 
 const fadeUp = keyframes`
   from { opacity: 0; transform: translateY(20px); }

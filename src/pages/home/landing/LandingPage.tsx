@@ -51,6 +51,7 @@ function resolveActiveSection(
 const LandingPage = () => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [activeSection, setActiveSection] = useState<NavScrollId>('intro');
+  const contactEmail = 'support@gwanaklab.com';
 
   const getNavOffset = useCallback(() => {
     const nav = wrapperRef.current?.querySelector('nav');
@@ -120,6 +121,25 @@ const LandingPage = () => {
   const navLinkClass = (id: NavScrollId) =>
     activeSection === id ? 'active' : undefined;
 
+  const copyEmailToClipboard = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+      window.alert(`이메일 주소가 복사되었습니다: ${contactEmail}`);
+      return;
+    } catch {
+      const temp = document.createElement('textarea');
+      temp.value = contactEmail;
+      temp.setAttribute('readonly', '');
+      temp.style.position = 'absolute';
+      temp.style.left = '-9999px';
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      window.alert(`이메일 주소가 복사되었습니다: ${contactEmail}`);
+    }
+  }, [contactEmail]);
+
   return (
     <S.LandingWrapper ref={wrapperRef}>
       <LandingNavBar
@@ -132,17 +152,14 @@ const LandingPage = () => {
 
       <div id="intro" className="landing-intro">
         <LegacyHeroSection />
-        <HeroSection
-          onStart={() => scrollTo('service')}
-          onContact={() => scrollTo('contact')}
-        />
+        <HeroSection onContact={copyEmailToClipboard} />
       </div>
       <AboutSection />
       <ServiceSection />
       <ProjectsSection />
       <AchievementsSection />
       <TeamSection />
-      <ContactSection />
+      <ContactSection onContact={copyEmailToClipboard} />
       <LandingFooter />
     </S.LandingWrapper>
   );

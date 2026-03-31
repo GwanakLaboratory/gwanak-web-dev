@@ -9,6 +9,7 @@ import {
   type NavScrollId,
 } from '../../../pages/home/landing/landingNavConstants';
 import { NavShell } from './style';
+import LogoPNG from '../../../lib/assets/images/logo_transparent.png';
 
 type LandingNavBarProps =
   | {
@@ -40,7 +41,7 @@ const LandingNavBar = (props: LandingNavBarProps) => {
       <nav>
         {isAuth ? (
           <Link className="nav-logo" to="/">
-            관악연구소 <span>GWANAK LAB</span>
+            <img src={LogoPNG} alt="GWANAK LAB logo" />
           </Link>
         ) : (
           <a
@@ -51,7 +52,7 @@ const LandingNavBar = (props: LandingNavBarProps) => {
               props.wrapperRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
-            관악연구소 <span>GWANAK LAB</span>
+            <img src={LogoPNG} alt="GWANAK LAB logo" />
           </a>
         )}
 

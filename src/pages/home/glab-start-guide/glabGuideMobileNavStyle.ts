@@ -94,6 +94,8 @@ export const S = {
       color: #2956e0;
       letter-spacing: -0.02em;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
     }
 
     span {
@@ -107,6 +109,12 @@ export const S = {
       font-weight: 600;
       letter-spacing: 0.04em;
       vertical-align: middle;
+    }
+
+    a img {
+      height: 22px;
+      width: auto;
+      display: block;
     }
   `,
 

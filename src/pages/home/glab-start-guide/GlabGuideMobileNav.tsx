@@ -6,6 +6,7 @@ import { useSignOutMutation } from '../../../apis';
 import { accessTokenAtom } from '../../../store/auth';
 import { NAV_SCROLL_IDS, SECTION_LABELS } from '../landing/landingNavConstants';
 import { S } from './glabGuideMobileNavStyle';
+import LogoPNG from '../../../lib/assets/images/logo_transparent.png';
 
 const GlabGuideMobileNav = () => {
   const [open, setOpen] = useState(false);
@@ -52,7 +53,7 @@ const GlabGuideMobileNav = () => {
           >
             <S.PanelHeader>
               <Link to="/" onClick={close}>
-                관악연구소 <span>GWANAK LAB</span>
+                <img src={LogoPNG} alt="GWANAK LAB logo" />
               </Link>
               <S.CloseBtn type="button" aria-label="메뉴 닫기" onClick={close}>
                 ×
