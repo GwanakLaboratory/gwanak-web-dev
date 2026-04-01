@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
@@ -7,18 +7,35 @@ type Bubble =
   | { role: 'user'; text: string }
   | { role: 'ai'; text: string; streaming: boolean };
 
+function nearestScrollRoot(el: HTMLElement | null): Element | null {
+  let p: HTMLElement | null = el?.parentElement ?? null;
+  while (p) {
+    const { overflowY } = getComputedStyle(p);
+    if (overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') {
+      return p;
+    }
+    p = p.parentElement;
+  }
+  return null;
+}
+
 const GlabChatDemo = () => {
-  const { t } = useTranslation();
-  const script = [
-    {
-      user: t('landing.chat.turn1.user'),
-      ai: t('landing.chat.turn1.ai'),
-    },
-    {
-      user: t('landing.chat.turn2.user'),
-      ai: t('landing.chat.turn2.ai'),
-    },
-  ] as const;
+  const { t, i18n } = useTranslation();
+  const script = useMemo(
+    () =>
+      [
+        {
+          user: t('landing.chat.turn1.user'),
+          ai: t('landing.chat.turn1.ai'),
+        },
+        {
+          user: t('landing.chat.turn2.user'),
+          ai: t('landing.chat.turn2.ai'),
+        },
+      ] as const,
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- t identity changes every render; language drives copy
+    [i18n.language],
+  );
 
   const rootRef = useRef<HTMLDivElement>(null);
   const msgsRef = useRef<HTMLDivElement>(null);
@@ -40,13 +57,14 @@ const GlabChatDemo = () => {
     const el = rootRef.current;
     if (!el) return;
 
-    const obs = new IntersectionObserver(
-      ([e]) => setVisible(e.isIntersecting),
-      { threshold: 0.25 },
-    );
+    const scrollRoot = nearestScrollRoot(el);
+    const obs = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), {
+      root: scrollRoot,
+      threshold: 0,
+    });
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [reducedMotion]);
 
   useLayoutEffect(() => {
     const el = msgsRef.current;
@@ -123,14 +141,14 @@ const GlabChatDemo = () => {
 
   if (reducedMotion) {
     return (
-      <div className="chat-msgs" ref={rootRef}>
-        {script.flatMap((t, i) => [
+      <div className="chat-msgs glab-chat-msgs" ref={rootRef}>
+        {script.flatMap((turn, i) => [
           <div key={`u-${i}`} className="chat-msg user">
-            {t.user}
+            {turn.user}
           </div>,
           <div key={`a-${i}`} className="chat-msg ai">
             <span className="label">GLAB</span>
-            {t.ai}
+            {turn.ai}
           </div>,
         ])}
       </div>

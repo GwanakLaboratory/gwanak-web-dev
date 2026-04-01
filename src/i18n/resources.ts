@@ -9,8 +9,8 @@ export const resources = {
       },
       landing: {
         legacyHero: {
-          title: '대담, 하지만 안정적인',
-          subtitle: '새로운 경험의 금융투자 서비스',
+          title: '예측을 넘어, 의사결정까지',
+          subtitle: '상태 기반 AI 의사결정 엔진',
         },
         nav: {
           start: '시작하기',
@@ -18,13 +18,12 @@ export const resources = {
           loginSignup: '로그인 · 회원가입',
           logout: '로그아웃',
           sections: {
-            intro: '홈',
-            about: '소개',
-            service: 'GLAB 서비스',
-            projects: '프로젝트',
-            achievements: '성과',
-            team: '팀',
-            contact: '문의',
+            intro: 'Home',
+            about: 'About',
+            projects: 'Projects',
+            achievements: 'Achievements',
+            team: 'Team',
+            contact: 'Contact',
           },
         },
         hero: {
@@ -40,20 +39,26 @@ export const resources = {
           metric3Value: 'RA 심사 통과',
           metric3Label: '로보어드바이저 운용심사',
           metric4Label: '금융기관 실증 진행중',
-          contact: '기업도입상담 문의하기',
+          contact: '문의하기',
         },
         contact: {
           title: '합리적인 의사결정,\n지금 시작하세요.',
           description:
             '개인 투자자는 GLAB으로, 기업은 맞춤 상담으로 시작할 수 있습니다.',
-          cta: '기업도입상담 문의하기',
+          cta: '문의하기',
+          modalTitle: '문의하기',
+          modalBody: '아래 이메일로 연락 주시면 빠르게 답변드리겠습니다.',
+          modalCopy: '주소 복사',
+          modalMail: '메일 작성',
+          modalClose: '닫기',
+          modalCopied: '클립보드에 복사했습니다.',
         },
         about: {
           label: 'About',
-          title: '합리적인 의사결정은\n지금의 상태를 이해하는 것에서 시작됩니다',
+          title: '합리적인 의사결정은\n데이터의 맥락을 이해하는 것에서 시작됩니다',
           problemTitle: '우리가 해결하는 문제',
           problemDesc:
-            '금융 산업 전반에 데이터와 AI가 넘쳐나지만, 의사결정 자동화율은 여전히 약 5%에 불과합니다. 같은 10% 수익률이어도 상승장 초입과 하락장 반등은 완전히 다른 상황이지만, 기존 AI는 숫자를 예측할 뿐 맥락을 이해하지 못합니다.',
+            '금융 산업 전반에 데이터와 AI가 넘쳐나지만, 의사결정 자동화율은 여전히 약 5%에 불과합니다.',
           approachTitle: '우리의 접근',
           approachDesc:
             '관악연구소는 서울대·서울시립대 통계학과 연구실과 공동연구를 수행하며, 투자 · 카드 · 보험 등 금융 도메인 전반에 적용 가능한 State 기반 AI 의사결정 엔진을 개발합니다. 하나의 엔진으로 영역을 넘나드는 의사결정 인프라를 구축하고 있습니다.',
@@ -68,7 +73,7 @@ export const resources = {
             '예측 결과에 리스크 요소를 반영한 명시적 판단 기준을 적용하여 최종 의사결정을 도출합니다.',
         },
         service: {
-          label: 'GLAB 서비스',
+          label: '엔진 · 서비스',
           title: '하나의 엔진, 두 개의 시장',
           desc: '투자 영역에서 검증된 기술을 리테일 투자자(GLAB)와 기관 고객(GLOV) 양쪽에 제공합니다.',
           card1Title: 'GLAB — 1:1 AI 디지털 PB',
@@ -79,8 +84,6 @@ export const resources = {
           card1Tag3: '가상자산 (예정)',
           card1Tag4: '개인화 코칭',
           card1Tag5: '투자교육',
-          card1Footnote:
-            '2026년 2분기 MVP 출시 · 구독 Basic 50,000원/연, Premium 100,000원/연',
           demoTitle: 'GLAB 대화 예시',
           card2Title: '포트폴리오 엔진',
           card2Desc:
@@ -339,8 +342,8 @@ export const resources = {
       },
       landing: {
         legacyHero: {
-          title: 'Bold, yet stable',
-          subtitle: 'A new financial investment experience',
+          title: 'Beyond prediction, to decisions',
+          subtitle: 'State-based AI decision engine',
         },
         nav: {
           start: 'Get Started',
@@ -350,7 +353,6 @@ export const resources = {
           sections: {
             intro: 'Home',
             about: 'About',
-            service: 'GLAB Service',
             projects: 'Projects',
             achievements: 'Achievements',
             team: 'Team',
@@ -370,20 +372,26 @@ export const resources = {
           metric3Value: 'RA Review Passed',
           metric3Label: 'Robo-advisor operation review',
           metric4Label: 'Ongoing validation with financial institutions',
-          contact: 'Enterprise Consultation',
+          contact: 'Contact us',
         },
         contact: {
           title: 'Make better decisions,\nstarting today.',
           description:
             'Individual investors can start with GLAB, while companies can request tailored consultation.',
-          cta: 'Enterprise Consultation',
+          cta: 'Contact us',
+          modalTitle: 'Contact us',
+          modalBody: 'Reach us at the email below — we will respond as soon as we can.',
+          modalCopy: 'Copy address',
+          modalMail: 'Open mail app',
+          modalClose: 'Close',
+          modalCopied: 'Copied to clipboard.',
         },
         about: {
           label: 'About',
-          title: 'Rational decisions begin\nwith understanding the current state',
+          title: 'Rational decisions begin\nwith understanding the context in data',
           problemTitle: 'The problem we solve',
           problemDesc:
-            'Data and AI are everywhere in finance, but decision automation remains around 5%. Even with the same 10% return, an early bull cycle and a rebound in a bear cycle are fundamentally different contexts.',
+            'Data and AI are everywhere in finance, but decision automation remains around 5%.',
           approachTitle: 'Our approach',
           approachDesc:
             'Gwanak Lab collaborates with statistics labs at SNU and UOS to build a State-based AI decision engine applicable across investment, card, and insurance domains.',
@@ -398,7 +406,7 @@ export const resources = {
             'Applies explicit criteria with risk factors to prediction outputs and derives final decisions.',
         },
         service: {
-          label: 'GLAB Service',
+          label: 'Engine · Services',
           title: 'One engine, two markets',
           desc: 'We provide battle-tested investment technology to both retail investors (GLAB) and institutional clients (GLOV).',
           card1Title: 'GLAB — 1:1 AI Digital PB',
@@ -409,8 +417,6 @@ export const resources = {
           card1Tag3: 'Crypto assets (planned)',
           card1Tag4: 'Personalized coaching',
           card1Tag5: 'Investment education',
-          card1Footnote:
-            'MVP launch in Q2 2026 · Subscription: Basic KRW 50,000/year, Premium KRW 100,000/year',
           demoTitle: 'GLAB conversation example',
           card2Title: 'Portfolio Engine',
           card2Desc:

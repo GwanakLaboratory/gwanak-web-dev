@@ -87,26 +87,25 @@ const LandingNavBar = (props: LandingNavBarProps) => {
           >
             {i18n.language === 'ko' ? 'EN' : 'KO'}
           </button>
-          {!isAuth && (
-            <Link className="nav-cta" to="/glab-start">
-              {t('landing.nav.start')}
-            </Link>
-          )}
-          <Link className="nav-auth-btn nav-auth-soft" to="/auth/portfolios">
-            {t('landing.nav.portfolio')}
-          </Link>
-          {accessToken !== null && accessToken !== '' ? (
-            <button
-              type="button"
-              className="nav-auth-btn nav-auth-outline"
-              onClick={handleLogout}
-            >
-              {t('landing.nav.logout')}
-            </button>
-          ) : (
-            <Link className="nav-auth-btn nav-auth-outline" to="/login">
-              {t('landing.nav.loginSignup')}
-            </Link>
+          {isAuth && (
+            <>
+              <Link className="nav-auth-btn nav-auth-soft" to="/auth/portfolios">
+                {t('landing.nav.portfolio')}
+              </Link>
+              {accessToken !== null && accessToken !== '' ? (
+                <button
+                  type="button"
+                  className="nav-auth-btn nav-auth-outline"
+                  onClick={handleLogout}
+                >
+                  {t('landing.nav.logout')}
+                </button>
+              ) : (
+                <Link className="nav-auth-btn nav-auth-outline" to="/login">
+                  {t('landing.nav.loginSignup')}
+                </Link>
+              )}
+            </>
           )}
         </div>
       </nav>

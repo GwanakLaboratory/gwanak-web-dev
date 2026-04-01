@@ -558,12 +558,17 @@ export const S = {
       box-shadow: 0 8px 30px rgba(41, 86, 224, 0.06);
     }
 
+    .projects-engine-block {
+      margin-top: 64px;
+      padding-top: 8px;
+    }
+
     .service-card.wide {
       grid-column: 1 / -1;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 40px;
-      align-items: center;
+      align-items: flex-start;
       background: linear-gradient(
         135deg,
         var(--bg-card) 0%,
@@ -695,9 +700,11 @@ export const S = {
     }
 
     .glab-chat-msgs {
-      min-height: 200px;
-      max-height: 280px;
+      height: 300px;
+      min-height: 300px;
+      max-height: 300px;
       overflow-y: auto;
+      flex-shrink: 0;
     }
 
     .glab-msg-enter {
@@ -847,6 +854,8 @@ export const S = {
     }
 
     .project-card {
+      display: flex;
+      flex-direction: column;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -884,6 +893,9 @@ export const S = {
     }
 
     .project-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       padding: 24px;
     }
 
@@ -913,8 +925,9 @@ export const S = {
 
     .project-meta {
       display: flex;
+      flex-wrap: wrap;
       gap: 12px;
-      margin-top: 16px;
+      margin-top: auto;
       padding-top: 12px;
       border-top: 1px solid var(--border);
       font-size: 11px;

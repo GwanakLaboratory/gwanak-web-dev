@@ -79,6 +79,8 @@ export const NavShell = styled.div`
     font-weight: 500;
     color: var(--text-muted);
     transition: color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .nav-links a:hover {
@@ -272,24 +274,14 @@ export const NavShell = styled.div`
     .nav-links {
       flex: 1;
       min-width: 0;
-      gap: 0;
-      overflow: visible;
-      justify-content: center;
-      padding: 4px 2px 10px;
-      margin-bottom: -6px;
-    }
-
-    .nav-links a:not(.active) {
-      display: none;
-    }
-
-    &.landing-nav--auth .nav-links {
       gap: 0 10px;
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       justify-content: flex-start;
+      padding: 4px 2px 10px;
+      margin-bottom: -6px;
       mask-image: linear-gradient(
         90deg,
         transparent,
@@ -299,18 +291,15 @@ export const NavShell = styled.div`
       );
     }
 
-    &.landing-nav--auth .nav-links::-webkit-scrollbar {
+    .nav-links::-webkit-scrollbar {
       display: none;
-    }
-
-    &.landing-nav--auth .nav-links a:not(.active) {
-      display: inline-flex;
     }
 
     .nav-links a {
       flex-shrink: 0;
       font-size: 12px;
       white-space: nowrap;
+      display: inline-flex;
     }
 
     .nav-links a.active::after {
@@ -321,18 +310,10 @@ export const NavShell = styled.div`
       gap: 5px;
     }
 
-    .nav-cta {
-      display: none;
-    }
-
     .nav-auth-btn {
       padding: 0 8px;
       min-height: 30px;
       font-size: 11px;
-    }
-
-    &.landing-nav--auth .nav-cta {
-      display: none;
     }
   }
 `;
