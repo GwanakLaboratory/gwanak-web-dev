@@ -5,8 +5,10 @@ import { getPropensity } from '../../../utils/propensity';
 import { S } from './style';
 import Text from '../../../components/common/Text';
 import { useGetUserInfoQuery } from '../../../apis/account';
+import { useTranslation } from 'react-i18next';
 
 const PortfolioListPage = () => {
+  const { t } = useTranslation();
   const userInfoQuery = useGetUserInfoQuery();
   if (!userInfoQuery.isSuccess) {
     return null;
@@ -17,8 +19,8 @@ const PortfolioListPage = () => {
   return (
     <>
       <DescriptionBox
-        title="포트폴리오 내역"
-        subtitle={['포트폴리오', ' > 포트폴리오 내역']}
+        title={t('portfolio.listTitle')}
+        subtitle={[t('portfolio.listBreadcrumb')]}
       />
       <S.PortfolioContainer className="layout-padding">
         <S.PropensityContainer>
@@ -26,21 +28,26 @@ const PortfolioListPage = () => {
             {propensity ? (
               <>
                 <S.PropensityText style={{ color: '#646464', fontWeight: 400 }}>
-                  내 투자성향은
+                  {t('portfolio.myPropensityPrefix')}
                 </S.PropensityText>
-                <S.PropensityText>{propensity.name}입니다.</S.PropensityText>
+                <S.PropensityText>
+                  {propensity.name}
+                  {t('portfolio.myPropensitySuffix')}
+                </S.PropensityText>
               </>
             ) : (
               <S.PropensityText style={{ color: '#646464' }}>
-                투자성향을 파악하지 못했습니다.
+                {t('portfolio.propensityNotFound')}
               </S.PropensityText>
             )}
           </S.PropensityTextWrapper>
           <Link to="/auth/analysis">
             <S.AnalysisButton>
               <Text color="White" typograph="md_bold">
-                {userInfoQuery.data.detail.propensity === null ? '' : '재'}분석
-                하기
+                {userInfoQuery.data.detail.propensity === null
+                  ? ''
+                  : t('portfolio.reanalysisPrefix')}
+                {t('portfolio.analysis')}
               </Text>
             </S.AnalysisButton>
           </Link>

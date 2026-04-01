@@ -1,25 +1,42 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
-
-const SCRIPT = [
-  {
-    user: '요즘 시장이 불안한데, 추가 매수해도 돼?',
-    ai:
-      '지금은 달려들 때가 아닙니다. 변동성 확대 국면이라 현금을 챙기며 관망할 때입니다.',
-  },
-  {
-    user: '현대차 -20% 물렸어. 물타기 해도 될까?',
-    ai:
-      '이미 많이 오른 뒤 꺾인 상태입니다. 단순 저점이 아니니 물타기를 자제하고, 추가 하락 여부를 먼저 확인하세요.',
-  },
-] as const;
 
 type Bubble =
   | { role: 'user'; text: string }
   | { role: 'ai'; text: string; streaming: boolean };
 
+function nearestScrollRoot(el: HTMLElement | null): Element | null {
+  let p: HTMLElement | null = el?.parentElement ?? null;
+  while (p) {
+    const { overflowY } = getComputedStyle(p);
+    if (overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') {
+      return p;
+    }
+    p = p.parentElement;
+  }
+  return null;
+}
+
 const GlabChatDemo = () => {
+  const { t, i18n } = useTranslation();
+  const script = useMemo(
+    () =>
+      [
+        {
+          user: t('landing.chat.turn1.user'),
+          ai: t('landing.chat.turn1.ai'),
+        },
+        {
+          user: t('landing.chat.turn2.user'),
+          ai: t('landing.chat.turn2.ai'),
+        },
+      ] as const,
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- t identity changes every render; language drives copy
+    [i18n.language],
+  );
+
   const rootRef = useRef<HTMLDivElement>(null);
   const msgsRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -40,13 +57,14 @@ const GlabChatDemo = () => {
     const el = rootRef.current;
     if (!el) return;
 
-    const obs = new IntersectionObserver(
-      ([e]) => setVisible(e.isIntersecting),
-      { threshold: 0.25 },
-    );
+    const scrollRoot = nearestScrollRoot(el);
+    const obs = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), {
+      root: scrollRoot,
+      threshold: 0,
+    });
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [reducedMotion]);
 
   useLayoutEffect(() => {
     const el = msgsRef.current;
@@ -65,7 +83,7 @@ const GlabChatDemo = () => {
         setComposerText('');
         setSending(false);
 
-        for (const turn of SCRIPT) {
+        for (const turn of script) {
           if (!alive) return;
 
           for (let i = 0; i <= turn.user.length && alive; i++) {
@@ -119,18 +137,18 @@ const GlabChatDemo = () => {
     return () => {
       alive = false;
     };
-  }, [visible, reducedMotion]);
+  }, [visible, reducedMotion, script]);
 
   if (reducedMotion) {
     return (
-      <div className="chat-msgs" ref={rootRef}>
-        {SCRIPT.flatMap((t, i) => [
+      <div className="chat-msgs glab-chat-msgs" ref={rootRef}>
+        {script.flatMap((turn, i) => [
           <div key={`u-${i}`} className="chat-msg user">
-            {t.user}
+            {turn.user}
           </div>,
           <div key={`a-${i}`} className="chat-msg ai">
             <span className="label">GLAB</span>
-            {t.ai}
+            {turn.ai}
           </div>,
         ])}
       </div>
@@ -174,7 +192,7 @@ const GlabChatDemo = () => {
           tabIndex={-1}
           aria-hidden
         >
-          전송
+          {t('landing.chat.send')}
         </button>
       </div>
     </div>

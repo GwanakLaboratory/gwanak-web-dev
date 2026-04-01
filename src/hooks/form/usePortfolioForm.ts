@@ -1,8 +1,10 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { PortfolioRequest, useCreatePortfolio } from '../../apis/portfolio';
+import { useTranslation } from 'react-i18next';
 
 const usePortfolioForm = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const createPortfolioMutation = useCreatePortfolio();
   const {
@@ -36,7 +38,7 @@ const usePortfolioForm = () => {
       ...register('propensity', { required: true }),
     },
     handleSubmit: handleSubmitWrapper(handleSubmit, () =>
-      alert('항목을 모두 채워주세요'),
+      alert(t('portfolio.fillAll')),
     ),
   };
 };

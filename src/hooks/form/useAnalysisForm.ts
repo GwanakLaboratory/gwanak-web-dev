@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export type AnalysisForm = {
   ageGroup: number; // 연령대 (1: 29세 이하, 2: 30세 ~ 39세, 3: 40세 ~ 49세, 4: 50세 ~ 59세, 5: 60세 이상)
@@ -17,6 +18,7 @@ export type AnalysisForm = {
 };
 
 const useAnalysisForm = () => {
+  const { t } = useTranslation();
   const {
     register,
     control,
@@ -55,7 +57,7 @@ const useAnalysisForm = () => {
       ([, value]) => value === undefined,
     );
     if (checkValues.find((item) => item === true)) {
-      alert('항목을 모두 채워주세요.');
+      alert(t('analysis.fillAll'));
       return;
     }
     navigate('result', { state: { ...data } });
@@ -63,7 +65,7 @@ const useAnalysisForm = () => {
 
   return {
     handleSubmit: handleSubmitWrapper(handleSubmit, () =>
-      alert('항목을 모두 채워주세요.'),
+      alert(t('analysis.fillAll')),
     ),
     control,
     ageGroup: {

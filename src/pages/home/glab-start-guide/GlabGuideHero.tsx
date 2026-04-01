@@ -1,11 +1,14 @@
 import { GLAB_GUIDE_HERO } from './glabGuideData';
 import { S } from './style';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   onScrollToGuide: () => void;
 };
 
 const GlabGuideHero = ({ onScrollToGuide }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <S.Hero>
       <S.HeroBadge>{GLAB_GUIDE_HERO.badge}</S.HeroBadge>
@@ -18,7 +21,7 @@ const GlabGuideHero = ({ onScrollToGuide }: Props) => {
       </S.HeroTitle>
       <S.HeroDesc>{GLAB_GUIDE_HERO.description}</S.HeroDesc>
       <S.HeroCta type="button" onClick={onScrollToGuide}>
-        시작 가이드 보기
+        {t('glabGuide.heroCta')}
         <svg
           viewBox="0 0 24 24"
           fill="none"

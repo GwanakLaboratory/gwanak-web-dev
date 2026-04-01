@@ -1,12 +1,15 @@
 import LandingFooter from '../landing/components/LandingFooter';
 import { GLAB_GUIDE_CTA, GLAB_GUIDE_FOOTER } from './glabGuideData';
 import { S } from './style';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   onAgain: () => void;
 };
 
 const GlabGuideCta = ({ onAgain }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <S.CtaPanel>
       <S.Cta>
@@ -19,10 +22,10 @@ const GlabGuideCta = ({ onAgain }: Props) => {
               e.preventDefault();
             }}
           >
-            앱 다운로드
+            {t('glabGuide.ctaDownload')}
           </S.CtaBtnPrimary>
           <S.CtaBtnSecondary type="button" onClick={onAgain}>
-            가이드 다시 보기
+            {t('glabGuide.ctaAgain')}
           </S.CtaBtnSecondary>
         </S.CtaButtons>
         <S.CtaDisclaimer>{GLAB_GUIDE_FOOTER}</S.CtaDisclaimer>

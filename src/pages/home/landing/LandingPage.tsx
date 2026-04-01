@@ -6,9 +6,8 @@ import AchievementsSection from './components/AchievementsSection';
 import ContactSection from './components/ContactSection';
 import HeroSection from './components/HeroSection';
 import LandingFooter from './components/LandingFooter';
-import LegacyHeroSection from './components/LegacyHeroSection';
 import ProjectsSection from './components/ProjectsSection';
-import ServiceSection from './components/ServiceSection';
+import LandingContactModal from './components/LandingContactModal';
 import TeamSection from './components/TeamSection';
 import {
   NAV_SCROLL_IDS,
@@ -51,6 +50,8 @@ function resolveActiveSection(
 const LandingPage = () => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [activeSection, setActiveSection] = useState<NavScrollId>('intro');
+  const [contactOpen, setContactOpen] = useState(false);
+  const contactEmail = 'support@gwanaklab.co.kr';
 
   const getNavOffset = useCallback(() => {
     const nav = wrapperRef.current?.querySelector('nav');
@@ -120,6 +121,26 @@ const LandingPage = () => {
   const navLinkClass = (id: NavScrollId) =>
     activeSection === id ? 'active' : undefined;
 
+  const copyEmailToClipboard = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+    } catch {
+      const temp = document.createElement('textarea');
+      temp.value = contactEmail;
+      temp.setAttribute('readonly', '');
+      temp.style.position = 'absolute';
+      temp.style.left = '-9999px';
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+    }
+  }, [contactEmail]);
+
+  const openContactModal = useCallback(() => {
+    setContactOpen(true);
+  }, []);
+
   return (
     <S.LandingWrapper ref={wrapperRef}>
       <LandingNavBar
@@ -131,19 +152,20 @@ const LandingPage = () => {
       />
 
       <div id="intro" className="landing-intro">
-        <LegacyHeroSection />
-        <HeroSection
-          onStart={() => scrollTo('service')}
-          onContact={() => scrollTo('contact')}
-        />
+        <HeroSection onContact={openContactModal} />
       </div>
       <AboutSection />
-      <ServiceSection />
       <ProjectsSection />
       <AchievementsSection />
       <TeamSection />
-      <ContactSection />
+      <ContactSection onContact={openContactModal} />
       <LandingFooter />
+      <LandingContactModal
+        isOpen={contactOpen}
+        email={contactEmail}
+        onClose={() => setContactOpen(false)}
+        onCopy={copyEmailToClipboard}
+      />
     </S.LandingWrapper>
   );
 };

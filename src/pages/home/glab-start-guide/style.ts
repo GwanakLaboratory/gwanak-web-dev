@@ -148,8 +148,8 @@ export const S = {
 
     @media (max-width: 900px) {
       height: auto;
-      justify-content: flex-start;
-      min-height: calc(100dvh - max(4px, env(safe-area-inset-top, 0px)));
+      justify-content: center;
+      min-height: auto;
       padding: 12px 16px;
       padding-top: max(8px, env(safe-area-inset-top, 0px));
       padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
@@ -525,6 +525,12 @@ export const S = {
       letter-spacing: 0.04em;
     }
 
+    .landing-footer .nav-logo img {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
+
     .footer-links {
       display: flex;
       gap: 24px;
@@ -573,10 +579,15 @@ export const S = {
     display: flex;
     gap: 16px;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
   `,
 
   CtaBtnPrimary: styled.a`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
     padding: 14px 24px;
     border-radius: 100px;
     font-size: 14px;
@@ -604,6 +615,10 @@ export const S = {
   `,
 
   CtaBtnSecondary: styled.button`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
     padding: 14px 24px;
     border-radius: 100px;
     font-size: 14px;
