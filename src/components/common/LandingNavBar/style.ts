@@ -174,6 +174,18 @@ export const NavShell = styled.div`
     background: rgba(41, 86, 224, 0.12);
   }
 
+  .nav-auth-btn.nav-lang-btn {
+    border-color: rgba(41, 86, 224, 0.18);
+    background: #fff;
+    color: var(--primary);
+    min-width: 48px;
+  }
+
+  .nav-auth-btn.nav-lang-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+  }
+
   @media (max-width: 1180px) and (min-width: 901px) {
     nav {
       padding: 14px 20px;

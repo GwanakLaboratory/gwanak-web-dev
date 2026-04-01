@@ -1,5 +1,6 @@
 import ModalPortal from './ModalPortal';
 import { S } from './style';
+import { useTranslation } from 'react-i18next';
 
 interface IModalProps {
   isOpen: boolean;
@@ -8,18 +9,19 @@ interface IModalProps {
 }
 
 const Modal = ({ isOpen, onLogout, onClose }: IModalProps) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   return (
     <ModalPortal>
       <S.ModalOuterStyle>
         <S.ModalInnerStyle>
-          <S.ModalBodyStyle>로그아웃 하시겠습니까?</S.ModalBodyStyle>
+          <S.ModalBodyStyle>{t('ui.logoutConfirm')}</S.ModalBodyStyle>
           <S.ModalButtonConatiner>
             <S.ModalButtonStyle style={{ color: 'red' }} onClick={onLogout}>
-              로그아웃
+              {t('ui.logout')}
             </S.ModalButtonStyle>
-            <S.ModalButtonStyle onClick={onClose}>취소</S.ModalButtonStyle>
+            <S.ModalButtonStyle onClick={onClose}>{t('ui.cancel')}</S.ModalButtonStyle>
           </S.ModalButtonConatiner>
         </S.ModalInnerStyle>
       </S.ModalOuterStyle>

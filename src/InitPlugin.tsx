@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRefreshTokenMutation } from './apis';
+import { useTranslation } from 'react-i18next';
 
 const InitPlugin = ({ children }: { children: React.ReactNode }) => {
   const [isReady, setIsReady] = useState(false);
   const refreshMutation = useRefreshTokenMutation();
+  const { t } = useTranslation();
 
   const hasRefreshed = useRef(false);
 
@@ -16,7 +18,7 @@ const InitPlugin = ({ children }: { children: React.ReactNode }) => {
     });
   }, []);
 
-  if (!isReady) return <p>loading...</p>;
+  if (!isReady) return <p>{t('app.loading')}</p>;
   return <>{children}</>;
 };
 

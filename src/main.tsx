@@ -5,6 +5,7 @@ import { Provider as JotaiProvider } from 'jotai';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { jotaiStore } from './store/auth.ts';
 import InitPlugin from './InitPlugin.tsx';
+import './i18n';
 
 const queryClient = new QueryClient();
 

@@ -6,8 +6,10 @@ import DescriptionBox from '../../../components/feature/DescriptionBox';
 import Text from '../../../components/common/Text';
 import Radio from '../../../components/common/Radio';
 import Checkbox from '../../../components/common/Checkbox';
+import { useTranslation } from 'react-i18next';
 
 const AnalysisMainPage = () => {
+  const { t } = useTranslation();
   const form = useAnalysisForm();
   const questions = useMemo(() => {
     const {
@@ -244,17 +246,17 @@ const AnalysisMainPage = () => {
   return (
     <>
       <DescriptionBox
-        title="금융성향분석"
-        subtitle={['포트폴리오', ' > 포트폴리오 만들기']}
+        title={t('analysis.title')}
+        subtitle={[t('analysis.breadcrumb')]}
       />
       <S.AnalysisPageForm
         className="layout-padding"
         onSubmit={form.handleSubmit}
       >
-        <S.FormTitleText>당신의 투자 성향을 알아보세요</S.FormTitleText>
+        <S.FormTitleText>{t('analysis.mainTitle')}</S.FormTitleText>
         <br></br>
         <Text color="Black" typograph="lg_bold">
-          관악연구소가 성향분석을 통해 꼭 맞는 투자 전략을 추천해드릴게요!
+          {t('analysis.mainDesc')}
         </Text>
         <S.FormContainer>
           {questions.map(
@@ -278,7 +280,7 @@ const AnalysisMainPage = () => {
               </S.QuestionBox>
             ),
           )}
-          <S.AnalysisButton type="submit">결과 확인하기</S.AnalysisButton>
+          <S.AnalysisButton type="submit">{t('analysis.submit')}</S.AnalysisButton>
         </S.FormContainer>
       </S.AnalysisPageForm>
       ;

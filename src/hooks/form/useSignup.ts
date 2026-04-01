@@ -11,11 +11,13 @@ import {
 } from '../../apis';
 import { accessTokenAtom } from '../../store/auth';
 import useCustomForm from '../useCustomForm';
+import { useTranslation } from 'react-i18next';
 
 /** 테스트용: 휴대폰 카카오 본인인증 생략. 배포 전 `false`로 되돌릴 것 */
 const SKIP_PHONE_VERIFICATION = true;
 
 const useSignUpForm = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const {
@@ -109,7 +111,10 @@ const useSignUpForm = () => {
               },
               onError: () => {
                 alert(
-                  '회원가입은 완료되었습니다. 로그인 페이지에서 다시 시도해 주세요.',
+                  t('auth.signup.signupDoneRetryLogin', {
+                    defaultValue:
+                      '회원가입은 완료되었습니다. 로그인 페이지에서 다시 시도해 주세요.',
+                  }),
                 );
                 navigate('/login', { replace: true });
               },
@@ -118,7 +123,11 @@ const useSignUpForm = () => {
         },
       });
     } else {
-      alert('본인 인증을 다시 진행해주세요');
+      alert(
+        t('auth.signup.reverify', {
+          defaultValue: '본인 인증을 다시 진행해주세요',
+        }),
+      );
     }
   };
 

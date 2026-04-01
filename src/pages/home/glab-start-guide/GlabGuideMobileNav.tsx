@@ -2,9 +2,10 @@ import { useCallback, useEffect, useId, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
 import { useSignOutMutation } from '../../../apis';
 import { accessTokenAtom } from '../../../store/auth';
-import { NAV_SCROLL_IDS, SECTION_LABELS } from '../landing/landingNavConstants';
+import { NAV_SCROLL_IDS } from '../landing/landingNavConstants';
 import { S } from './glabGuideMobileNavStyle';
 import LogoPNG from '../../../lib/assets/images/logo_transparent.png';
 
@@ -13,6 +14,7 @@ const GlabGuideMobileNav = () => {
   const menuId = useId();
   const accessToken = useAtomValue(accessTokenAtom);
   const logoutMutation = useSignOutMutation();
+  const { t, i18n } = useTranslation();
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -35,7 +37,7 @@ const GlabGuideMobileNav = () => {
   }, [open, close]);
 
   const handleLogout = () => {
-    if (window.confirm('로그아웃 하시겠습니까?')) {
+    if (window.confirm(t('ui.logoutConfirm'))) {
       logoutMutation.mutate();
       close();
     }
@@ -49,13 +51,13 @@ const GlabGuideMobileNav = () => {
             id={menuId}
             role="dialog"
             aria-modal="true"
-            aria-label="사이트 메뉴"
+            aria-label={t('ui.siteMenu')}
           >
             <S.PanelHeader>
               <Link to="/" onClick={close}>
                 <img src={LogoPNG} alt="GWANAK LAB logo" />
               </Link>
-              <S.CloseBtn type="button" aria-label="메뉴 닫기" onClick={close}>
+              <S.CloseBtn type="button" aria-label={t('ui.closeMenu')} onClick={close}>
                 ×
               </S.CloseBtn>
             </S.PanelHeader>
@@ -63,25 +65,30 @@ const GlabGuideMobileNav = () => {
               {NAV_SCROLL_IDS.map((id) => (
                 <li key={id}>
                   <S.NavLink href={`/#${id}`} onClick={close}>
-                    {SECTION_LABELS[id]}
+                    {t(`landing.nav.sections.${id}`)}
                   </S.NavLink>
                 </li>
               ))}
               <li>
+                <S.NavButton type="button" onClick={() => void i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko')}>
+                  {i18n.language === 'ko' ? 'Switch to English' : '한국어로 전환'}
+                </S.NavButton>
+              </li>
+              <li>
                 <S.NavLinkRouter to="/auth/portfolios" onClick={close}>
-                  포트폴리오
+                  {t('landing.nav.portfolio')}
                 </S.NavLinkRouter>
               </li>
               {accessToken !== null && accessToken !== '' ? (
                 <li>
                   <S.NavButton type="button" onClick={handleLogout}>
-                    로그아웃
+                    {t('landing.nav.logout')}
                   </S.NavButton>
                 </li>
               ) : (
                 <li>
                   <S.NavLinkRouter to="/login" onClick={close}>
-                    로그인 · 회원가입
+                    {t('landing.nav.loginSignup')}
                   </S.NavLinkRouter>
                 </li>
               )}
@@ -100,7 +107,7 @@ const GlabGuideMobileNav = () => {
           aria-expanded={open}
           aria-controls={open ? menuId : undefined}
           aria-haspopup="dialog"
-          aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
+          aria-label={open ? t('ui.closeMenu') : t('ui.openMenu')}
           onClick={() => setOpen((v) => !v)}
         >
           <span />

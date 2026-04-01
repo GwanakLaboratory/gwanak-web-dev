@@ -19,6 +19,7 @@ import {
 import DescriptionBox from '../../../components/feature/DescriptionBox';
 import { S } from './style';
 import Checkbox from '../../../components/common/Checkbox';
+import { useTranslation } from 'react-i18next';
 
 const labelMap: {
   [key in string]: {
@@ -92,6 +93,7 @@ type AnalysisResultFormType = {
   agreement: boolean;
 };
 const AnalysisResultPage = () => {
+  const { t } = useTranslation();
   const { register, handleSubmit } = useCustomForm<AnalysisResultFormType>();
   const [analysisScore, setAnalysisScore] = useState(0);
   const [resultSummary, setResultSummary] = useState({
@@ -159,8 +161,8 @@ const AnalysisResultPage = () => {
   return (
     <>
       <DescriptionBox
-        title="금융성향분석"
-        subtitle={['포트폴리오', '> 포트폴리오 만들기']}
+        title={t('analysis.title')}
+        subtitle={[t('analysis.breadcrumb')]}
       />
       <S.ResultContainer className="layout-padding">
         <S.ResultTitleText>
@@ -187,20 +189,20 @@ const AnalysisResultPage = () => {
           <S.CheckboxContainer>
             <Checkbox
               size="large"
-              label="동의합니다."
+              label={t('analysis.agree')}
               {...register('agreement', { required: true })}
               labelStyle={{ fontSize: '3.8rem' }}
             />
           </S.CheckboxContainer>
 
           <S.ResultComment>
-            위의 투자성향을 기준으로 AI가 전략을 추천 해드립니다.
+            {t('analysis.resultComment')}
           </S.ResultComment>
           <S.ResultButtons>
             <S.ResultButton color="primary">
-              <Link to="/auth/analysis">재분석 하기</Link>
+              <Link to="/auth/analysis">{t('analysis.retry')}</Link>
             </S.ResultButton>
-            <S.ResultButton type="submit">등록하기</S.ResultButton>
+            <S.ResultButton type="submit">{t('analysis.register')}</S.ResultButton>
           </S.ResultButtons>
         </S.FormContainer>
       </S.ResultContainer>

@@ -1,9 +1,13 @@
+import { useTranslation } from 'react-i18next';
+
 const LegacyHeroSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="legacy-hero-banner">
       <div className="legacy-hero-copy">
-        <p className="legacy-hero-title">대담, 하지만 안정적인</p>
-        <p className="legacy-hero-subtitle">새로운 경험의 금융투자 서비스</p>
+        <p className="legacy-hero-title">{t('landing.legacyHero.title')}</p>
+        <p className="legacy-hero-subtitle">{t('landing.legacyHero.subtitle')}</p>
       </div>
     </section>
   );

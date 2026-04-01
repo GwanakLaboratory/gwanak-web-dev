@@ -8,12 +8,14 @@ import { S } from './style';
 import DescriptionBox from '../../../components/feature/DescriptionBox';
 import Table from '../../../components/common/Table';
 import { formattedRatio } from '../../../utils/portfolio';
+import { useTranslation } from 'react-i18next';
 type PortfolioUpdatingInfo = {
   title: string;
   account: number;
 };
 
 const PortfolioResultPage = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { register, handleSubmit, control } = useForm<PortfolioUpdatingInfo>();
@@ -44,15 +46,15 @@ const PortfolioResultPage = () => {
   const onSubmitHandler: SubmitHandler<PortfolioUpdatingInfo> = (data) => {
     console.log('asdf');
     if (data.title.length > 20) {
-      alert('포트폴리오 명은 20자를 넘을 수 없습니다.');
+      alert(t('portfolio.titleTooLong'));
       return;
     }
     if (data.account < 5000000) {
-      alert('희망 투자 금액의 최소 금액은 5,000,000원입니다.');
+      alert(t('portfolio.minAmount'));
       return;
     }
     if (data.account % 500000 !== 0) {
-      alert('희망 투자 금액의 최소 단위는 500,000원입니다.');
+      alert(t('portfolio.unitAmount'));
       return;
     }
     updatePortfolioMutation.mutate(
@@ -91,8 +93,8 @@ const PortfolioResultPage = () => {
   return (
     <>
       <DescriptionBox
-        title="포트폴리오 생성"
-        subtitle={['포트폴리오', ' > 포트폴리오 만들기']}
+        title={t('portfolio.createTitle')}
+        subtitle={[t('portfolio.createBreadcrumb')]}
       />
       <S.PortfolioResultContainer className="layout-padding">
         <S.PropensityTitleText>
@@ -100,32 +102,40 @@ const PortfolioResultPage = () => {
         </S.PropensityTitleText>
         {portfolioInfo.detail.portfolio.is_result === false ? (
           <S.PortfolioDescription>
-            포트폴리오 생성중입니다.
+            {t('portfolio.generating')}
           </S.PortfolioDescription>
         ) : (
           <S.ResultConatiner>
             <S.FormContainer onSubmit={handleSubmit(onSubmitHandler)}>
               <S.PortfolioDetailContainer>
-                <S.InputDetailText>포트폴리오 명 : </S.InputDetailText>
+                <S.InputDetailText>{t('portfolio.portfolioName')}</S.InputDetailText>
                 <S.InputStyle
                   defaultValue={portfolioInfo.detail.portfolio.title}
                   type="text"
-                  placeholder="20자 이내로 입력해주세요"
+                  placeholder={t('portfolio.titlePlaceholder')}
                   {...register('title', { required: true })}
                 ></S.InputStyle>
-                <S.InputDetailText>희망투자금액 : </S.InputDetailText>
+                <S.InputDetailText>{t('portfolio.targetAmount')}</S.InputDetailText>
                 <S.InputStyle
                   defaultValue={5000000}
                   type="number"
-                  placeholder="기본 단위 : 만"
+                  placeholder={t('portfolio.amountPlaceholder')}
                   min="5000000"
                   step="500000"
                   {...register('account', { required: true })}
                 ></S.InputStyle>
               </S.PortfolioDetailContainer>
 
-              <Table headers={['', '종목이름', '금액', '비중']} rows={rows} />
-              <S.ResultButton type="submit">포트폴리오 생성</S.ResultButton>
+              <Table
+                headers={[
+                  '',
+                  t('portfolio.stockName'),
+                  t('portfolio.amount'),
+                  t('portfolio.ratio'),
+                ]}
+                rows={rows}
+              />
+              <S.ResultButton type="submit">{t('portfolio.createButton')}</S.ResultButton>
             </S.FormContainer>
           </S.ResultConatiner>
         )}

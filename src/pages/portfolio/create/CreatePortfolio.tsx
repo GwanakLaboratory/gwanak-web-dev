@@ -9,8 +9,10 @@ import {
 import { S } from './style';
 import Radio from '../../../components/common/Radio';
 import Text from '../../../components/common/Text';
+import { useTranslation } from 'react-i18next';
 
 const CreatePortfolioPage = () => {
+  const { t } = useTranslation();
   const { handleSubmit, model, propensity } = usePortfolioForm();
   const propensities = getPropensityTableData();
   const portfolios = useMemo(() => {
@@ -73,8 +75,8 @@ const CreatePortfolioPage = () => {
   return (
     <>
       <DescriptionBox
-        title="포트폴리오 생성"
-        subtitle={['포트폴리오', ' > 포트폴리오 만들기']}
+        title={t('portfolio.createTitle')}
+        subtitle={[t('portfolio.createBreadcrumb')]}
       />
       <S.CreatePortfolioPageContainer
         onSubmit={handleSubmit}
@@ -168,7 +170,7 @@ const CreatePortfolioPage = () => {
                     })}
                   </S.TBody>
                 </S.CustomTableStyle>
-                <S.ResultButton type="submit">포트폴리오 생성</S.ResultButton>
+                <S.ResultButton type="submit">{t('portfolio.createButton')}</S.ResultButton>
               </S.TableContainer>
             )}
           </S.ModelContainer>

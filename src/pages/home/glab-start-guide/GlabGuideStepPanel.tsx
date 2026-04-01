@@ -1,5 +1,6 @@
 import type { GlabGuideStep } from './glabGuideData';
 import { S } from './style';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   step: GlabGuideStep;
@@ -8,6 +9,8 @@ type Props = {
 };
 
 const GlabGuideStepPanel = ({ step, stepIndex, imageSrc }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <S.Step>
       <S.StepVisual>
@@ -15,7 +18,7 @@ const GlabGuideStepPanel = ({ step, stepIndex, imageSrc }: Props) => {
         <S.PhoneFrame>
           <img
             src={imageSrc}
-            alt={`${step.tag} 화면 예시`}
+            alt={t('glabGuide.stepImageAlt', { tag: step.tag })}
             loading="lazy"
             decoding="async"
           />

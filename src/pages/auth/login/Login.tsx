@@ -5,6 +5,7 @@ import { useSignInMutation } from '../../../apis';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
 import { accessTokenAtom } from '../../../store/auth';
+import { useTranslation } from 'react-i18next';
 
 type LoginForm = {
   email: string;
@@ -12,6 +13,7 @@ type LoginForm = {
 };
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const loginMutation = useSignInMutation();
   const navigate = useNavigate();
   const setAccessToken = useSetAtom(accessTokenAtom);
@@ -28,9 +30,9 @@ const LoginPage = () => {
   const isFilled = !!email?.trim() && !!password?.trim();
   return (
     <S.AuthCard>
-      <S.AuthPageTitle>로그인</S.AuthPageTitle>
+      <S.AuthPageTitle>{t('auth.login.title')}</S.AuthPageTitle>
       <S.AuthSubtitle>
-        당신의 금융 성향에 맞는 포트폴리오를 만들어보세요.
+        {t('auth.login.subtitle')}
       </S.AuthSubtitle>
       <S.LoginForm
         onSubmit={handleSubmit((data) => {
@@ -41,23 +43,23 @@ const LoginPage = () => {
               navigate('/auth/portfolios');
             },
             onError: () => {
-              alert('아이디 혹은 비밀번호가 틀렸습니다.');
+              alert(t('auth.login.invalidCredential'));
             },
           });
         })}
       >
         <S.Field>
-          <S.Label htmlFor="login-email">이메일</S.Label>
+          <S.Label htmlFor="login-email">{t('auth.login.email')}</S.Label>
           <S.AuthInput
             id="login-email"
             placeholder="abc@email.com"
             type="email"
             autoComplete="email"
             {...register('email', {
-              required: '이메일을 입력해주세요',
+              required: t('auth.login.requiredEmail'),
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: '이메일 형식이 올바르지 않습니다',
+                message: t('auth.login.invalidEmail'),
               },
             })}
           />
@@ -66,23 +68,23 @@ const LoginPage = () => {
           )}
         </S.Field>
         <S.Field>
-          <S.Label htmlFor="login-password">비밀번호</S.Label>
+          <S.Label htmlFor="login-password">{t('auth.login.password')}</S.Label>
           <S.AuthInput
             id="login-password"
-            placeholder="비밀번호를 입력해주세요"
+            placeholder={t('auth.login.passwordPlaceholder')}
             type="password"
             autoComplete="current-password"
-            {...register('password', { required: '비밀번호를 입력해주세요' })}
+            {...register('password', { required: t('auth.login.requiredPassword') })}
           />
           {errors.password && (
             <S.FieldError>{errors.password.message}</S.FieldError>
           )}
         </S.Field>
         <S.LoginButton type="submit" disabled={!isFilled} $active={isFilled}>
-          로그인
+          {t('auth.login.submit')}
         </S.LoginButton>
         <S.FooterLink>
-          아직 계정이 없으신가요? <Link to="/signup">회원가입</Link>
+          {t('auth.login.noAccount')} <Link to="/signup">{t('auth.login.signup')}</Link>
         </S.FooterLink>
       </S.LoginForm>
     </S.AuthCard>

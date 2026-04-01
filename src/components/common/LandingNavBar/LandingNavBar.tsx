@@ -1,11 +1,11 @@
 import type { RefObject } from 'react';
 import { Link } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
 import { useSignOutMutation } from '../../../apis';
 import { accessTokenAtom } from '../../../store/auth';
 import {
   NAV_SCROLL_IDS,
-  SECTION_LABELS,
   type NavScrollId,
 } from '../../../pages/home/landing/landingNavConstants';
 import { NavShell } from './style';
@@ -26,9 +26,10 @@ type LandingNavBarProps =
 const LandingNavBar = (props: LandingNavBarProps) => {
   const accessToken = useAtomValue(accessTokenAtom);
   const logoutMutation = useSignOutMutation();
+  const { t, i18n } = useTranslation();
 
   const handleLogout = () => {
-    if (window.confirm('로그아웃 하시겠습니까?')) {
+    if (window.confirm(t('ui.logoutConfirm'))) {
       logoutMutation.mutate();
     }
   };
@@ -60,7 +61,7 @@ const LandingNavBar = (props: LandingNavBarProps) => {
           {NAV_SCROLL_IDS.map((id) =>
             isAuth ? (
               <a key={id} href={`/#${id}`}>
-                {SECTION_LABELS[id]}
+                {t(`landing.nav.sections.${id}`)}
               </a>
             ) : (
               <a
@@ -72,20 +73,27 @@ const LandingNavBar = (props: LandingNavBarProps) => {
                   props.scrollTo(id);
                 }}
               >
-                {SECTION_LABELS[id]}
+                {t(`landing.nav.sections.${id}`)}
               </a>
             ),
           )}
         </div>
 
         <div className="nav-actions">
+          <button
+            type="button"
+            className="nav-auth-btn nav-lang-btn"
+            onClick={() => void i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko')}
+          >
+            {i18n.language === 'ko' ? 'EN' : 'KO'}
+          </button>
           {!isAuth && (
             <Link className="nav-cta" to="/glab-start">
-              시작하기
+              {t('landing.nav.start')}
             </Link>
           )}
           <Link className="nav-auth-btn nav-auth-soft" to="/auth/portfolios">
-            포트폴리오
+            {t('landing.nav.portfolio')}
           </Link>
           {accessToken !== null && accessToken !== '' ? (
             <button
@@ -93,11 +101,11 @@ const LandingNavBar = (props: LandingNavBarProps) => {
               className="nav-auth-btn nav-auth-outline"
               onClick={handleLogout}
             >
-              로그아웃
+              {t('landing.nav.logout')}
             </button>
           ) : (
             <Link className="nav-auth-btn nav-auth-outline" to="/login">
-              로그인 · 회원가입
+              {t('landing.nav.loginSignup')}
             </Link>
           )}
         </div>
