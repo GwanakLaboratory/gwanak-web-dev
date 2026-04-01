@@ -134,6 +134,8 @@ export const resources = {
         achievements: {
           label: 'Achievements',
           title: '관악연구소의 발자취',
+          timelineTitle: '연혁',
+          evidenceTitle: '보도 · 증빙',
           group1Title: '기술 검증 · IP',
           g1i1Title: '로보어드바이저 운용심사 통과',
           g1i1Desc: '테스트베드 정기심사 완료 · 4개 알고리즘 운용심사 확인증',
@@ -196,12 +198,12 @@ export const resources = {
             7: {
               role: '개발',
               title: '5년차 프론트엔드 개발자',
-              affil: '아주대 시스템보안',
+              affil: '아주대 사이버보안',
               desc: 'LG CNS SaaS 서비스 프론트엔드. 이미지 편집 플랫폼 다수 개발. 레거시 전환 및 성능 최적화 전문.',
             },
             8: {
               role: '개발',
-              title: '4년차 풀스택 개발자',
+              title: '5년차 풀스택 개발자',
               affil: 'Oregon 주립대 컴퓨터공학',
               desc: 'LG CNS SaaS 서비스 풀스택. 자동매매 알고리즘 해커톤 입상, 오픈소스 기여. 유저 친화 설계.',
             },
@@ -467,6 +469,8 @@ export const resources = {
         achievements: {
           label: 'Achievements',
           title: 'Gwanak Lab milestones',
+          timelineTitle: 'Timeline',
+          evidenceTitle: 'Press · Documents',
           group1Title: 'Technology validation · IP',
           g1i1Title: 'Robo-advisor operation review passed',
           g1i1Desc:
@@ -530,12 +534,12 @@ export const resources = {
             7: {
               role: 'Engineering',
               title: '5-year Frontend Developer',
-              affil: 'Ajou Univ. System Security',
+              affil: 'Ajou Univ. Cyber Security',
               desc: 'LG CNS SaaS frontend. Built multiple image-editing platforms. Legacy migration and performance optimization specialist.',
             },
             8: {
               role: 'Engineering',
-              title: '4-year Full-stack Developer',
+              title: '5-year Full-stack Developer',
               affil: 'Oregon State Univ. Computer Engineering',
               desc: 'LG CNS SaaS full-stack. Award winner in trading algorithm hackathons; open-source contributor; user-centric design.',
             },

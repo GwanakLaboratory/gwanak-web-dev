@@ -133,7 +133,6 @@ const ProjectsSection = () => {
       </div>
 
       <div className="projects-glov reveal">
-        <div className="projects-glov-divider" aria-hidden />
         <div className="section-label">{t('landing.projects.glovLabel', { defaultValue: 'GLOV — B2B' })}</div>
         <p className="section-desc projects-glov-desc">{t('landing.projects.glovDesc', { defaultValue: '기관을 통해 검증된 전략을 리테일에 적용하고, 리테일 유저 데이터로 엔진을 고도화하는 플라이휠 구조입니다.' })}</p>
         <div className="b2b-cards">

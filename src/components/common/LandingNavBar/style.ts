@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-/** 랜딩 네비와 동일한 토큰·스타일 (고정 nav) */
 export const NavShell = styled.div`
   --bg: #fafbfe;
   --text: #1a1d2b;
@@ -35,6 +34,10 @@ export const NavShell = styled.div`
     transition: all 0.3s;
   }
 
+  &.landing-nav--landing nav {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
   .nav-logo {
     font-family: 'Outfit', sans-serif;
     font-weight: 800;
@@ -46,16 +49,6 @@ export const NavShell = styled.div`
     gap: 6px;
     cursor: pointer;
     flex-shrink: 0;
-  }
-
-  .nav-logo span {
-    background: var(--primary);
-    color: #fff;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
   }
 
   .nav-logo img {
@@ -81,6 +74,7 @@ export const NavShell = styled.div`
     transition: color 0.2s;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    white-space: nowrap;
   }
 
   .nav-links a:hover {
@@ -102,28 +96,6 @@ export const NavShell = styled.div`
     background: var(--primary);
     border-radius: 2px;
     opacity: 0.95;
-  }
-
-  .nav-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 22px;
-    border-radius: 8px;
-    background: var(--primary);
-    color: #fff;
-    font-weight: 600;
-    font-size: 12px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.25s;
-    font-family: 'Noto Sans KR', 'Outfit', sans-serif;
-    text-decoration: none;
-  }
-
-  .nav-cta:hover {
-    background: var(--primary-dark);
-    box-shadow: 0 4px 20px var(--primary-glow);
   }
 
   .nav-actions {
@@ -188,6 +160,7 @@ export const NavShell = styled.div`
     background: var(--primary-bg);
   }
 
+  /* ──── Tablet ──── */
   @media (max-width: 1180px) and (min-width: 901px) {
     nav {
       padding: 14px 20px;
@@ -199,11 +172,6 @@ export const NavShell = styled.div`
     .nav-logo {
       font-size: 18px;
       gap: 4px;
-    }
-
-    .nav-logo span {
-      font-size: 9px;
-      padding: 2px 5px;
     }
 
     .nav-logo img {
@@ -218,13 +186,6 @@ export const NavShell = styled.div`
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       padding: 2px 6px;
-      mask-image: linear-gradient(
-        90deg,
-        transparent,
-        #000 12px,
-        #000 calc(100% - 12px),
-        transparent
-      );
     }
 
     .nav-links::-webkit-scrollbar {
@@ -233,17 +194,11 @@ export const NavShell = styled.div`
 
     .nav-links a {
       flex-shrink: 0;
-      white-space: nowrap;
       font-size: 12px;
     }
 
     .nav-actions {
       gap: 6px;
-    }
-
-    .nav-cta {
-      padding: 8px 14px;
-      font-size: 11px;
     }
 
     .nav-auth-btn {
@@ -253,6 +208,7 @@ export const NavShell = styled.div`
     }
   }
 
+  /* ──── Mobile ──── */
   @media (max-width: 900px) {
     nav {
       padding: 12px 14px;
@@ -274,19 +230,18 @@ export const NavShell = styled.div`
     .nav-links {
       flex: 1;
       min-width: 0;
-      gap: 0 10px;
+      gap: 0 14px;
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       justify-content: flex-start;
-      padding: 4px 2px 10px;
-      margin-bottom: -6px;
+      padding: 4px 2px;
       mask-image: linear-gradient(
         90deg,
         transparent,
-        #000 12px,
-        #000 calc(100% - 12px),
+        #000 8px,
+        #000 calc(100% - 8px),
         transparent
       );
     }
@@ -297,8 +252,7 @@ export const NavShell = styled.div`
 
     .nav-links a {
       flex-shrink: 0;
-      font-size: 12px;
-      white-space: nowrap;
+      font-size: 11px;
       display: inline-flex;
     }
 

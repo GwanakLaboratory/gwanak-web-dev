@@ -35,7 +35,9 @@ const LandingNavBar = (props: LandingNavBarProps) => {
   };
 
   const isAuth = props.variant === 'auth';
-  const shellClass = isAuth ? 'landing-nav-root landing-nav--auth' : 'landing-nav-root';
+  const shellClass = isAuth
+    ? 'landing-nav-root landing-nav--auth'
+    : 'landing-nav-root landing-nav--landing';
 
   return (
     <NavShell className={shellClass}>
@@ -79,35 +81,33 @@ const LandingNavBar = (props: LandingNavBarProps) => {
           )}
         </div>
 
-        <div className="nav-actions">
-          <button
-            type="button"
-            className="nav-auth-btn nav-lang-btn"
-            onClick={() => void i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko')}
-          >
-            {i18n.language === 'ko' ? 'EN' : 'KO'}
-          </button>
-          {isAuth && (
-            <>
-              <Link className="nav-auth-btn nav-auth-soft" to="/auth/portfolios">
-                {t('landing.nav.portfolio')}
+        {isAuth && (
+          <div className="nav-actions">
+            <button
+              type="button"
+              className="nav-auth-btn nav-lang-btn"
+              onClick={() => void i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko')}
+            >
+              {i18n.language === 'ko' ? 'EN' : 'KO'}
+            </button>
+            <Link className="nav-auth-btn nav-auth-soft" to="/auth/portfolios">
+              {t('landing.nav.portfolio')}
+            </Link>
+            {accessToken !== null && accessToken !== '' ? (
+              <button
+                type="button"
+                className="nav-auth-btn nav-auth-outline"
+                onClick={handleLogout}
+              >
+                {t('landing.nav.logout')}
+              </button>
+            ) : (
+              <Link className="nav-auth-btn nav-auth-outline" to="/login">
+                {t('landing.nav.loginSignup')}
               </Link>
-              {accessToken !== null && accessToken !== '' ? (
-                <button
-                  type="button"
-                  className="nav-auth-btn nav-auth-outline"
-                  onClick={handleLogout}
-                >
-                  {t('landing.nav.logout')}
-                </button>
-              ) : (
-                <Link className="nav-auth-btn nav-auth-outline" to="/login">
-                  {t('landing.nav.loginSignup')}
-                </Link>
-              )}
-            </>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </nav>
     </NavShell>
   );

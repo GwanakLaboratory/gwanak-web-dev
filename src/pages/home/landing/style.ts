@@ -326,15 +326,10 @@ export const S = {
       padding: 40px 24px;
       text-align: center;
       border-right: 1px solid var(--border);
-      transition: background 0.3s;
     }
 
     .metric:last-child {
       border-right: none;
-    }
-
-    .metric:hover {
-      background: var(--primary-bg);
     }
 
     .metric-value {
@@ -366,7 +361,6 @@ export const S = {
     .legacy-hero-banner,
     .hero,
     .about-section,
-    #service,
     #projects,
     #achievements,
     #team {
@@ -422,15 +416,6 @@ export const S = {
         #f2f6ff 0%,
         #ecf5f3 48%,
         #f4f6fb 100%
-      );
-    }
-
-    #service {
-      background: linear-gradient(
-        168deg,
-        #fafcfe 0%,
-        rgba(41, 86, 224, 0.08) 45%,
-        #f5f8ff 100%
       );
     }
 
@@ -503,12 +488,6 @@ export const S = {
       display: flex;
       gap: 16px;
       align-items: flex-start;
-      transition: all 0.3s;
-    }
-
-    .engine-step:hover {
-      border-color: var(--border-strong);
-      transform: translateX(4px);
     }
 
     .step-num {
@@ -549,18 +528,12 @@ export const S = {
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 32px;
-      transition: all 0.3s;
-    }
-
-    .service-card:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(41, 86, 224, 0.06);
     }
 
     .projects-engine-block {
       margin-top: 64px;
       padding-top: 8px;
+      background: none;
     }
 
     .service-card.wide {
@@ -747,7 +720,7 @@ export const S = {
       line-height: 1.45;
       color: var(--text);
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       flex-wrap: wrap;
       gap: 0;
       word-break: keep-all;
@@ -756,12 +729,12 @@ export const S = {
     .glab-chat-caret {
       display: inline-block;
       width: 2px;
-      height: 1em;
+      height: 14px;
       margin-left: 1px;
       background: var(--primary);
       border-radius: 1px;
       animation: ${glabCaretBlink} 1.05s step-end infinite;
-      vertical-align: -0.12em;
+      flex-shrink: 0;
     }
 
     .glab-chat-send {
@@ -798,12 +771,6 @@ export const S = {
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 24px;
-      transition: all 0.3s;
-    }
-
-    .b2b-card:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-2px);
     }
 
     .b2b-status {
@@ -860,14 +827,6 @@ export const S = {
       border: 1px solid var(--border);
       border-radius: 14px;
       overflow: hidden;
-      transition: all 0.3s;
-      cursor: default;
-    }
-
-    .project-card:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(41, 86, 224, 0.06);
     }
 
     .project-thumb {
@@ -935,24 +894,7 @@ export const S = {
     }
 
     .projects-glov {
-      margin-top: 72px;
-      padding-top: 56px;
-    }
-
-    .projects-glov-divider {
-      height: 1px;
-      width: 100%;
-      max-width: 720px;
-      margin: 0 0 40px;
-      border: none;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(41, 86, 224, 0.2) 20%,
-        rgba(0, 201, 167, 0.25) 50%,
-        rgba(245, 133, 43, 0.2) 80%,
-        transparent 100%
-      );
+      margin-top: 64px;
     }
 
     .projects-glov-desc {
@@ -960,14 +902,15 @@ export const S = {
     }
 
     /* ──── ACHIEVEMENTS ──── */
-    .ach-grid {
+    .ach-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 48px;
       margin-top: 48px;
+      align-items: start;
     }
 
-    .ach-group h4 {
+    .ach-col-title {
       font-family: 'Outfit', sans-serif;
       font-size: 11px;
       font-weight: 700;
@@ -979,38 +922,119 @@ export const S = {
       border-bottom: 1px solid var(--border);
     }
 
-    .ach-item {
+    /* ── vertical timeline ── */
+    .tl-track {
       display: flex;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-      transition: all 0.2s;
+      flex-direction: column;
     }
 
-    .ach-item:hover {
-      padding-left: 5px;
+    .tl-node {
+      display: grid;
+      grid-template-columns: 20px 62px 1fr;
+      gap: 0 10px;
+      padding: 10px 0;
+      cursor: default;
+      transition: background 0.25s;
+      border-radius: 8px;
     }
 
-    .ach-marker {
-      width: 8px;
-      height: 8px;
+    .tl-node--active {
+      background: var(--primary-bg);
+    }
+
+    .tl-rail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      grid-row: 1 / 2;
+      padding-top: 4px;
+    }
+
+    .tl-dot {
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: var(--primary);
+      border: 2px solid var(--primary);
+      background: var(--bg);
       flex-shrink: 0;
-      margin-top: 6px;
-      opacity: 0.4;
+      transition: all 0.25s;
     }
 
-    .ach-content h5 {
+    .tl-node--active .tl-dot {
+      background: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-glow);
+    }
+
+    .tl-line {
+      flex: 1;
+      width: 2px;
+      background: var(--border-strong);
+      min-height: 100%;
+    }
+
+    .tl-date {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      padding-top: 2px;
+      white-space: nowrap;
+      transition: color 0.25s;
+    }
+
+    .tl-node--active .tl-date {
+      color: var(--primary);
+    }
+
+    .tl-body h5 {
       font-size: 14px;
       font-weight: 500;
       margin-bottom: 2px;
+      transition: color 0.25s;
     }
 
-    .ach-content p {
+    .tl-node--active .tl-body h5 {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .tl-body p {
       font-size: 12px;
       color: var(--text-muted);
       line-height: 1.45;
+    }
+
+    .ach-ev-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 12px;
+    }
+
+    .ach-ev-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-bg);
+      padding: 2px 8px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 8px;
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: 0.03em;
+    }
+
+    .ach-ev-card h5 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .ach-ev-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
     /* ──── TEAM ──── */
@@ -1026,11 +1050,6 @@ export const S = {
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 24px;
-      transition: all 0.3s;
-    }
-
-    .team-card:hover {
-      border-color: var(--border-strong);
     }
 
     .team-role {
@@ -1257,7 +1276,6 @@ export const S = {
 
       .hero,
       .about-section,
-      #service,
       #projects,
       #achievements,
       #team {
@@ -1277,7 +1295,7 @@ export const S = {
 
       .about-grid,
       .service-dual,
-      .ach-grid {
+      .ach-layout {
         grid-template-columns: 1fr;
       }
 
