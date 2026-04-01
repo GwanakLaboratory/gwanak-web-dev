@@ -6,7 +6,6 @@ import AchievementsSection from './components/AchievementsSection';
 import ContactSection from './components/ContactSection';
 import HeroSection from './components/HeroSection';
 import LandingFooter from './components/LandingFooter';
-import LegacyHeroSection from './components/LegacyHeroSection';
 import ProjectsSection from './components/ProjectsSection';
 import LandingContactModal from './components/LandingContactModal';
 import TeamSection from './components/TeamSection';
@@ -153,7 +152,6 @@ const LandingPage = () => {
       />
 
       <div id="intro" className="landing-intro">
-        <LegacyHeroSection />
         <HeroSection onContact={openContactModal} />
       </div>
       <AboutSection />
