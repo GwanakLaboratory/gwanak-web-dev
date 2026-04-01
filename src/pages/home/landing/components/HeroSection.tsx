@@ -124,7 +124,7 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
     ctx.setLineDash([]);
 
     // zone labels
-    ctx.font = '600 9px Outfit, monospace';
+    ctx.font = '800 12px Outfit, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillStyle = 'rgba(41,86,224,0.45)';
     ctx.fillText('PREDICT', z1 / 2, 16);
@@ -136,23 +136,23 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
     // decide zone lane markers
     const laneY = [h * 0.22, h * 0.5, h * 0.78];
     const laneLabels = ['▲', '—', '▼'];
-    const laneColors = [COLORS.rise, COLORS.hold, COLORS.fall];
+    const laneColors = ['#ef4444', '#22c55e', '#3b82f6']; // top red, middle green, bottom blue
     for (let i = 0; i < 3; i++) {
       ctx.beginPath();
       ctx.setLineDash([2, 4]);
       ctx.strokeStyle =
         i === 0
-          ? 'rgba(0,201,167,0.42)'
+          ? 'rgba(239,68,68,0.45)'
           : i === 1
-            ? 'rgba(41,86,224,0.4)'
-            : 'rgba(245,133,43,0.42)';
+            ? 'rgba(34,197,94,0.45)'
+            : 'rgba(59,130,246,0.45)';
       ctx.lineWidth = 1.8;
       ctx.moveTo(z2 + 4, laneY[i]);
       ctx.lineTo(w - 4, laneY[i]);
       ctx.stroke();
       ctx.setLineDash([]);
 
-      ctx.font = '700 10px Outfit, sans-serif';
+      ctx.font = '800 11px Outfit, sans-serif';
       ctx.textAlign = 'right';
       ctx.fillStyle = laneColors[i];
       ctx.globalAlpha = 0.5;
