@@ -1,9 +1,8 @@
-import type { RefObject } from 'react';
+import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Link } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedPath } from '../../../i18n/useLocalizedPath';
-import { useLanguageSwitch } from '../../../i18n/useLanguageSwitch';
 import { useSignOutMutation } from '../../../apis';
 import { accessTokenAtom } from '../../../store/auth';
 import {
@@ -30,7 +29,8 @@ const LandingNavBar = (props: LandingNavBarProps) => {
   const logoutMutation = useSignOutMutation();
   const { t, i18n } = useTranslation();
   const localizedPath = useLocalizedPath();
-  const switchLanguage = useLanguageSwitch();
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement | null>(null);
 
   const handleLogout = () => {
     if (window.confirm(t('ui.logoutConfirm'))) {
@@ -42,6 +42,22 @@ const LandingNavBar = (props: LandingNavBarProps) => {
   const shellClass = isAuth
     ? 'landing-nav-root landing-nav--auth'
     : 'landing-nav-root landing-nav--landing';
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (!langRef.current) return;
+      if (!langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLangOpen(false);
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, []);
 
   return (
     <NavShell className={shellClass}>
@@ -86,9 +102,44 @@ const LandingNavBar = (props: LandingNavBarProps) => {
         </div>
 
         <div className="nav-actions">
-          <button type="button" className="nav-auth-btn nav-lang-btn" onClick={switchLanguage}>
-            {i18n.language === 'ko' ? 'EN' : 'KO'}
-          </button>
+          <div className="nav-lang-dropdown" ref={langRef}>
+            <button
+              type="button"
+              className={`nav-lang-trigger${langOpen ? ' open' : ''}`}
+              onClick={() => setLangOpen((v) => !v)}
+              aria-haspopup="listbox"
+              aria-expanded={langOpen}
+            >
+              {i18n.language === 'ko' ? '한국어' : 'English'}
+              <span className="nav-lang-chevron" aria-hidden>
+                ▾
+              </span>
+            </button>
+            {langOpen && (
+              <div className="nav-lang-menu" role="listbox" aria-label="language selector">
+                <button
+                  type="button"
+                  className={`nav-lang-option${i18n.language === 'ko' ? ' active' : ''}`}
+                  onClick={() => {
+                    void i18n.changeLanguage('ko');
+                    setLangOpen(false);
+                  }}
+                >
+                  한국어
+                </button>
+                <button
+                  type="button"
+                  className={`nav-lang-option${i18n.language === 'en' ? ' active' : ''}`}
+                  onClick={() => {
+                    void i18n.changeLanguage('en');
+                    setLangOpen(false);
+                  }}
+                >
+                  English
+                </button>
+              </div>
+            )}
+          </div>
           {isAuth && (
             <>
               <Link className="nav-auth-btn nav-auth-soft" to={localizedPath('/auth/portfolios')}>

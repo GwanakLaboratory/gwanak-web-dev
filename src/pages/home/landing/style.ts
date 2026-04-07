@@ -123,10 +123,11 @@ export const S = {
     .nhero {
       position: relative;
       min-height: 100vh;
-      padding: 100px 48px 36px;
+      padding: 88px 48px 72px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       overflow: hidden;
       isolation: isolate;
       background: linear-gradient(
@@ -203,6 +204,7 @@ export const S = {
       grid-template-columns: 0.5fr 1.5fr;
       gap: 0;
       align-items: stretch;
+      transform: translateY(-8px);
     }
 
     .nhero-left {
@@ -1202,6 +1204,18 @@ export const S = {
     .tl-track {
       display: flex;
       flex-direction: column;
+      position: relative;
+    }
+
+    .tl-track::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 14px;
+      bottom: 14px;
+      width: 2px;
+      background: var(--border-strong);
+      pointer-events: none;
     }
 
     .tl-node {
@@ -1212,6 +1226,8 @@ export const S = {
       cursor: default;
       transition: background 0.25s;
       border-radius: 8px;
+      position: relative;
+      z-index: 1;
     }
 
     .tl-node--active {
@@ -1242,10 +1258,7 @@ export const S = {
     }
 
     .tl-line {
-      flex: 1;
-      width: 2px;
-      background: var(--border-strong);
-      min-height: 100%;
+      display: none;
     }
 
     .tl-date {
@@ -1280,37 +1293,136 @@ export const S = {
       line-height: 1.45;
     }
 
-    .ach-ev-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 22px;
-      margin-bottom: 12px;
+    /* ── evidence track (라인 단위 hover) ── */
+    .ev-track {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
 
-    .ach-ev-badge {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--primary);
-      background: var(--primary-bg);
-      padding: 2px 8px;
-      border-radius: 3px;
-      display: inline-block;
-      margin-bottom: 8px;
+    .ev-group-block {
+      display: grid;
+      grid-template-columns: 62px 1fr;
+      gap: 0 10px;
+    }
+
+    .ev-group-category {
       font-family: 'Outfit', sans-serif;
-      letter-spacing: 0.03em;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dim);
+      padding-top: 11px;
+      white-space: nowrap;
     }
 
-    .ach-ev-card h5 {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
+    .ev-group-items {
+      display: flex;
+      flex-direction: column;
     }
 
-    .ach-ev-card p {
-      font-size: 12px;
-      color: var(--text-muted);
+    .ev-row {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 0 10px;
+      padding: 0;
+      border-radius: 8px;
+      transition: background 0.25s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ev-row--active {
+      background: var(--primary-bg);
+    }
+
+    /* rail: tl-rail과 동일 구조 */
+    .ev-rail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ev-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      background: var(--bg);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+
+    .ev-line {
+      flex: 1;
+      width: 2px;
+      background: var(--border-strong);
+      min-height: 100%;
+      margin-top: 2px;
+    }
+
+    /* 카테고리 레이블 */
+    .ev-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 10px 0;
+    }
+
+    .ev-item--link {
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .ev-item--link:hover .ev-item-title {
+      color: var(--primary);
+    }
+
+    .ev-item-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
       line-height: 1.5;
+      transition: color 0.25s ease;
+    }
+
+    .ev-row--active .ev-dot {
+      background: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-glow);
+    }
+
+    .ev-row--active .ev-item-title {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .ev-row--active ~ .ev-row .ev-line {
+      background: var(--border-strong);
+    }
+
+    .ev-group-divider {
+      grid-column: 1 / -1;
+      height: 1px;
+      background: var(--border);
+      margin: 4px 0 6px;
+    }
+
+    .ev-item-sub {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: 'Outfit', monospace;
+      line-height: 1.4;
+    }
+
+    .ev-item-arrow {
+      font-size: 11px;
+      color: var(--primary);
+      opacity: 0.7;
     }
 
     /* ──── TEAM ──── */
