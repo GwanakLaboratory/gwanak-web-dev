@@ -3,68 +3,76 @@ import { useTranslation } from 'react-i18next';
 
 type TimelineEntry = { date: string; title: string };
 type EvidenceGroup = {
-  category: '특허' | '논문' | '기사';
+  category: string;
   items: Array<{ title: string; sub: string; href?: string }>;
 };
 
-const TIMELINE: TimelineEntry[] = [
-  { date: '23.02', title: '관악연구소 설립' },
-  { date: '23.12', title: '핀테크 AI 개발 (서울시립대학교와 공동연구개발)' },
-  { date: '24.06', title: '로보어드바이저 테스트베드 운용심사 통과' },
-  { date: '25.01', title: 'LG CNS 생성형 AI 기반 이미지 편집툴, COP 프로젝트 개발' },
-  { date: '25.04', title: '핀테크 AI, 특허 등록 완료' },
-  { date: '25.10', title: '서울핀테크랩 멤버십 기업 선정' },
-  { date: '26.01', title: '동물병원 통합 데이터베이스 구축 프로젝트 개발' },
-  { date: '26.02', title: 'IBK 1st LAB 7기 선정 (카드고객이탈방지 모델 구축 PoC)' },
-  { date: '26.02', title: '기보벤처캠프 18기 선정' },
-  { date: '26.03', title: '한국핀테크지원센터 디지털 금융기술 내재화 사업 선정' },
-  { date: '26.03', title: 'BNK썸 인큐베이터 11기 선정' },
-];
-
-const EVIDENCE_GROUPS: EvidenceGroup[] = [
-  {
-    category: '특허',
-    items: [{ title: '투자 비율 결정 장치 및 방법', sub: '제10-2803037호' }],
-  },
-  {
-    category: '논문',
-    items: [
-      {
-        title: 'Generating High-Diversity Synthetic Tabular Data via Less-Constrained Prior',
-        sub: 'Anonymous Authors · IJCAI 2026',
-      },
-      {
-        title: 'Dynamic Higher-Order Relations and Event-Driven Temporal Modeling for Stock Price Forecasting',
-        sub: 'Kijeong Park, Sungchul Hong, Jong-June Jeon · 2025',
-      },
-    ],
-  },
-  {
-    category: '기사',
-    items: [
-      {
-        title: "기업은행, 오픈 이노베이션 프로그램 'IBK 1st랩' 7기 참여기업 선정",
-        sub: '디지털타임스',
-        href: 'https://www.dt.co.kr/article/12048079?ref=naver',
-      },
-      {
-        title: "기보벤처캠프 18기, 'AI·그린' 스타트업 집결…산업 혁신 전면에",
-        sub: '머니투데이',
-        href: 'https://www.mt.co.kr/future/2026/04/07/2026040611022367960',
-      },
-      {
-        title: "부산은행 '썸 인큐베이터 11기' 발대…스타트업 육성",
-        sub: '연합뉴스',
-        href: 'https://www.yna.co.kr/view/AKR20260331144100051?input=1195m',
-      },
-    ],
-  },
-];
+const TIMELINE_KEYS = [
+  { date: '23.02', titleKey: 'timeline.i1' },
+  { date: '23.12', titleKey: 'timeline.i2' },
+  { date: '24.06', titleKey: 'timeline.i3' },
+  { date: '25.01', titleKey: 'timeline.i4' },
+  { date: '25.04', titleKey: 'timeline.i5' },
+  { date: '25.10', titleKey: 'timeline.i6' },
+  { date: '26.01', titleKey: 'timeline.i7' },
+  { date: '26.02', titleKey: 'timeline.i8' },
+  { date: '26.02', titleKey: 'timeline.i9' },
+  { date: '26.03', titleKey: 'timeline.i10' },
+  { date: '26.03', titleKey: 'timeline.i11' },
+] as const;
 
 const AchievementsSection = () => {
   const { t } = useTranslation();
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [activeEvidenceIdx, setActiveEvidenceIdx] = useState<number | null>(null);
+  const timeline: TimelineEntry[] = TIMELINE_KEYS.map((item) => ({
+    date: item.date,
+    title: t(`landing.achievements.${item.titleKey}`),
+  }));
+  const evidenceGroups: EvidenceGroup[] = [
+    {
+      category: t('landing.achievements.evidence.patent'),
+      items: [
+        {
+          title: t('landing.achievements.evidence.patentItem1Title'),
+          sub: t('landing.achievements.evidence.patentItem1Sub'),
+        },
+      ],
+    },
+    {
+      category: t('landing.achievements.evidence.paper'),
+      items: [
+        {
+          title: t('landing.achievements.evidence.paperItem1Title'),
+          sub: t('landing.achievements.evidence.paperItem1Sub'),
+        },
+        {
+          title: t('landing.achievements.evidence.paperItem2Title'),
+          sub: t('landing.achievements.evidence.paperItem2Sub'),
+        },
+      ],
+    },
+    {
+      category: t('landing.achievements.evidence.news'),
+      items: [
+        {
+          title: t('landing.achievements.evidence.newsItem1Title'),
+          sub: t('landing.achievements.evidence.newsItem1Sub'),
+          href: 'https://www.dt.co.kr/article/12048079?ref=naver',
+        },
+        {
+          title: t('landing.achievements.evidence.newsItem2Title'),
+          sub: t('landing.achievements.evidence.newsItem2Sub'),
+          href: 'https://www.mt.co.kr/future/2026/04/07/2026040611022367960',
+        },
+        {
+          title: t('landing.achievements.evidence.newsItem3Title'),
+          sub: t('landing.achievements.evidence.newsItem3Sub'),
+          href: 'https://www.yna.co.kr/view/AKR20260331144100051?input=1195m',
+        },
+      ],
+    },
+  ];
 
   return (
     <section id="achievements">
@@ -80,7 +88,7 @@ const AchievementsSection = () => {
             {t('landing.achievements.timelineTitle', { defaultValue: '연혁' })}
           </h4>
           <div className="tl-track">
-            {TIMELINE.map((entry, idx) => (
+            {timeline.map((entry, idx) => (
               <div
                 key={idx}
                 className={`tl-node${activeIdx === idx ? ' tl-node--active' : ''}`}
@@ -89,7 +97,7 @@ const AchievementsSection = () => {
               >
                 <div className="tl-rail">
                   <span className="tl-dot" />
-                  {idx < TIMELINE.length - 1 && <span className="tl-line" />}
+                  {idx < timeline.length - 1 && <span className="tl-line" />}
                 </div>
                 <div className="tl-date">{entry.date}</div>
                 <div className="tl-body">
@@ -107,7 +115,7 @@ const AchievementsSection = () => {
           </h4>
 
           <div className="ev-track">
-            {EVIDENCE_GROUPS.map((group, groupIdx) => (
+            {evidenceGroups.map((group, groupIdx) => (
               <div
                 key={group.category}
                 className="ev-group-block"
@@ -149,7 +157,7 @@ const AchievementsSection = () => {
                     </div>
                   ))}
                 </div>
-                {groupIdx < EVIDENCE_GROUPS.length - 1 && <div className="ev-group-divider" />}
+                {groupIdx < evidenceGroups.length - 1 && <div className="ev-group-divider" />}
               </div>
             ))}
           </div>
