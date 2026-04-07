@@ -35,7 +35,7 @@ export const NavShell = styled.div`
   }
 
   &.landing-nav--landing nav {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
 
   .nav-logo {

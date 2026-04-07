@@ -85,29 +85,31 @@ const LandingNavBar = (props: LandingNavBarProps) => {
           )}
         </div>
 
-        {isAuth && (
-          <div className="nav-actions">
-            <button type="button" className="nav-auth-btn nav-lang-btn" onClick={switchLanguage}>
-              {i18n.language === 'ko' ? 'EN' : 'KO'}
-            </button>
-            <Link className="nav-auth-btn nav-auth-soft" to={localizedPath('/auth/portfolios')}>
-              {t('landing.nav.portfolio')}
-            </Link>
-            {accessToken !== null && accessToken !== '' ? (
-              <button
-                type="button"
-                className="nav-auth-btn nav-auth-outline"
-                onClick={handleLogout}
-              >
-                {t('landing.nav.logout')}
-              </button>
-            ) : (
-              <Link className="nav-auth-btn nav-auth-outline" to={localizedPath('/login')}>
-                {t('landing.nav.loginSignup')}
+        <div className="nav-actions">
+          <button type="button" className="nav-auth-btn nav-lang-btn" onClick={switchLanguage}>
+            {i18n.language === 'ko' ? 'EN' : 'KO'}
+          </button>
+          {isAuth && (
+            <>
+              <Link className="nav-auth-btn nav-auth-soft" to={localizedPath('/auth/portfolios')}>
+                {t('landing.nav.portfolio')}
               </Link>
-            )}
-          </div>
-        )}
+              {accessToken !== null && accessToken !== '' ? (
+                <button
+                  type="button"
+                  className="nav-auth-btn nav-auth-outline"
+                  onClick={handleLogout}
+                >
+                  {t('landing.nav.logout')}
+                </button>
+              ) : (
+                <Link className="nav-auth-btn nav-auth-outline" to={localizedPath('/login')}>
+                  {t('landing.nav.loginSignup')}
+                </Link>
+              )}
+            </>
+          )}
+        </div>
       </nav>
     </NavShell>
   );
