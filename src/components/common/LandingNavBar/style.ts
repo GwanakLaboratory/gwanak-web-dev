@@ -35,7 +35,7 @@ export const NavShell = styled.div`
   }
 
   &.landing-nav--landing nav {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
 
   .nav-logo {
@@ -148,16 +148,100 @@ export const NavShell = styled.div`
     background: rgba(41, 86, 224, 0.12);
   }
 
-  .nav-auth-btn.nav-lang-btn {
-    border-color: rgba(41, 86, 224, 0.18);
-    background: #fff;
-    color: var(--primary);
-    min-width: 48px;
+  .nav-lang-dropdown {
+    position: relative;
+    display: inline-flex;
   }
 
-  .nav-auth-btn.nav-lang-btn:hover {
+  .nav-lang-trigger {
+    border: 1px solid rgba(41, 86, 224, 0.18);
+    background: #fff;
+    color: var(--primary);
+    min-height: 34px;
+    padding: 0 30px 0 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+    cursor: pointer;    
+    outline: none;
+    transition:
+      color 0.2s,
+      background 0.2s,
+      border-color 0.2s,
+      box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .nav-lang-trigger:hover {
     border-color: var(--primary);
     background: var(--primary-bg);
+  }
+
+  .nav-lang-trigger:focus-visible,
+  .nav-lang-trigger.open {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+  }
+
+  .nav-lang-chevron {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    font-size: 11px;
+    pointer-events: none;
+    transition: transform 0.2s ease;
+  }
+
+  .nav-lang-trigger.open .nav-lang-chevron {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  .nav-lang-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 120px;
+    padding: 6px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 10px;
+    box-shadow:
+      0 10px 24px rgba(16, 24, 40, 0.12),
+      0 1px 2px rgba(16, 24, 40, 0.08);
+    z-index: 120;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .nav-lang-option {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    border-radius: 8px;
+    min-height: 32px;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .nav-lang-option:hover {
+    background: var(--primary-bg);
+    color: var(--primary);
+  }
+
+  .nav-lang-option.active {
+    background: rgba(41, 86, 224, 0.1);
+    color: var(--primary);
   }
 
   /* ──── Tablet ──── */
@@ -205,6 +289,16 @@ export const NavShell = styled.div`
       padding: 0 10px;
       min-height: 32px;
       font-size: 11px;
+    }
+
+    .nav-lang-trigger {
+      min-height: 32px;
+      font-size: 11px;
+      padding: 0 26px 0 10px;
+    }
+
+    .nav-lang-menu {
+      min-width: 108px;
     }
   }
 
@@ -266,6 +360,23 @@ export const NavShell = styled.div`
 
     .nav-auth-btn {
       padding: 0 8px;
+      min-height: 30px;
+      font-size: 11px;
+    }
+
+    .nav-lang-trigger {
+      min-height: 30px;
+      font-size: 11px;
+      padding: 0 24px 0 8px;
+    }
+
+    .nav-lang-menu {
+      right: -2px;
+      min-width: 100px;
+      padding: 5px;
+    }
+
+    .nav-lang-option {
       min-height: 30px;
       font-size: 11px;
     }

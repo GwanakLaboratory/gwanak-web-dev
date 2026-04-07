@@ -164,6 +164,18 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
 
     // particle update & render
     particles.forEach((p, idx) => {
+      // Defensive reset: guard against rare numeric corruption over long runs.
+      if (
+        !Number.isFinite(p.x) ||
+        !Number.isFinite(p.y) ||
+        !Number.isFinite(p.r) ||
+        !Number.isFinite(p.g) ||
+        !Number.isFinite(p.b)
+      ) {
+        resetParticle(p, h);
+        return;
+      }
+
       const inZone1 = p.x < z1;
       const inZone2 = p.x >= z1 && p.x < z2;
       const inZone3 = p.x >= z2;
@@ -287,7 +299,7 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
       }
 
       // reset when out of bounds
-      if (p.x > w + 10) {
+      if (p.x > w + 10 || p.x < -60 || p.y < -40 || p.y > h + 40) {
         resetParticle(p, h);
       }
     });
@@ -384,32 +396,6 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
             </a>
           </div>
 
-          <div className="nhero-stats">
-            <div className="nhero-stat">
-              <div className="nhero-stat-val">
-                {t('landing.newHero.stat1Value')}
-              </div>
-              <div className="nhero-stat-lbl">
-                {t('landing.newHero.stat1Label')}
-              </div>
-            </div>
-            <div className="nhero-stat">
-              <div className="nhero-stat-val">
-                {t('landing.newHero.stat2Value')}
-              </div>
-              <div className="nhero-stat-lbl">
-                {t('landing.newHero.stat2Label')}
-              </div>
-            </div>
-            <div className="nhero-stat">
-              <div className="nhero-stat-val">
-                {t('landing.newHero.stat3Value')}
-              </div>
-              <div className="nhero-stat-lbl">
-                {t('landing.newHero.stat3Label')}
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="nhero-right">
