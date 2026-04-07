@@ -8,7 +8,7 @@ import HeroSection from './components/HeroSection';
 import LandingFooter from './components/LandingFooter';
 import ProjectsSection from './components/ProjectsSection';
 import LandingContactModal from './components/LandingContactModal';
-import TeamSection from './components/TeamSection';
+// import TeamSection from './components/TeamSection';
 import {
   NAV_SCROLL_IDS,
   type NavScrollId,
@@ -157,7 +157,7 @@ const LandingPage = () => {
       <AboutSection />
       <ProjectsSection />
       <AchievementsSection />
-      <TeamSection />
+      {/* <TeamSection /> */}
       <ContactSection onContact={openContactModal} />
       <LandingFooter />
       <LandingContactModal
