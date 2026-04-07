@@ -20,6 +20,7 @@ import DescriptionBox from '../../../components/feature/DescriptionBox';
 import { S } from './style';
 import Checkbox from '../../../components/common/Checkbox';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '../../../i18n/useLocalizedPath';
 
 const labelMap: {
   [key in string]: {
@@ -94,6 +95,7 @@ type AnalysisResultFormType = {
 };
 const AnalysisResultPage = () => {
   const { t } = useTranslation();
+  const localizedPath = useLocalizedPath();
   const { register, handleSubmit } = useCustomForm<AnalysisResultFormType>();
   const [analysisScore, setAnalysisScore] = useState(0);
   const [resultSummary, setResultSummary] = useState({
@@ -114,7 +116,7 @@ const AnalysisResultPage = () => {
   const userInfoQuery = useGetUserInfoQuery();
   useEffect(() => {
     if (!location.state) {
-      navigate('/auth/analysis', { replace: true });
+      navigate(localizedPath('/auth/analysis'), { replace: true });
     } else {
       const analysisScore = getAnalysisScore(location.state);
       setAnalysisScore(analysisScore);
@@ -152,7 +154,7 @@ const AnalysisResultPage = () => {
       propensityMutation.mutate(
         { score: analysisScore },
         {
-          onSuccess: () => navigate('/auth/portfolios'),
+          onSuccess: () => navigate(localizedPath('/auth/portfolios')),
         },
       );
     }
@@ -200,7 +202,7 @@ const AnalysisResultPage = () => {
           </S.ResultComment>
           <S.ResultButtons>
             <S.ResultButton color="primary">
-              <Link to="/auth/analysis">{t('analysis.retry')}</Link>
+              <Link to={localizedPath('/auth/analysis')}>{t('analysis.retry')}</Link>
             </S.ResultButton>
             <S.ResultButton type="submit">{t('analysis.register')}</S.ResultButton>
           </S.ResultButtons>

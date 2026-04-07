@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '../../../i18n/useLocalizedPath';
+import { useLanguageSwitch } from '../../../i18n/useLanguageSwitch';
 import { useSignOutMutation } from '../../../apis';
 import { accessTokenAtom } from '../../../store/auth';
 import { NAV_SCROLL_IDS } from '../landing/landingNavConstants';
@@ -15,6 +17,8 @@ const GlabGuideMobileNav = () => {
   const accessToken = useAtomValue(accessTokenAtom);
   const logoutMutation = useSignOutMutation();
   const { t, i18n } = useTranslation();
+  const localizedPath = useLocalizedPath();
+  const switchLanguage = useLanguageSwitch();
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -54,7 +58,7 @@ const GlabGuideMobileNav = () => {
             aria-label={t('ui.siteMenu')}
           >
             <S.PanelHeader>
-              <Link to="/" onClick={close}>
+              <Link to={localizedPath('/')} onClick={close}>
                 <img src={LogoPNG} alt="GWANAK LAB logo" />
               </Link>
               <S.CloseBtn type="button" aria-label={t('ui.closeMenu')} onClick={close}>
@@ -64,18 +68,18 @@ const GlabGuideMobileNav = () => {
             <S.NavList>
               {NAV_SCROLL_IDS.map((id) => (
                 <li key={id}>
-                  <S.NavLink href={`/#${id}`} onClick={close}>
+                  <S.NavLink href={`${localizedPath('/')}#${id}`} onClick={close}>
                     {t(`landing.nav.sections.${id}`)}
                   </S.NavLink>
                 </li>
               ))}
               <li>
-                <S.NavButton type="button" onClick={() => void i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko')}>
+                <S.NavButton type="button" onClick={switchLanguage}>
                   {i18n.language === 'ko' ? 'Switch to English' : '한국어로 전환'}
                 </S.NavButton>
               </li>
               <li>
-                <S.NavLinkRouter to="/auth/portfolios" onClick={close}>
+                <S.NavLinkRouter to={localizedPath('/auth/portfolios')} onClick={close}>
                   {t('landing.nav.portfolio')}
                 </S.NavLinkRouter>
               </li>
@@ -87,7 +91,7 @@ const GlabGuideMobileNav = () => {
                 </li>
               ) : (
                 <li>
-                  <S.NavLinkRouter to="/login" onClick={close}>
+                  <S.NavLinkRouter to={localizedPath('/login')} onClick={close}>
                     {t('landing.nav.loginSignup')}
                   </S.NavLinkRouter>
                 </li>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import DescriptionBox from '../../../components/feature/DescriptionBox';
+import { useLocalizedPath } from '../../../i18n/useLocalizedPath';
 import { getPropensity } from '../../../utils/propensity';
 import { S } from './style';
 import Text from '../../../components/common/Text';
@@ -9,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 const PortfolioListPage = () => {
   const { t } = useTranslation();
+  const localizedPath = useLocalizedPath();
   const userInfoQuery = useGetUserInfoQuery();
   if (!userInfoQuery.isSuccess) {
     return null;
@@ -41,7 +43,7 @@ const PortfolioListPage = () => {
               </S.PropensityText>
             )}
           </S.PropensityTextWrapper>
-          <Link to="/auth/analysis">
+          <Link to={localizedPath('/auth/analysis')}>
             <S.AnalysisButton>
               <Text color="White" typograph="md_bold">
                 {userInfoQuery.data.detail.propensity === null

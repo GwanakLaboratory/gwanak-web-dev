@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
 import { accessTokenAtom } from '../../../store/auth';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '../../../i18n/useLocalizedPath';
 
 type LoginForm = {
   email: string;
@@ -16,6 +17,7 @@ const LoginPage = () => {
   const { t } = useTranslation();
   const loginMutation = useSignInMutation();
   const navigate = useNavigate();
+  const localizedPath = useLocalizedPath();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const {
     control,
@@ -40,7 +42,7 @@ const LoginPage = () => {
             onSuccess: (res) => {
               // 로그인 성공 시 accessToken을 먼저 세팅한 뒤 이동(RequireAuth 리다이렉트 레이스 방지)
               setAccessToken(res.detail.access_token);
-              navigate('/auth/portfolios');
+              navigate(localizedPath('/auth/portfolios'));
             },
             onError: () => {
               alert(t('auth.login.invalidCredential'));
@@ -84,7 +86,7 @@ const LoginPage = () => {
           {t('auth.login.submit')}
         </S.LoginButton>
         <S.FooterLink>
-          {t('auth.login.noAccount')} <Link to="/signup">{t('auth.login.signup')}</Link>
+          {t('auth.login.noAccount')} <Link to={localizedPath('/signup')}>{t('auth.login.signup')}</Link>
         </S.FooterLink>
       </S.LoginForm>
     </S.AuthCard>

@@ -2,6 +2,8 @@ import type { RefObject } from 'react';
 import { Link } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '../../../i18n/useLocalizedPath';
+import { useLanguageSwitch } from '../../../i18n/useLanguageSwitch';
 import { useSignOutMutation } from '../../../apis';
 import { accessTokenAtom } from '../../../store/auth';
 import {
@@ -27,6 +29,8 @@ const LandingNavBar = (props: LandingNavBarProps) => {
   const accessToken = useAtomValue(accessTokenAtom);
   const logoutMutation = useSignOutMutation();
   const { t, i18n } = useTranslation();
+  const localizedPath = useLocalizedPath();
+  const switchLanguage = useLanguageSwitch();
 
   const handleLogout = () => {
     if (window.confirm(t('ui.logoutConfirm'))) {
@@ -43,7 +47,7 @@ const LandingNavBar = (props: LandingNavBarProps) => {
     <NavShell className={shellClass}>
       <nav>
         {isAuth ? (
-          <Link className="nav-logo" to="/">
+          <Link className="nav-logo" to={localizedPath('/')}>
             <img src={LogoPNG} alt="GWANAK LAB logo" />
           </Link>
         ) : (
@@ -62,7 +66,7 @@ const LandingNavBar = (props: LandingNavBarProps) => {
         <div className="nav-links">
           {NAV_SCROLL_IDS.map((id) =>
             isAuth ? (
-              <a key={id} href={`/#${id}`}>
+              <a key={id} href={`${localizedPath('/')}#${id}`}>
                 {t(`landing.nav.sections.${id}`)}
               </a>
             ) : (
@@ -83,14 +87,10 @@ const LandingNavBar = (props: LandingNavBarProps) => {
 
         {isAuth && (
           <div className="nav-actions">
-            <button
-              type="button"
-              className="nav-auth-btn nav-lang-btn"
-              onClick={() => void i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko')}
-            >
+            <button type="button" className="nav-auth-btn nav-lang-btn" onClick={switchLanguage}>
               {i18n.language === 'ko' ? 'EN' : 'KO'}
             </button>
-            <Link className="nav-auth-btn nav-auth-soft" to="/auth/portfolios">
+            <Link className="nav-auth-btn nav-auth-soft" to={localizedPath('/auth/portfolios')}>
               {t('landing.nav.portfolio')}
             </Link>
             {accessToken !== null && accessToken !== '' ? (
@@ -102,7 +102,7 @@ const LandingNavBar = (props: LandingNavBarProps) => {
                 {t('landing.nav.logout')}
               </button>
             ) : (
-              <Link className="nav-auth-btn nav-auth-outline" to="/login">
+              <Link className="nav-auth-btn nav-auth-outline" to={localizedPath('/login')}>
                 {t('landing.nav.loginSignup')}
               </Link>
             )}

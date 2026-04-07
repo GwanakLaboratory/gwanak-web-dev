@@ -9,6 +9,7 @@ import DescriptionBox from '../../../components/feature/DescriptionBox';
 import Table from '../../../components/common/Table';
 import { formattedRatio } from '../../../utils/portfolio';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '../../../i18n/useLocalizedPath';
 type PortfolioUpdatingInfo = {
   title: string;
   account: number;
@@ -16,6 +17,7 @@ type PortfolioUpdatingInfo = {
 
 const PortfolioResultPage = () => {
   const { t } = useTranslation();
+  const localizedPath = useLocalizedPath();
   const location = useLocation();
   const navigate = useNavigate();
   const { register, handleSubmit, control } = useForm<PortfolioUpdatingInfo>();
@@ -27,7 +29,7 @@ const PortfolioResultPage = () => {
 
   useEffect(() => {
     if (!location.state) {
-      navigate('/auth/portfolios/create', { replace: true });
+      navigate(localizedPath('/auth/portfolios/create'), { replace: true });
     }
   }, []);
 
@@ -65,7 +67,7 @@ const PortfolioResultPage = () => {
       },
       {
         onSuccess: () => {
-          navigate('/auth/portfolios');
+          navigate(localizedPath('/auth/portfolios'));
         },
       },
     );

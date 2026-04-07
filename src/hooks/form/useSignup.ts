@@ -2,6 +2,7 @@ import { useMemo, MouseEvent, useState, useEffect } from 'react';
 import { SubmitHandler, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
+import { useLocalizedPath } from '../../i18n/useLocalizedPath';
 import {
   AuthSignUpViewModel,
   useKaKaoInfoCheckMutation,
@@ -19,6 +20,7 @@ const SKIP_PHONE_VERIFICATION = true;
 const useSignUpForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const localizedPath = useLocalizedPath();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const {
     register,
@@ -107,7 +109,7 @@ const useSignUpForm = () => {
             {
               onSuccess: (res) => {
                 setAccessToken(res.detail.access_token);
-                navigate('/auth/portfolios', { replace: true });
+                navigate(localizedPath('/auth/portfolios'), { replace: true });
               },
               onError: () => {
                 alert(
@@ -116,7 +118,7 @@ const useSignUpForm = () => {
                       '회원가입은 완료되었습니다. 로그인 페이지에서 다시 시도해 주세요.',
                   }),
                 );
-                navigate('/login', { replace: true });
+                navigate(localizedPath('/login'), { replace: true });
               },
             },
           );
