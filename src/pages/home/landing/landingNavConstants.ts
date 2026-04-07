@@ -3,7 +3,6 @@ export const NAV_SCROLL_IDS = [
   'about',
   'projects',
   'achievements',
-  'team',
   'contact',
 ] as const;
 
@@ -14,6 +13,5 @@ export const SECTION_LABELS: Record<NavScrollId, string> = {
   about: 'About',
   projects: 'Projects',
   achievements: 'Achievements',
-  team: 'Team',
   contact: 'Contact',
 };

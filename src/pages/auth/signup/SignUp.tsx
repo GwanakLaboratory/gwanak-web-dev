@@ -1,11 +1,13 @@
 import Checkbox from '../../../components/common/Checkbox';
 import { Link } from 'react-router-dom';
+import { useLocalizedPath } from '../../../i18n/useLocalizedPath';
 import useSignUpForm from '../../../hooks/form/useSignup';
 import { S } from './style';
 import { useTranslation } from 'react-i18next';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
+  const localizedPath = useLocalizedPath();
   const {
     register,
     errors,
@@ -138,7 +140,7 @@ const SignUpPage = () => {
           {t('auth.signup.submit')}
         </S.SubmitButton>
         <S.FooterLink>
-          {t('auth.signup.hasAccount')} <Link to="/login">{t('auth.signup.login')}</Link>
+          {t('auth.signup.hasAccount')} <Link to={localizedPath('/login')}>{t('auth.signup.login')}</Link>
         </S.FooterLink>
       </S.SignupForm>
     </S.AuthCard>

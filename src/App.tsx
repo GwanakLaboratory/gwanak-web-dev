@@ -16,50 +16,60 @@ import LoginPage from './pages/auth/login';
 import SignUpPage from './pages/auth/signup';
 import NotFoundPage from './pages/system/not-found';
 import EventListenerManager from './EventListenerManager';
+import LocaleLayout from './components/LocaleLayout';
+import RootLocaleRedirect from './components/RootLocaleRedirect';
 import './lib/assets/styles/index.css';
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <EventListenerManager />,
+      element: <RootLocaleRedirect />,
+    },
+    {
+      path: '/:lang',
+      element: <LocaleLayout />,
       children: [
-        { index: true, element: <LandingPage /> },
-        { path: 'glab-start', element: <GlabStartGuidePage /> },
         {
-          path: '/auth',
-          element: <RequireAuth />,
+          element: <EventListenerManager />,
           children: [
+            { index: true, element: <LandingPage /> },
+            { path: 'glab-start', element: <GlabStartGuidePage /> },
             {
-              element: <BasicLayout />,
+              path: 'auth',
+              element: <RequireAuth />,
               children: [
-                { path: 'portfolios', element: <PortfolioListPage /> },
-                { path: 'portfolios/create', element: <CreatePortfolioPage /> },
-                { path: 'portfolios/result', element: <PortfolioResultPage /> },
-                { path: 'analysis', element: <AnalysisMainPage /> },
-                { path: 'analysis/result', element: <AnalysisResultPage /> },
+                {
+                  element: <BasicLayout />,
+                  children: [
+                    { path: 'portfolios', element: <PortfolioListPage /> },
+                    { path: 'portfolios/create', element: <CreatePortfolioPage /> },
+                    { path: 'portfolios/result', element: <PortfolioResultPage /> },
+                    { path: 'analysis', element: <AnalysisMainPage /> },
+                    { path: 'analysis/result', element: <AnalysisResultPage /> },
+                  ],
+                },
               ],
             },
-          ],
-        },
-        {
-          path: '/',
-          element: <RejectAuth />,
-          children: [
             {
-              element: <AuthLandingLayout />,
+              element: <RejectAuth />,
               children: [
-                { path: 'login', element: <LoginPage /> },
-                { path: 'signup', element: <SignUpPage /> },
-                { path: 'forgot-email', element: <ForgotEmailPage /> },
-                { path: 'forgot-password', element: <ForgotPasswordPage /> },
+                {
+                  element: <AuthLandingLayout />,
+                  children: [
+                    { path: 'login', element: <LoginPage /> },
+                    { path: 'signup', element: <SignUpPage /> },
+                    { path: 'forgot-email', element: <ForgotEmailPage /> },
+                    { path: 'forgot-password', element: <ForgotPasswordPage /> },
+                  ],
+                },
               ],
             },
+            {
+              path: '*',
+              element: <NotFoundPage />,
+            },
           ],
-        },
-        {
-          path: '*',
-          element: <NotFoundPage />,
         },
       ],
     },

@@ -2,10 +2,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { PortfolioRequest, useCreatePortfolio } from '../../apis/portfolio';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedPath } from '../../i18n/useLocalizedPath';
 
 const usePortfolioForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const localizedPath = useLocalizedPath();
   const createPortfolioMutation = useCreatePortfolio();
   const {
     register,
@@ -22,7 +24,7 @@ const usePortfolioForm = () => {
       { model, propensity },
       {
         onSuccess: (data) => {
-          navigate('/auth/portfolios/result', {
+          navigate(localizedPath('/auth/portfolios/result'), {
             state: data.detail.portfolio_id,
           });
         },
