@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type TimelineEntry = { date: string; title: string };
@@ -21,10 +21,75 @@ const TIMELINE_KEYS = [
   { date: '26.03', titleKey: 'timeline.i11' },
 ] as const;
 
+/** 연혁·소개에 맞춘 협력·연계 기관 (한 번만 정의) */
+const PARTNER_KEYS = [
+  'partners.snu',
+  'partners.uos',
+  'partners.lgCns',
+  'partners.seoulFintech',
+  'partners.ibk',
+  'partners.kibo',
+  'partners.kftc',
+  'partners.bnk',
+] as const;
+
+/** 무한 마퀴용 길이 — map은 한 번만 ([...keys, ...keys].map) */
+const PARTNER_STRIP = [...PARTNER_KEYS, ...PARTNER_KEYS];
+
+type PartnerKey = (typeof PARTNER_KEYS)[number];
+
+/** `public/partners/` 로컬 파일 (웹에서 내려받아 저장) */
+const PARTNER_LOGO_FILES: Record<PartnerKey, string> = {
+  'partners.snu': 'snu.svg',
+  'partners.uos': 'uos.png',
+  'partners.lgCns': 'lg-cns-wordmark.png',
+  'partners.seoulFintech': 'seoul-fintech-lab.png',
+  'partners.ibk': 'ibk.svg',
+  'partners.kibo': 'kibo.svg',
+  'partners.kftc': 'kftc.png',
+  'partners.bnk': 'bnk.png',
+};
+
+/** 큰 로고는 그대로 두고, 작은 에셋만 키움(서울핀테크랩 등 축소 없음) */
+function partnerLogoClassName(key: PartnerKey): string {
+  const parts = ['partner-marquee-logo'];
+  if (key === 'partners.snu' || key === 'partners.uos') {
+    parts.push('partner-marquee-logo--wordmark');
+  }
+  if (key === 'partners.lgCns') {
+    parts.push('partner-marquee-logo--boostOg');
+  } else if (key === 'partners.ibk') {
+    parts.push('partner-marquee-logo--boost');
+  }
+  return parts.join(' ');
+}
+
+function partnerItemClassName(key: PartnerKey): string {
+  const parts = ['partner-marquee-item'];
+  if (key === 'partners.ibk') {
+    parts.push('partner-marquee-item--ibk');
+  }
+  if (key === 'partners.lgCns') {
+    parts.push('partner-marquee-item--contain');
+  }
+  return parts.join(' ');
+}
+
 const AchievementsSection = () => {
   const { t } = useTranslation();
+  const [reducePartnerMotion, setReducePartnerMotion] = useState(false);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [activeEvidenceIdx, setActiveEvidenceIdx] = useState<number | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setReducePartnerMotion(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
+  const partnerStrip = reducePartnerMotion ? [...PARTNER_KEYS] : PARTNER_STRIP;
   const timeline: TimelineEntry[] = TIMELINE_KEYS.map((item) => ({
     date: item.date,
     title: t(`landing.achievements.${item.titleKey}`),
@@ -160,6 +225,39 @@ const AchievementsSection = () => {
                 {groupIdx < evidenceGroups.length - 1 && <div className="ev-group-divider" />}
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="ach-partners reveal" aria-label={t('landing.achievements.partnersTitle')}>
+        <h4 className="ach-partners-title">{t('landing.achievements.partnersTitle')}</h4>
+        <div
+          className={`partner-marquee${reducePartnerMotion ? ' partner-marquee--static' : ''}`}
+          role="presentation"
+        >
+          <div
+            className={`partner-marquee-track${reducePartnerMotion ? ' partner-marquee-track--static' : ''}`}
+          >
+            {partnerStrip.map((key, idx) => {
+              const logoFile = PARTNER_LOGO_FILES[key];
+              const label = t(`landing.achievements.${key}`);
+              const isDuplicateLap = idx >= PARTNER_KEYS.length;
+              return (
+                <div key={`${key}-${idx}`} className={partnerItemClassName(key)}>
+                  {logoFile ? (
+                    <img
+                      className={partnerLogoClassName(key)}
+                      src={`/partners/${logoFile}`}
+                      alt={isDuplicateLap ? '' : label}
+                      loading="eager"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span className="partner-marquee-text">{label}</span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

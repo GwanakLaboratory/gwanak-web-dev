@@ -12,6 +12,10 @@ import {
 import { NavShell } from './style';
 import LogoPNG from '../../../lib/assets/images/logo_transparent.png';
 
+/** 리전 인디케이터 이모지(🇰🇷 🇺🇸). 일부 구형 윈도우에서는 KR/US 두 글자로 보일 수 있음 */
+const FLAG_EMOJI_KR = '\u{1F1F0}\u{1F1F7}';
+const FLAG_EMOJI_US = '\u{1F1FA}\u{1F1F8}';
+
 type LandingNavBarProps =
   | {
       variant: 'landing';
@@ -109,14 +113,24 @@ const LandingNavBar = (props: LandingNavBarProps) => {
               onClick={() => setLangOpen((v) => !v)}
               aria-haspopup="listbox"
               aria-expanded={langOpen}
+              aria-label={
+                i18n.language === 'ko'
+                  ? 'Language: Korean, select English'
+                  : 'Language: English, select Korean'
+              }
             >
-              {i18n.language === 'ko' ? '한국어' : 'English'}
+              <span className="nav-lang-trigger-inner">
+                <span className="nav-lang-flag-emoji" aria-hidden>
+                  {i18n.language === 'ko' ? FLAG_EMOJI_KR : FLAG_EMOJI_US}
+                </span>
+                <span className="nav-lang-code">{i18n.language === 'ko' ? 'KO' : 'EN'}</span>
+              </span>
               <span className="nav-lang-chevron" aria-hidden>
                 ▾
               </span>
             </button>
             {langOpen && (
-              <div className="nav-lang-menu" role="listbox" aria-label="language selector">
+              <div className="nav-lang-menu" role="listbox" aria-label="Language">
                 <button
                   type="button"
                   className={`nav-lang-option${i18n.language === 'ko' ? ' active' : ''}`}
@@ -125,7 +139,12 @@ const LandingNavBar = (props: LandingNavBarProps) => {
                     setLangOpen(false);
                   }}
                 >
-                  한국어
+                  <span className="nav-lang-option-inner">
+                    <span className="nav-lang-flag-emoji" aria-hidden>
+                      {FLAG_EMOJI_KR}
+                    </span>
+                    <span>KO</span>
+                  </span>
                 </button>
                 <button
                   type="button"
@@ -135,7 +154,12 @@ const LandingNavBar = (props: LandingNavBarProps) => {
                     setLangOpen(false);
                   }}
                 >
-                  English
+                  <span className="nav-lang-option-inner">
+                    <span className="nav-lang-flag-emoji" aria-hidden>
+                      {FLAG_EMOJI_US}
+                    </span>
+                    <span>EN</span>
+                  </span>
                 </button>
               </div>
             )}
