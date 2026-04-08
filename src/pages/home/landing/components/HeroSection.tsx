@@ -5,8 +5,14 @@ type HeroSectionProps = {
   onContact: () => void;
 };
 
-const STEP_INTERVAL = 3200;
+const CYCLE_PAUSE = 700;
 const PARTICLE_COUNT = 50;
+const BASE_FRAME_MS = 1000 / 60;
+const ZONE1_SPEED = 94;
+const ZONE2_SPEED = 76;
+const ZONE3_SPEED = 98;
+const STEP_TIMING_FACTOR = 0.68;
+const STRUCTURE_LINK_DISTANCE = 40;
 
 type Particle = {
   x: number;
@@ -27,9 +33,9 @@ function initParticles(w: number, h: number): Particle[] {
   for (let i = 0; i < PARTICLE_COUNT; i++) {
     const y = Math.random() * h;
     arr.push({
-      x: Math.random() * w,
+      x: -4 - Math.random() * Math.min(w * 0.42, 220),
       y,
-      vx: 0.4 + Math.random() * 0.5,
+      vx: ZONE1_SPEED + Math.random() * 15,
       vy: 0,
       size: 2.4 + Math.random() * 2.2,
       phase: Math.random() * Math.PI * 2,
@@ -47,7 +53,7 @@ function resetParticle(p: Particle, h: number) {
   const y = Math.random() * h;
   p.x = -4 - Math.random() * 20;
   p.y = y;
-  p.vx = 0.4 + Math.random() * 0.5;
+  p.vx = ZONE1_SPEED + Math.random() * 15;
   p.vy = 0;
   p.decision = Math.floor(Math.random() * 3);
   p.trail = [y, y, y, y];
@@ -75,17 +81,9 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
   const rafRef = useRef<number>(0);
   const [activeStep, setActiveStep] = useState(0);
   const activeStepRef = useRef(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActiveStep((prev) => {
-        const next = (prev + 1) % 3;
-        activeStepRef.current = next;
-        return next;
-      });
-    }, STEP_INTERVAL);
-    return () => clearInterval(id);
-  }, []);
+  const cycleStartedAtRef = useRef(0);
+  const loopIndexRef = useRef(-1);
+  const lastFrameAtRef = useRef(0);
 
   const renderCanvas = useCallback(() => {
     const canvas = canvasRef.current;
@@ -98,8 +96,44 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
     const h = rect.height;
     const z1 = w / 3;
     const z2 = (w * 2) / 3;
-    const step = activeStepRef.current;
     const now = performance.now();
+    const deltaMs = lastFrameAtRef.current
+      ? Math.min(now - lastFrameAtRef.current, BASE_FRAME_MS * 3)
+      : BASE_FRAME_MS;
+    const frameScale = deltaMs / BASE_FRAME_MS;
+    const deltaSeconds = deltaMs / 1000;
+    lastFrameAtRef.current = now;
+    const spawnRange = Math.min(w * 0.42, 220);
+    const zone1Duration = ((z1 + spawnRange * 0.7) / ZONE1_SPEED) * 1000;
+    const zone2Duration = ((z2 - z1) / ZONE2_SPEED) * 1000;
+    const zone3Duration = ((w - z2 + 24) / ZONE3_SPEED) * 1000;
+    const cycleDuration = zone1Duration + zone2Duration + zone3Duration;
+    const stepZone1Duration = zone1Duration * STEP_TIMING_FACTOR;
+    const stepZone2Duration = zone2Duration * STEP_TIMING_FACTOR;
+    const stepCycleDuration = stepZone1Duration + stepZone2Duration;
+    const loopDuration = cycleDuration + CYCLE_PAUSE;
+    const elapsed = now - cycleStartedAtRef.current;
+    const loopElapsed = elapsed % loopDuration;
+    const isPaused = loopElapsed >= cycleDuration;
+    const loopIndex = Math.floor(elapsed / loopDuration);
+    const step = isPaused
+      ? 2
+      : loopElapsed < stepZone1Duration
+        ? 0
+        : loopElapsed < stepCycleDuration
+          ? 1
+          : 2;
+
+    if (loopIndex !== loopIndexRef.current) {
+      loopIndexRef.current = loopIndex;
+      particlesRef.current = initParticles(w, h);
+      lastFrameAtRef.current = now;
+    }
+
+    if (step !== activeStepRef.current) {
+      activeStepRef.current = step;
+      setActiveStep(step);
+    }
 
     ctx.clearRect(0, 0, w, h);
 
@@ -135,8 +169,11 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
 
     // decide zone lane markers
     const laneY = [h * 0.22, h * 0.5, h * 0.78];
-    const laneLabels = ['▲', '—', '▼'];
+    // U+25B2/U+25B6/U+25BC: 꽉 찬 삼각형(위·오른쪽·아래)
+    const laneLabels = ['\u25B2', '\u25B6', '\u25BC'];
     const laneColors = ['#ef4444', '#22c55e', '#3b82f6']; // top red, middle green, bottom blue
+    const laneLabelX = w - 14;
+    const laneLineEndX = laneLabelX - 14;
     for (let i = 0; i < 3; i++) {
       ctx.beginPath();
       ctx.setLineDash([2, 4]);
@@ -148,7 +185,7 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
             : 'rgba(59,130,246,0.45)';
       ctx.lineWidth = 1.8;
       ctx.moveTo(z2 + 4, laneY[i]);
-      ctx.lineTo(w - 4, laneY[i]);
+      ctx.lineTo(laneLineEndX, laneY[i]);
       ctx.stroke();
       ctx.setLineDash([]);
 
@@ -156,11 +193,16 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
       ctx.textAlign = 'right';
       ctx.fillStyle = laneColors[i];
       ctx.globalAlpha = 0.5;
-      ctx.fillText(laneLabels[i], w - 6, laneY[i] + 4);
+      ctx.fillText(laneLabels[i], laneLabelX, laneY[i] + 4);
       ctx.globalAlpha = 1;
     }
 
     const particles = particlesRef.current;
+
+    if (isPaused) {
+      rafRef.current = requestAnimationFrame(renderCanvas);
+      return;
+    }
 
     // particle update & render
     particles.forEach((p, idx) => {
@@ -182,10 +224,10 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
 
       // --- ZONE 1: random vertical oscillation with trail ---
       if (inZone1) {
-        p.vx = 0.5 + Math.random() * 0.15;
+        p.vx = ZONE1_SPEED + Math.random() * 12;
         p.vy = Math.sin(now * 0.003 + p.phase) * 1.4;
-        p.y += p.vy;
-        p.x += p.vx;
+        p.y += p.vy * frameScale;
+        p.x += p.vx * deltaSeconds;
 
         // clamp within canvas
         if (p.y < 8) p.y = 8;
@@ -217,10 +259,10 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
 
       // --- ZONE 2: connect nearby particles, form pattern ---
       if (inZone2) {
-        p.vx = 0.35 + Math.random() * 0.1;
+        p.vx = ZONE2_SPEED + Math.random() * 10;
         p.vy *= 0.92;
-        p.y += p.vy + Math.sin(now * 0.002 + p.phase) * 0.3;
-        p.x += p.vx;
+        p.y += (p.vy + Math.sin(now * 0.002 + p.phase) * 0.3) * frameScale;
+        p.x += p.vx * deltaSeconds;
 
         if (p.y < 8) p.y = 8;
         if (p.y > h - 8) p.y = h - 8;
@@ -236,12 +278,12 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
           const dx = p.x - other.x;
           const dy = p.y - other.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 55) {
+          if (dist < STRUCTURE_LINK_DISTANCE) {
             const lineR = (p.r + other.r) * 0.5;
             const lineG = (p.g + other.g) * 0.5;
             const lineB = (p.b + other.b) * 0.5;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(${Math.round(lineR)},${Math.round(lineG)},${Math.round(lineB)},${(0.38 * (1 - dist / 55)).toFixed(3)})`;
+            ctx.strokeStyle = `rgba(${Math.round(lineR)},${Math.round(lineG)},${Math.round(lineB)},${(0.38 * (1 - dist / STRUCTURE_LINK_DISTANCE)).toFixed(3)})`;
             ctx.lineWidth = 3.1;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(other.x, other.y);
@@ -279,9 +321,9 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
         else p.decision = 2;
 
         const targetY = laneY[p.decision];
-        p.y += (targetY - p.y) * 0.06;
-        p.vx = 0.45 + Math.random() * 0.12;
-        p.x += p.vx;
+        p.y += (targetY - p.y) * 0.06 * frameScale;
+        p.vx = ZONE3_SPEED + Math.random() * 12;
+        p.x += p.vx * deltaSeconds;
         const color =
           p.decision === 0
             ? `rgb(${Math.round(p.r)},80,80)`
@@ -298,9 +340,10 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
         ctx.globalAlpha = 1;
       }
 
-      // reset when out of bounds
+      // A cycle uses a finite batch of particles, so once a particle exits
+      // the canvas we let it disappear until the next loop restarts.
       if (p.x > w + 10 || p.x < -60 || p.y < -40 || p.y > h + 40) {
-        resetParticle(p, h);
+        return;
       }
     });
 
@@ -319,6 +362,11 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
       const ctx = canvas.getContext('2d');
       ctx?.setTransform(ratio, 0, 0, ratio, 0, 0);
       particlesRef.current = initParticles(rect.width, rect.height);
+      cycleStartedAtRef.current = performance.now();
+      loopIndexRef.current = 0;
+      lastFrameAtRef.current = 0;
+      activeStepRef.current = 0;
+      setActiveStep(0);
     };
 
     resize();

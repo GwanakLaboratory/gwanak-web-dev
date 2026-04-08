@@ -63,6 +63,16 @@ const glabCursorPulse = keyframes`
   }
 `;
 
+/** 동일 한 줄을 두 번 이어 붙인 뒤 -50% 이동 → 왼쪽으로 나간 만큼 오른쪽에서 이어짐 */
+const partnerMarqueeLoop = keyframes`
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+`;
+
 export const S = {
   LandingWrapper: styled.div`
     --bg: #fafbfe;
@@ -1425,6 +1435,126 @@ export const S = {
       opacity: 0.7;
     }
 
+    /* ── 협력 기관 로고: strip은 TS에서 [...keys, ...keys] 한 번만 map, 흰 로고 대비 배경 ── */
+    .ach-partners {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .ach-partners-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 0 0 20px;
+      text-align: center;
+    }
+
+    .partner-marquee {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      padding: 18px 0;
+      box-sizing: border-box;
+      /* 가장자리만 살짝 페이드 — 5%는 로고가 통째로 사라져 보일 수 있어 좁힘 */
+      mask-image: linear-gradient(
+        90deg,
+        transparent,
+        #000 1.5%,
+        #000 98.5%,
+        transparent
+      );
+    }
+
+    .partner-marquee--static {
+      mask-image: none;
+    }
+
+    .partner-marquee-track {
+      display: flex;
+      flex-wrap: nowrap;
+      width: max-content;
+      gap: 12px;
+      animation: ${partnerMarqueeLoop} 48s linear infinite;
+    }
+
+    .partner-marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    .partner-marquee-track--static {
+      animation: none !important;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .partner-marquee-item {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 30px;
+      min-height: 104px;
+      min-width: 128px;
+      overflow: visible;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+    .partner-marquee-item--ibk {
+    min-width: 180px;
+    padding-left: 42px;
+      padding-right: 42px;
+    }
+
+    .partner-marquee-item--contain {
+      overflow: hidden;
+    }
+
+    .partner-marquee-text {
+      font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .partner-marquee-logo {
+      display: block;
+      max-height: 64px;
+      max-width: min(340px, 88vw);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      transform-origin: center;
+    }
+
+    /* 서울대·시립대 로고타입(가로 문구 포함) */
+    .partner-marquee-logo--wordmark {
+      max-height: 48px;
+      max-width: min(300px, 84vw);
+      min-width: 0;
+    }
+
+    .partner-marquee-logo--boost {
+      transform: scale(1.5);
+    }
+
+    .partner-marquee-logo--boostOg {
+      max-width: min(220px, 64vw);
+      transform: scale(1.16);
+    }
+
     /* ──── TEAM ──── */
     .team-grid {
       display: grid;
@@ -1698,6 +1828,49 @@ export const S = {
 
       .team-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ach-partners {
+        margin-top: 40px;
+        padding-top: 28px;
+      }
+
+      .partner-marquee {
+        padding: 12px 0;
+      }
+
+      .partner-marquee-item {
+        padding: 14px 16px;
+        min-height: 80px;
+        min-width: 112px;
+      }
+
+      .partner-marquee-item--ibk {
+        min-width: 140px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .partner-marquee-logo {
+        max-height: 52px;
+        max-width: min(90vw, 300px);
+      }
+
+      .partner-marquee-logo--wordmark {
+        max-height: 42px;
+      }
+
+      .partner-marquee-logo--boost {
+        transform: scale(1.32);
+      }
+
+      .partner-marquee-logo--boostOg {
+        max-width: min(180px, 58vw);
+        transform: scale(1.06);
+      }
+
+      .partner-marquee-text {
+        font-size: 13px;
       }
 
       .landing-footer {

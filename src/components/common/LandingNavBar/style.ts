@@ -158,11 +158,11 @@ export const NavShell = styled.div`
     background: #fff;
     color: var(--primary);
     min-height: 34px;
-    padding: 0 30px 0 12px;
+    padding: 0 30px 0 10px;
     border-radius: 8px;
     font-size: 12px;
     font-weight: 600;
-    font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
     cursor: pointer;    
     outline: none;
     transition:
@@ -173,6 +173,35 @@ export const NavShell = styled.div`
     display: inline-flex;
     align-items: center;
     position: relative;
+  }
+
+  .nav-lang-trigger-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-lang-code {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-lang-flag-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .nav-lang-option-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
   }
 
   .nav-lang-trigger:hover {
@@ -205,7 +234,7 @@ export const NavShell = styled.div`
     position: absolute;
     top: calc(100% + 6px);
     right: 0;
-    min-width: 120px;
+    min-width: 132px;
     padding: 6px;
     border: 1px solid var(--border);
     background: #fff;
