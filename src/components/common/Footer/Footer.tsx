@@ -1,12 +1,11 @@
 import { S } from './style';
-import LogoPNG from '../../../lib/assets/images/logo_transparent.png';
 
 const Footer = () => {
   return (
     <S.FooterContainer className="layout-padding">
       <S.FooterHeaderRow>
         <S.LogoContainer>
-          <img src={LogoPNG} alt="logo" style={{ width: '100%' }} />
+          <img src="/gwanak-logo.png" alt="GWANAK LAB logo" style={{ width: '100%' }} />
         </S.LogoContainer>
       </S.FooterHeaderRow>
       <S.FooterDescriptionWrapper>

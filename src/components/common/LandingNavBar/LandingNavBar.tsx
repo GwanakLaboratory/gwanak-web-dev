@@ -10,7 +10,6 @@ import {
   type NavScrollId,
 } from '../../../pages/home/landing/landingNavConstants';
 import { NavShell } from './style';
-import LogoPNG from '../../../lib/assets/images/logo_transparent.png';
 
 /** 리전 인디케이터 이모지(🇰🇷 🇺🇸). 일부 구형 윈도우에서는 KR/US 두 글자로 보일 수 있음 */
 const FLAG_EMOJI_KR = '\u{1F1F0}\u{1F1F7}';
@@ -68,7 +67,7 @@ const LandingNavBar = (props: LandingNavBarProps) => {
       <nav>
         {isAuth ? (
           <Link className="nav-logo" to={localizedPath('/')}>
-            <img src={LogoPNG} alt="GWANAK LAB logo" />
+            <img src="/gwanak-logo.png" alt="GWANAK LAB logo" />
           </Link>
         ) : (
           <a
@@ -79,7 +78,7 @@ const LandingNavBar = (props: LandingNavBarProps) => {
               props.wrapperRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
-            <img src={LogoPNG} alt="GWANAK LAB logo" />
+            <img src="/gwanak-logo.png" alt="GWANAK LAB logo" />
           </a>
         )}
 

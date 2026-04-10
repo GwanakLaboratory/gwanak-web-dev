@@ -9,7 +9,6 @@ import { useSignOutMutation } from '../../../apis';
 import { accessTokenAtom } from '../../../store/auth';
 import { NAV_SCROLL_IDS } from '../landing/landingNavConstants';
 import { S } from './glabGuideMobileNavStyle';
-import LogoPNG from '../../../lib/assets/images/logo_transparent.png';
 
 const GlabGuideMobileNav = () => {
   const [open, setOpen] = useState(false);
@@ -59,7 +58,7 @@ const GlabGuideMobileNav = () => {
           >
             <S.PanelHeader>
               <Link to={localizedPath('/')} onClick={close}>
-                <img src={LogoPNG} alt="GWANAK LAB logo" />
+                <img src="/gwanak-logo.png" alt="GWANAK LAB logo" />
               </Link>
               <S.CloseBtn type="button" aria-label={t('ui.closeMenu')} onClick={close}>
                 ×
