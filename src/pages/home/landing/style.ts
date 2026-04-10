@@ -824,17 +824,73 @@ export const S = {
       background: none;
     }
 
+    .service-b2-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+      column-gap: 40px;
+      row-gap: 0;
+      margin-top: 48px;
+      align-items: start;
+    }
+
+    .service-b2-divider {
+      width: 1px;
+      align-self: stretch;
+      min-height: 160px;
+      margin: 0;
+      border: none;
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        var(--border) 8%,
+        var(--border) 92%,
+        transparent 100%
+      );
+    }
+
+    .service-b2-column {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .service-b2-column-head .section-label {
+      margin-bottom: 0;
+    }
+
+    .service-b2-column-desc {
+      margin-top: 12px;
+      margin-bottom: 0;
+      max-width: 100%;
+    }
+
+    .service-b2-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .service-b2-stack .service-card.wide {
+      grid-column: auto;
+    }
+
+    .b2b-cards--pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
     .service-card.wide {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 40px;
       align-items: flex-start;
-      background: linear-gradient(
-        135deg,
-        var(--bg-card) 0%,
-        rgba(41, 86, 224, 0.02) 100%
-      );
+      background: var(--bg-card);
+    }
+
+    .service-card.wide > * {
+      min-width: 0;
     }
 
     .service-icon {
@@ -856,6 +912,11 @@ export const S = {
     .service-icon.green {
       background: var(--accent-bg);
       border: 1px solid rgba(0, 201, 167, 0.15);
+    }
+
+    .service-icon.orange {
+      background: rgba(245, 133, 43, 0.08);
+      border: 1px solid rgba(245, 133, 43, 0.18);
     }
 
     .service-card h3 {
@@ -885,6 +946,31 @@ export const S = {
       border: 1px solid var(--border-strong);
       color: var(--text-muted);
       font-weight: 500;
+    }
+
+    .tag.tag-b2b {
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .tag.tag-b2b--done {
+      background: rgba(0, 201, 167, 0.1);
+      border-color: rgba(0, 201, 167, 0.22);
+      color: #00a88a;
+    }
+
+    .tag.tag-b2b--wip {
+      background: rgba(41, 86, 224, 0.08);
+      border-color: rgba(41, 86, 224, 0.2);
+      color: var(--primary);
+    }
+
+    .tag.tag-b2b--plan {
+      background: rgba(245, 133, 43, 0.1);
+      border-color: rgba(245, 133, 43, 0.22);
+      color: var(--orange);
     }
 
     .demo-box {
@@ -954,18 +1040,53 @@ export const S = {
       display: block;
     }
 
-    .glab-chat-demo {
+    /* 메시지+입력 합산 높이 고정 — 입력이 두 줄이면 영역은 그대로, 메시지 창만 줄고 입력은 아래 고정·위로만 커짐 */
+    .glab-chat {
       display: flex;
       flex-direction: column;
       gap: 12px;
+      min-width: 0;
+      height: 368px;
+      min-height: 368px;
+      max-height: 368px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .glab-chat__thread {
+      min-width: 0;
     }
 
     .glab-chat-msgs {
-      height: 300px;
-      min-height: 300px;
-      max-height: 300px;
+      flex: 1 1 0;
+      min-height: 0;
       overflow-y: auto;
-      flex-shrink: 0;
+      overflow-x: hidden;
+      justify-content: flex-end;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .glab-chat-msgs::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .glab-chat--reduced .glab-chat__thread {
+      flex: 1 1 0;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      justify-content: flex-start;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .glab-chat--reduced .glab-chat__thread::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
     }
 
     .glab-msg-enter {
@@ -985,51 +1106,59 @@ export const S = {
       vertical-align: -0.05em;
     }
 
-    .glab-chat-composer {
+    .glab-chat__composer {
       display: flex;
-      align-items: stretch;
-      gap: 8px;
-      padding-top: 4px;
+      flex-direction: row;
+      align-items: flex-end;
+      flex-shrink: 0;
+      gap: 10px;
+      padding-top: 12px;
       border-top: 1px solid var(--border);
-    }
-
-    .glab-chat-input-wrap {
-      flex: 1;
       min-width: 0;
     }
 
-    .glab-chat-input-fake {
+    .glab-chat__input {
+      box-sizing: border-box;
+      flex: 1;
+      min-width: 0;
       min-height: 40px;
-      padding: 10px 12px;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       border-radius: 10px;
       border: 1px solid var(--border-strong);
       background: var(--bg-card);
-      font-size: 12px;
-      line-height: 1.45;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0;
-      word-break: keep-all;
+      overflow: hidden;
     }
 
-    .glab-chat-caret {
+    .glab-chat__input-line {
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text);
+      max-height: calc(1.4em * 2);
+      overflow: hidden;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .glab-chat__caret {
       display: inline-block;
       width: 2px;
-      height: 14px;
+      height: 1.05em;
       margin-left: 1px;
-      background: var(--primary);
       border-radius: 1px;
+      vertical-align: -0.14em;
+      background: var(--primary);
       animation: ${glabCaretBlink} 1.05s step-end infinite;
-      flex-shrink: 0;
     }
 
-    .glab-chat-send {
+    .glab-chat__send {
       flex-shrink: 0;
-      align-self: center;
-      padding: 0 14px;
-      height: 36px;
+      box-sizing: border-box;
+      height: 40px;
+      padding: 0 16px;
       border: none;
       border-radius: 10px;
       font-size: 11px;
@@ -1041,63 +1170,17 @@ export const S = {
       transition: transform 0.2s ease, filter 0.2s ease;
     }
 
-    .glab-chat-send--active {
+    .glab-chat__send--active {
       animation: ${glabSendPulse} 0.55s ease both;
       filter: brightness(1.08);
     }
 
-    /* ──── B2B ──── */
+    /* ──── B2B (카드는 .service-card와 동일 패턴) ──── */
     .b2b-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin-top: 40px;
-    }
-
-    .b2b-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-    }
-
-    .b2b-status {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 3px;
-      display: inline-block;
-      margin-bottom: 12px;
-      font-family: 'Outfit', sans-serif;
-      letter-spacing: 0.03em;
-    }
-
-    .b2b-status.done {
-      background: rgba(0, 201, 167, 0.1);
-      color: #00a88a;
-    }
-
-    .b2b-status.wip {
-      background: rgba(41, 86, 224, 0.08);
-      color: var(--primary);
-    }
-
-    .b2b-status.plan {
-      background: rgba(245, 133, 43, 0.08);
-      color: var(--orange);
-    }
-
-    .b2b-card h4 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 5px;
-    }
-
-    .b2b-card p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
     }
 
     /* ──── PROJECTS ──── */
@@ -1179,14 +1262,6 @@ export const S = {
       border-top: 1px solid var(--border);
       font-size: 11px;
       color: var(--text-dim);
-    }
-
-    .projects-glov {
-      margin-top: 64px;
-    }
-
-    .projects-glov-desc {
-      max-width: 560px;
     }
 
     /* ──── ACHIEVEMENTS ──── */
@@ -1459,14 +1534,7 @@ export const S = {
       overflow: hidden;
       padding: 18px 0;
       box-sizing: border-box;
-      /* 가장자리만 살짝 페이드 — 5%는 로고가 통째로 사라져 보일 수 있어 좁힘 */
-      mask-image: linear-gradient(
-        90deg,
-        transparent,
-        #000 1.5%,
-        #000 98.5%,
-        transparent
-      );
+      mask-image: linear-gradient(90deg, transparent, #000 2%, #000 98%, transparent);
     }
 
     .partner-marquee--static {
@@ -1496,27 +1564,16 @@ export const S = {
 
     .partner-marquee-item {
       flex-shrink: 0;
+      box-sizing: border-box;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px 30px;
-      min-height: 104px;
-      min-width: 128px;
-      overflow: visible;
-      background: #ffffff;
+      width: 168px;
+      min-height: 88px;
+      padding: 16px 18px;
+      background: #fff;
       border: 1px solid var(--border);
       border-radius: 10px;
-      box-sizing: border-box;
-    }
-
-    .partner-marquee-item--ibk {
-    min-width: 180px;
-    padding-left: 42px;
-      padding-right: 42px;
-    }
-
-    .partner-marquee-item--contain {
-      overflow: hidden;
     }
 
     .partner-marquee-text {
@@ -1530,29 +1587,11 @@ export const S = {
 
     .partner-marquee-logo {
       display: block;
-      max-height: 64px;
-      max-width: min(340px, 88vw);
+      max-width: 100%;
+      max-height: 48px;
       width: auto;
       height: auto;
       object-fit: contain;
-      object-position: center;
-      transform-origin: center;
-    }
-
-    /* 서울대·시립대 로고타입(가로 문구 포함) */
-    .partner-marquee-logo--wordmark {
-      max-height: 48px;
-      max-width: min(300px, 84vw);
-      min-width: 0;
-    }
-
-    .partner-marquee-logo--boost {
-      transform: scale(1.5);
-    }
-
-    .partner-marquee-logo--boostOg {
-      max-width: min(220px, 64vw);
-      transform: scale(1.16);
     }
 
     /* ──── TEAM ──── */
@@ -1730,6 +1769,22 @@ export const S = {
     }
 
     /* ──── RESPONSIVE ──── */
+    @media (max-width: 1100px) {
+      .service-b2-split {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 32px;
+      }
+
+      .service-b2-divider {
+        width: 100%;
+        height: 1px;
+        min-height: 1px;
+        align-self: stretch;
+        background: var(--border);
+      }
+    }
+
     @media (max-width: 900px) {
       scroll-snap-type: none;
 
@@ -1813,6 +1868,7 @@ export const S = {
 
       .about-grid,
       .service-dual,
+      .service-b2-split,
       .ach-layout {
         grid-template-columns: 1fr;
       }
@@ -1822,7 +1878,8 @@ export const S = {
       }
 
       .projects-grid,
-      .b2b-cards {
+      .b2b-cards,
+      .b2b-cards--pair {
         grid-template-columns: 1fr;
       }
 
@@ -1840,33 +1897,13 @@ export const S = {
       }
 
       .partner-marquee-item {
-        padding: 14px 16px;
-        min-height: 80px;
-        min-width: 112px;
-      }
-
-      .partner-marquee-item--ibk {
-        min-width: 140px;
-        padding-left: 24px;
-        padding-right: 24px;
+        width: 140px;
+        min-height: 76px;
+        padding: 12px 14px;
       }
 
       .partner-marquee-logo {
-        max-height: 52px;
-        max-width: min(90vw, 300px);
-      }
-
-      .partner-marquee-logo--wordmark {
-        max-height: 42px;
-      }
-
-      .partner-marquee-logo--boost {
-        transform: scale(1.32);
-      }
-
-      .partner-marquee-logo--boostOg {
-        max-width: min(180px, 58vw);
-        transform: scale(1.06);
+        max-height: 40px;
       }
 
       .partner-marquee-text {

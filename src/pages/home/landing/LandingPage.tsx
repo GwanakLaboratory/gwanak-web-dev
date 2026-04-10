@@ -75,6 +75,9 @@ const LandingPage = () => {
   );
 
   useEffect(() => {
+    const wrap = wrapperRef.current;
+    if (!wrap) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -83,14 +86,21 @@ const LandingPage = () => {
           }
         });
       },
-      { threshold: 0.08 },
+      { threshold: 0, root: wrap, rootMargin: '0px 0px 10% 0px' },
     );
 
-    const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach((el) => observer.observe(el));
+    wrap.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const raw = window.location.hash.replace(/^#/, '');
+    if (!raw || !(NAV_SCROLL_IDS as readonly string[]).includes(raw)) return;
+    const id = raw as NavScrollId;
+    const t = window.setTimeout(() => scrollTo(id), 50);
+    return () => clearTimeout(t);
+  }, [scrollTo]);
 
   useEffect(() => {
     const wrap = wrapperRef.current;

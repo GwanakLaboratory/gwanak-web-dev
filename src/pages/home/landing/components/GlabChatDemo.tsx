@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,16 +8,52 @@ type Bubble =
   | { role: 'user'; text: string }
   | { role: 'ai'; text: string; streaming: boolean };
 
-function nearestScrollRoot(el: HTMLElement | null): Element | null {
-  let p: HTMLElement | null = el?.parentElement ?? null;
-  while (p) {
-    const { overflowY } = getComputedStyle(p);
-    if (overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') {
-      return p;
-    }
-    p = p.parentElement;
+type Turn = { user: string; ai: string };
+
+async function playTurn(
+  turn: Turn,
+  alive: () => boolean,
+  setComposerText: (s: string) => void,
+  setSending: (v: boolean) => void,
+  setBubbles: Dispatch<SetStateAction<Bubble[]>>,
+): Promise<void> {
+  for (let i = 0; i <= turn.user.length && alive(); i++) {
+    setComposerText(turn.user.slice(0, i));
+    await sleep(i === 0 ? 0 : 28 + Math.random() * 22);
   }
-  return null;
+  if (!alive()) return;
+
+  await sleep(380);
+  setSending(true);
+  await sleep(420);
+  if (!alive()) return;
+
+  setSending(false);
+  setComposerText('');
+  setBubbles((prev) => [...prev, { role: 'user', text: turn.user }]);
+  await sleep(280);
+  if (!alive()) return;
+
+  setBubbles((prev) => [...prev, { role: 'ai', text: '', streaming: true }]);
+
+  for (let i = 0; i <= turn.ai.length && alive(); i++) {
+    const slice = turn.ai.slice(0, i);
+    setBubbles((prev) => {
+      const next = [...prev];
+      const last = next[next.length - 1];
+      if (last?.role === 'ai') {
+        next[next.length - 1] = {
+          role: 'ai',
+          text: slice,
+          streaming: i < turn.ai.length,
+        };
+      }
+      return next;
+    });
+    await sleep(12 + Math.random() * 10);
+  }
+  if (!alive()) return;
+  await sleep(2400);
 }
 
 const GlabChatDemo = () => {
@@ -24,16 +61,10 @@ const GlabChatDemo = () => {
   const script = useMemo(
     () =>
       [
-        {
-          user: t('landing.chat.turn1.user'),
-          ai: t('landing.chat.turn1.ai'),
-        },
-        {
-          user: t('landing.chat.turn2.user'),
-          ai: t('landing.chat.turn2.ai'),
-        },
-      ] as const,
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- t identity changes every render; language drives copy
+        { user: t('landing.chat.turn1.user'), ai: t('landing.chat.turn1.ai') },
+        { user: t('landing.chat.turn2.user'), ai: t('landing.chat.turn2.ai') },
+      ] as const satisfies readonly Turn[],
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- language only
     [i18n.language],
   );
 
@@ -47,93 +78,48 @@ const GlabChatDemo = () => {
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setReducedMotion(mq.matches);
-    const onChange = () => setReducedMotion(mq.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
+    const sync = () => setReducedMotion(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
   }, []);
 
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
-
-    const scrollRoot = nearestScrollRoot(el);
-    const obs = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), {
-      root: scrollRoot,
-      threshold: 0,
+    const obs = new IntersectionObserver(([e]) => setVisible(!!e?.isIntersecting), {
+      threshold: 0.12,
+      rootMargin: '32px',
     });
     obs.observe(el);
     return () => obs.disconnect();
-  }, [reducedMotion]);
+  }, []);
 
   useLayoutEffect(() => {
     const el = msgsRef.current;
     if (!el) return;
     el.scrollTop = el.scrollHeight;
-  }, [bubbles, composerText]);
+  }, [bubbles]);
 
   useEffect(() => {
     if (!visible || reducedMotion) return;
-
     let alive = true;
+    const isAlive = () => alive;
 
-    const run = async () => {
-      while (alive) {
+    (async () => {
+      while (isAlive()) {
         setBubbles([]);
         setComposerText('');
         setSending(false);
-
         for (const turn of script) {
-          if (!alive) return;
-
-          for (let i = 0; i <= turn.user.length && alive; i++) {
-            setComposerText(turn.user.slice(0, i));
-            await sleep(i === 0 ? 0 : 28 + Math.random() * 22);
-          }
-          if (!alive) return;
-
-          await sleep(380);
-          setSending(true);
-          await sleep(420);
-          if (!alive) return;
-
-          setSending(false);
-          setComposerText('');
-          setBubbles((prev) => [...prev, { role: 'user', text: turn.user }]);
-          await sleep(280);
-          if (!alive) return;
-
-          setBubbles((prev) => [
-            ...prev,
-            { role: 'ai', text: '', streaming: true },
-          ]);
-
-          for (let i = 0; i <= turn.ai.length && alive; i++) {
-            const slice = turn.ai.slice(0, i);
-            setBubbles((prev) => {
-              const next = [...prev];
-              const last = next[next.length - 1];
-              if (last?.role === 'ai') {
-                next[next.length - 1] = {
-                  role: 'ai',
-                  text: slice,
-                  streaming: i < turn.ai.length,
-                };
-              }
-              return next;
-            });
-            await sleep(12 + Math.random() * 10);
-          }
-          if (!alive) return;
-
-          await sleep(2400);
+          if (!isAlive()) return;
+          await playTurn(turn, isAlive, setComposerText, setSending, setBubbles);
         }
-
+        if (!isAlive()) return;
         await sleep(900);
       }
-    };
+    })();
 
-    run();
     return () => {
       alive = false;
     };
@@ -141,23 +127,25 @@ const GlabChatDemo = () => {
 
   if (reducedMotion) {
     return (
-      <div className="chat-msgs glab-chat-msgs" ref={rootRef}>
-        {script.flatMap((turn, i) => [
-          <div key={`u-${i}`} className="chat-msg user">
-            {turn.user}
-          </div>,
-          <div key={`a-${i}`} className="chat-msg ai">
-            <span className="label">GLAB</span>
-            {turn.ai}
-          </div>,
-        ])}
+      <div className="glab-chat glab-chat--reduced" ref={rootRef}>
+        <div ref={msgsRef} className="glab-chat__thread chat-msgs">
+          {script.flatMap((turn, i) => [
+            <div key={`u-${i}`} className="chat-msg user">
+              {turn.user}
+            </div>,
+            <div key={`a-${i}`} className="chat-msg ai">
+              <span className="label">GLAB</span>
+              {turn.ai}
+            </div>,
+          ])}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="glab-chat-demo" ref={rootRef}>
-      <div ref={msgsRef} className="chat-msgs glab-chat-msgs">
+    <div className="glab-chat" ref={rootRef}>
+      <div ref={msgsRef} className="glab-chat__thread chat-msgs glab-chat-msgs">
         {bubbles.map((b, idx) =>
           b.role === 'user' ? (
             <div key={`u-${idx}`} className="chat-msg user glab-msg-enter">
@@ -179,18 +167,17 @@ const GlabChatDemo = () => {
         )}
       </div>
 
-      <div className="glab-chat-composer">
-        <div className="glab-chat-input-wrap">
-          <div className="glab-chat-input-fake" aria-hidden>
+      <div className="glab-chat__composer" aria-hidden>
+        <div className="glab-chat__input">
+          <div className="glab-chat__input-line">
             {composerText}
-            <span className="glab-chat-caret" />
+            <span className="glab-chat__caret" aria-hidden />
           </div>
         </div>
         <button
           type="button"
-          className={`glab-chat-send${sending ? ' glab-chat-send--active' : ''}`}
+          className={`glab-chat__send${sending ? ' glab-chat__send--active' : ''}`}
           tabIndex={-1}
-          aria-hidden
         >
           {t('landing.chat.send')}
         </button>
