@@ -79,6 +79,7 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const particlesRef = useRef<Particle[]>([]);
   const rafRef = useRef<number>(0);
+  const canvasSizeRef = useRef({ width: 0, height: 0 });
   const [activeStep, setActiveStep] = useState(0);
   const activeStepRef = useRef(0);
   const cycleStartedAtRef = useRef(0);
@@ -92,8 +93,10 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
     if (!ctx) return;
 
     const rect = canvas.getBoundingClientRect();
-    const w = rect.width;
-    const h = rect.height;
+    // Always render using the actual backing-store size to avoid
+    // uncleared edge strips when CSS pixels and canvas pixels diverge.
+    const w = canvasSizeRef.current.width || rect.width;
+    const h = canvasSizeRef.current.height || rect.height;
     const z1 = w / 3;
     const z2 = (w * 2) / 3;
     const now = performance.now();
@@ -357,11 +360,19 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
     const resize = () => {
       const ratio = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * ratio;
-      canvas.height = rect.height * ratio;
+      const deviceWidth = Math.max(1, Math.round(rect.width * ratio));
+      const deviceHeight = Math.max(1, Math.round(rect.height * ratio));
+      canvas.width = deviceWidth;
+      canvas.height = deviceHeight;
       const ctx = canvas.getContext('2d');
       ctx?.setTransform(ratio, 0, 0, ratio, 0, 0);
-      particlesRef.current = initParticles(rect.width, rect.height);
+      const logicalWidth = deviceWidth / ratio;
+      const logicalHeight = deviceHeight / ratio;
+      canvasSizeRef.current = {
+        width: logicalWidth,
+        height: logicalHeight,
+      };
+      particlesRef.current = initParticles(logicalWidth, logicalHeight);
       cycleStartedAtRef.current = performance.now();
       loopIndexRef.current = 0;
       lastFrameAtRef.current = 0;
@@ -372,10 +383,13 @@ const HeroSection = ({ onContact }: HeroSectionProps) => {
     resize();
     rafRef.current = requestAnimationFrame(renderCanvas);
     window.addEventListener('resize', resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', resize);
+      resizeObserver.disconnect();
     };
   }, [renderCanvas]);
 

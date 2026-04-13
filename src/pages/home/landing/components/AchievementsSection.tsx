@@ -23,8 +23,9 @@ const TIMELINE_KEYS = [
 
 /** 연혁·소개에 맞춘 협력·연계 기관 (한 번만 정의) */
 const PARTNER_KEYS = [
-  'partners.snu',
   'partners.uos',
+  'partners.snuVmth',
+  'partners.snu',
   'partners.lgCns',
   'partners.seoulFintech',
   'partners.ibk',
@@ -38,42 +39,17 @@ const PARTNER_STRIP = [...PARTNER_KEYS, ...PARTNER_KEYS];
 
 type PartnerKey = (typeof PARTNER_KEYS)[number];
 
-/** `public/partners/` 로컬 파일 (웹에서 내려받아 저장) */
 const PARTNER_LOGO_FILES: Record<PartnerKey, string> = {
-  'partners.snu': 'snu.svg',
   'partners.uos': 'uos.png',
+  'partners.snuVmth': 'snu-vet.png',
+  'partners.snu': 'snu.png',
   'partners.lgCns': 'lg-cns-wordmark.png',
   'partners.seoulFintech': 'seoul-fintech-lab.png',
   'partners.ibk': 'ibk.svg',
   'partners.kibo': 'kibo.svg',
   'partners.kftc': 'kftc.png',
-  'partners.bnk': 'bnk.png',
+  'partners.bnk': 'bnk-busan.jpg',
 };
-
-/** 큰 로고는 그대로 두고, 작은 에셋만 키움(서울핀테크랩 등 축소 없음) */
-function partnerLogoClassName(key: PartnerKey): string {
-  const parts = ['partner-marquee-logo'];
-  if (key === 'partners.snu' || key === 'partners.uos') {
-    parts.push('partner-marquee-logo--wordmark');
-  }
-  if (key === 'partners.lgCns') {
-    parts.push('partner-marquee-logo--boostOg');
-  } else if (key === 'partners.ibk') {
-    parts.push('partner-marquee-logo--boost');
-  }
-  return parts.join(' ');
-}
-
-function partnerItemClassName(key: PartnerKey): string {
-  const parts = ['partner-marquee-item'];
-  if (key === 'partners.ibk') {
-    parts.push('partner-marquee-item--ibk');
-  }
-  if (key === 'partners.lgCns') {
-    parts.push('partner-marquee-item--contain');
-  }
-  return parts.join(' ');
-}
 
 const AchievementsSection = () => {
   const { t } = useTranslation();
@@ -243,10 +219,10 @@ const AchievementsSection = () => {
               const label = t(`landing.achievements.${key}`);
               const isDuplicateLap = idx >= PARTNER_KEYS.length;
               return (
-                <div key={`${key}-${idx}`} className={partnerItemClassName(key)}>
+                <div key={`${key}-${idx}`} className="partner-marquee-item">
                   {logoFile ? (
                     <img
-                      className={partnerLogoClassName(key)}
+                      className="partner-marquee-logo"
                       src={`/partners/${logoFile}`}
                       alt={isDuplicateLap ? '' : label}
                       loading="eager"
