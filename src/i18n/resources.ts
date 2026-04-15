@@ -185,6 +185,7 @@ export const resources = {
             kibo: '기보벤처캠프',
             kftc: '한국핀테크지원센터',
             bnk: 'BNK 부산은행',
+            kbFinancialGroup: 'KB금융그룹',
           },
           timeline: {
             i1: '관악연구소 설립',
@@ -198,6 +199,7 @@ export const resources = {
             i9: '기보벤처캠프 18기 선정',
             i10: '한국핀테크지원센터 디지털 금융기술 내재화 사업 선정',
             i11: 'BNK썸 인큐베이터 11기 선정',
+            i12: 'KB스타터스 선정',
           },
           evidence: {
             patent: '특허',
@@ -601,6 +603,7 @@ export const resources = {
             kibo: 'KIBO Venture Camp',
             kftc: 'Korea Fintech Support Center',
             bnk: 'BNK Busan Bank',
+            kbFinancialGroup: 'KB Financial Group',
           },
           timeline: {
             i1: 'Founded Gwanak Lab',
@@ -614,6 +617,7 @@ export const resources = {
             i9: 'Selected for KIBO Venture Camp 18th cohort',
             i10: 'Selected for Korea Fintech Center digital finance internalization program',
             i11: 'Selected for BNK Sum Incubator 11th cohort',
+            i12: 'Selected for KB Starters',
           },
           evidence: {
             patent: 'Patent',
