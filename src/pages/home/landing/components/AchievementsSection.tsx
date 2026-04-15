@@ -19,6 +19,7 @@ const TIMELINE_KEYS = [
   { date: '26.02', titleKey: 'timeline.i9' },
   { date: '26.03', titleKey: 'timeline.i10' },
   { date: '26.03', titleKey: 'timeline.i11' },
+  { date: '26.04', titleKey: 'timeline.i12' },
 ] as const;
 
 /** 연혁·소개에 맞춘 협력·연계 기관 (한 번만 정의) */
@@ -32,6 +33,7 @@ const PARTNER_KEYS = [
   'partners.kibo',
   'partners.kftc',
   'partners.bnk',
+  'partners.kbFinancialGroup',
 ] as const;
 
 /** 무한 마퀴용 길이 — map은 한 번만 ([...keys, ...keys].map) */
@@ -49,6 +51,7 @@ const PARTNER_LOGO_FILES: Record<PartnerKey, string> = {
   'partners.kibo': 'kibo.svg',
   'partners.kftc': 'kftc.png',
   'partners.bnk': 'bnk-busan.jpg',
+  'partners.kbFinancialGroup': 'kb-financial-group.svg',
 };
 
 const AchievementsSection = () => {
