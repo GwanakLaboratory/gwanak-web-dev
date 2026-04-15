@@ -29,8 +29,12 @@ jobs:
           node-version: 20
           cache: yarn
 
+      # 로컬과 동일하게 Yarn Berry 사용 (없으면 러너 기본 yarn 1이 lockfile을 망가뜨리며 frozen 실패)
+      - name: Enable Corepack (Yarn from packageManager)
+        run: corepack enable
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Build
         run: yarn build
