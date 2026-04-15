@@ -23,14 +23,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # cache: yarn 은 이 단계에서 yarn을 호출함 → Corepack 전이라 packageManager(yarn@4)와
+      # 러너 기본 yarn 1.x가 충돌해 실패함. 캐시 없이 Node만 깔고 Corepack 다음.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
 
-      # 로컬과 동일하게 Yarn Berry 사용 (없으면 러너 기본 yarn 1이 lockfile을 망가뜨리며 frozen 실패)
-      - name: Enable Corepack (Yarn from packageManager)
+      - name: Enable Corepack (Yarn from package.json packageManager)
         run: corepack enable
 
       - name: Install dependencies
