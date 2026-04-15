@@ -218,6 +218,8 @@ export const resources = {
             newsItem2Sub: '머니투데이',
             newsItem3Title: "부산은행 '썸 인큐베이터 11기' 발대…스타트업 육성",
             newsItem3Sub: '연합뉴스',
+            newsItem4Title: '"단어 몇 개로 뚝딱"…LG CNS, 산돌에 이미지 생성 AI 제공',
+            newsItem4Sub: '디지털타임스',
           },
           group1Title: '기술 검증 · IP',
           g1i1Title: '로보어드바이저 운용심사 통과',
@@ -637,6 +639,9 @@ export const resources = {
             newsItem2Sub: 'MoneyToday',
             newsItem3Title: "BNK Busan Bank launches 'Sum Incubator' 11th cohort",
             newsItem3Sub: 'Yonhap News',
+            newsItem4Title:
+              '"Done in a few words"... LG CNS provides image generation AI to Sandoll',
+            newsItem4Sub: 'Digital Times',
           },
           group1Title: 'Technology validation · IP',
           g1i1Title: 'Robo-advisor operation review passed',

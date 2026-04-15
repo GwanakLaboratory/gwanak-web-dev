@@ -114,6 +114,11 @@ const AchievementsSection = () => {
           sub: t('landing.achievements.evidence.newsItem3Sub'),
           href: 'https://www.yna.co.kr/view/AKR20260331144100051?input=1195m',
         },
+        {
+          title: t('landing.achievements.evidence.newsItem4Title'),
+          sub: t('landing.achievements.evidence.newsItem4Sub'),
+          href: 'https://www.dt.co.kr/article/11674174',
+        },
       ],
     },
   ];
