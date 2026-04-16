@@ -29,7 +29,10 @@ const Actions = styled.div`
 `;
 
 export type RenewalHeroProps = {
-  primaryCta: { href: string; label: string };
+  /** `onClick`이 있으면 모달 등 — 앵커 대신 버튼으로 렌더 */
+  primaryCta:
+    | { label: string; href: string }
+    | { label: string; onClick: () => void };
   secondaryCta: { href: string; label: string };
 };
 
@@ -86,7 +89,17 @@ function RenewalHero({ primaryCta, secondaryCta }: RenewalHeroProps) {
         </LandingStylesBridge>
 
         <Actions>
-          <BtnPrimary href={primaryCta.href}>{primaryCta.label}</BtnPrimary>
+          {'onClick' in primaryCta ? (
+            <BtnPrimary
+              as="button"
+              type="button"
+              onClick={primaryCta.onClick}
+            >
+              {primaryCta.label}
+            </BtnPrimary>
+          ) : (
+            <BtnPrimary href={primaryCta.href}>{primaryCta.label}</BtnPrimary>
+          )}
           <BtnSecondary href={secondaryCta.href}>
             {secondaryCta.label}
           </BtnSecondary>

@@ -42,7 +42,9 @@ export type RenewalCtaSectionProps = {
   id?: string;
   title: string;
   lead: string;
-  primaryHref: string;
+  /** 기존 랜딩 `LandingContactModal` 열기 — 있으면 `primaryHref` 대신 사용 */
+  onPrimaryClick?: () => void;
+  primaryHref?: string;
   primaryLabel: string;
   secondaryHref?: string;
   secondaryLabel?: string;
@@ -52,10 +54,11 @@ function RenewalCtaSection({
   id = 'contact',
   title,
   lead,
+  onPrimaryClick,
   primaryHref,
   primaryLabel,
   secondaryHref = '#',
-  secondaryLabel = '기술 소개서 다운로드',
+  secondaryLabel,
 }: RenewalCtaSectionProps) {
   return (
     <Section id={id}>
@@ -63,8 +66,20 @@ function RenewalCtaSection({
         <Title>{title}</Title>
         <Lead>{lead}</Lead>
         <Actions>
-          <BtnPrimary href={primaryHref}>{primaryLabel}</BtnPrimary>
-          <BtnSecondary href={secondaryHref}>{secondaryLabel}</BtnSecondary>
+          {onPrimaryClick ? (
+            <BtnPrimary
+              as="button"
+              type="button"
+              onClick={onPrimaryClick}
+            >
+              {primaryLabel}
+            </BtnPrimary>
+          ) : (
+            <BtnPrimary href={primaryHref ?? '#'}>{primaryLabel}</BtnPrimary>
+          )}
+          {secondaryLabel ? (
+            <BtnSecondary href={secondaryHref}>{secondaryLabel}</BtnSecondary>
+          ) : null}
         </Actions>
       </Inner>
     </Section>

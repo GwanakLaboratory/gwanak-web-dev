@@ -333,6 +333,9 @@ export const resources = {
           privacy: '개인정보처리방침',
         },
         renewal: {
+          meta: {
+            documentTitle: '관악연구소 | AI 기반 금융 의사결정 엔진',
+          },
           hero: {
             badge: 'AI-Powered Financial Intelligence',
             titleLine1: '금융 AI,',
@@ -359,6 +362,163 @@ export const resources = {
             productsTitle: '금융 AI의 모든 레이어를\n설계, 개발합니다',
             productsLead:
               '핵심 엔진 기술을 중심으로, B2B SaaS · B2C 서비스 · IT 구축까지\n금융 AI의 전 영역을 커버합니다.',
+          },
+          problem: {
+            tag: 'Problem',
+            title: 'AI는 넘쳐나지만,\n"무엇을 해야 하는가"에 대한 답은 없습니다',
+            lead:
+              '금융 현장에서 AI는 데이터를 분석하고 예측까지는 해줍니다.\n하지만 정작 중요한 의사결정 — 지금 매수할지, 이 고객을 어떻게 잡을지, 이 리스크를 어떻게 평가할지 — 은\n여전히 사람의 경험과 감에 의존하고 있습니다.',
+            stats: {
+              stat1: {
+                number: '같은 데이터,\n다른 판단',
+                label: '상태 정의가 없다',
+                description:
+                  '같은 숫자를 보고도 사람마다 다르게 해석합니다. 지금 이 상황이 어떤 상태인지 정의하는 구조가 없기 때문입니다.',
+              },
+              stat2: {
+                number: '좋아지는 건지,\n나빠지는 건지',
+                label: '변화 방향을 모른다',
+                description:
+                  '지금 시점의 스냅샷만 보고 판단합니다. 상황이 어디서 왔고 어디로 가는지, 방향성을 파악하지 못합니다.',
+              },
+              stat3: {
+                number: '담당자마다\n다른 결정',
+                label: '판단 기준이 없다',
+                description:
+                  '같은 예측 결과를 보고도 사람마다 다른 결정을 내립니다. 기준이 머릿속에만 있어 일관성도, 확장성도 없습니다.',
+              },
+            },
+          },
+          pillars: {
+            core: {
+              badge: 'CORE',
+              sublabel: 'B2B SaaS',
+              title: 'AI 기반\n금융 분석 엔진',
+              description:
+                '상태 예측 AI로 금융기관의 의사결정을 자동화하는 SaaS 솔루션',
+            },
+            b2c: {
+              badge: 'B2C',
+              sublabel: 'GLAB 서비스',
+              title: '예측 분석\nLLM 솔루션',
+              description:
+                '1:1 AI PB로 개인 투자자에게 맞춤형 의사결정 코칭을 제공',
+            },
+            si: {
+              badge: 'SI/SM',
+              sublabel: 'IT 서비스',
+              title: 'AI 중심\nIT SI/SM',
+              description:
+                'AI 기술 기반의 시스템 구축 및 운영·관리 서비스',
+            },
+          },
+          solutions: {
+            sol1: {
+              title: '상태를 정의합니다',
+              body:
+                '숫자 나열이 아니라, "지금 어떤 판단이 필요한 상황인지"를 맥락과 함께 표현합니다. 같은 10% 수익률이라도 상승장 초입과 하락장 반등은 다르니까요.',
+            },
+            sol2: {
+              title: '변화 방향을 예측합니다',
+              body:
+                '지금 이 순간의 스냅샷이 아니라, 상태가 어디서 왔고 어디로 가고 있는지를 시계열 AI로 예측합니다. 방향성이 있어야 판단이 가능합니다.',
+            },
+            sol3: {
+              title: '판단 기준을 세웁니다',
+              body:
+                '예측 결과에 리스크를 반영한 명시적 기준을 적용합니다. 담당자가 바뀌어도, 시장이 바뀌어도, 일관되고 합리적인 의사결정이 가능해집니다.',
+            },
+          },
+          products: {
+            b2b: {
+              tag: '핵심 사업 · B2B SaaS',
+              title: 'AI 기반 금융 분석 엔진',
+              description:
+                '상태 예측 AI로 금융기관의 의사결정을 자동화합니다. 기존 시스템을 건드리지 않고 도입할 수 있으며, 데이터가 쌓일수록 엔진이 강해지는 구조입니다.',
+              f1: '고객이탈방지 · 연체예측 · 타겟마케팅 등 금융 전 영역',
+              f2: '기존 분석 모델 위에 의사결정 레이어 추가',
+              f3: '증권 · 카드 · 은행 · 보험 대응',
+            },
+            glab: {
+              tag: 'B2C 서비스',
+              title: 'GLAB · 1:1 AI PB',
+              description:
+                '예측 분석 LLM 기반의 개인 투자 코칭 서비스입니다. 투자 금액과 무관하게 전문 PB 수준의 맞춤형 의사결정을 지원합니다.',
+              g1: '시장 상태 분석 → 구체적인 행동 지침 제시',
+              g2: '투자 성향 · 심리에 맞춘 초개인화 코칭',
+              g3: '국내주식 · 미국주식 · 가상자산 · 퇴직연금',
+            },
+            si: {
+              tag: 'IT SI/SM',
+              title: 'AI 중심 IT 서비스',
+              description:
+                'AI 기술 역량을 기반으로 금융·공공 영역의 시스템 구축(SI) 및 운영·관리(SM) 서비스를 제공합니다.',
+              s1: '금융 도메인 특화 AI 시스템 설계 및 구축',
+              s2: 'LG CNS 등 대형 프로젝트 수행 경험',
+              s3: '구축부터 운영까지 End-to-End 대응',
+            },
+            pipeline: {
+              label: 'Engine Pipeline',
+              predictSub: '상태 전이 예측',
+              structureSub: '리스크 구조화',
+              decideSub: '의사결정 도출',
+            },
+          },
+          achievementsHeader: {
+            tag: 'Achievements',
+            title: '검증된 기술',
+          },
+          achievementsCards: {
+            ach1: {
+              title: '로보어드바이저\n운용심사 통과',
+              description: '금융위원회 산하 테스트베드 심사 4회 연속 완료',
+            },
+            ach2: {
+              title: '하락 예측 정확도\n82.5%',
+              description: '시장 하락 국면을 높은 정확도로 사전 감지',
+            },
+            ach3: {
+              title: '특허 등록 완료',
+              description: 'AI 기반 투자 비율 결정 방법 특허 보유',
+            },
+            ach4: {
+              title: '금융기관 협업',
+              description: 'IBK · KB · BNK 등 현업 금융기관과 프로젝트 수행',
+            },
+          },
+          teamSection: {
+            tag: 'Team',
+            title: '서울대 출신 창업팀,\n현장을 아는 전문가들',
+            lead:
+              '서울대학교·서울시립대 통계학과 연구실과 공동연구 체계를 갖추고 있으며,\n금융·개발 현장 경험을 가진 팀이 기술을 서비스로 만듭니다.',
+          },
+          teamMembers: {
+            m1: {
+              name: '대표 · 연구',
+              role: '서울대학교 학/석사 · 박사과정',
+              description:
+                '개발과 금융 양쪽 현장 경험을 바탕으로 기술과 사업을 연결합니다.',
+            },
+            m2: {
+              name: '공동연구',
+              role: '서울대 · 서울시립대 통계학과',
+              description:
+                '금융 AI 모델의 학문적 타당성과 산업 적용성을 공동 검증합니다.',
+            },
+            m3: {
+              name: '개발팀 7명',
+              role: '시니어 · 풀스택',
+              description: '대형 SaaS 프로젝트 경험을 갖춘 실전형 팀입니다.',
+            },
+          },
+          cta: {
+            title: '합리적인 의사결정,\n지금 시작하세요',
+            lead:
+              '개인 투자자는 GLAB으로, 금융기관은 맞춤 상담으로 시작할 수 있습니다.',
+            secondaryDownload: '기술 소개서 다운로드',
+          },
+          footer: {
+            brandLine: '관악연구소 | Gwanak Lab.',
           },
         },
       },
@@ -793,6 +953,9 @@ export const resources = {
           privacy: 'Privacy Policy',
         },
         renewal: {
+          meta: {
+            documentTitle: 'Gwanak Lab | AI-Powered Financial Decision Engine',
+          },
           hero: {
             badge: 'AI-Powered Financial Intelligence',
             titleLine1: 'Financial AI,',
@@ -819,6 +982,167 @@ export const resources = {
             productsTitle: 'Designing every layer\nof financial AI',
             productsLead:
               'Centered on a core engine, covering B2B SaaS, B2C services, and IT delivery\nacross the full stack of financial AI.',
+          },
+          problem: {
+            tag: 'Problem',
+            title:
+              'AI is everywhere —\nbut there is still no answer to “what should we do?”',
+            lead:
+              'In finance, AI can analyze data and forecast outcomes.\nYet the decisions that matter — whether to buy now, how to retain this customer, how to assess this risk —\nstill depend on human intuition and experience.',
+            stats: {
+              stat1: {
+                number: 'Same data,\ndifferent conclusions',
+                label: 'No shared state definition',
+                description:
+                  'People interpret the same numbers differently because there is no structure that defines what situation you are in.',
+              },
+              stat2: {
+                number: 'Is it getting better\nor worse?',
+                label: 'Direction is unclear',
+                description:
+                  'Decisions rely on a snapshot of “now,” without knowing where the situation came from or where it is heading.',
+              },
+              stat3: {
+                number: 'Different decisions\nby different owners',
+                label: 'No explicit decision criteria',
+                description:
+                  'Even with the same forecast, people decide differently because criteria live only in their heads — no consistency or scale.',
+              },
+            },
+          },
+          pillars: {
+            core: {
+              badge: 'CORE',
+              sublabel: 'B2B SaaS',
+              title: 'AI-powered\nfinancial analytics engine',
+              description:
+                'A SaaS solution that automates institutional decisions with state-prediction AI.',
+            },
+            b2c: {
+              badge: 'B2C',
+              sublabel: 'GLAB',
+              title: 'Predictive analytics\nLLM solution',
+              description:
+                '1:1 AI private banker coaching tailored to individual investors.',
+            },
+            si: {
+              badge: 'SI/SM',
+              sublabel: 'IT services',
+              title: 'AI-centric\nIT SI/SM',
+              description:
+                'System implementation and operations & management services powered by AI.',
+            },
+          },
+          solutions: {
+            sol1: {
+              title: 'Define the state',
+              body:
+                'We express not just numbers, but “what kind of decision is needed now,” with context. Even the same 10% return can mean different things at the start of a rally vs. a rebound in a downtrend.',
+            },
+            sol2: {
+              title: 'Predict the direction of change',
+              body:
+                'Beyond a snapshot of this moment, time-series AI predicts where the state came from and where it is going. Direction is required for judgment.',
+            },
+            sol3: {
+              title: 'Set decision criteria',
+              body:
+                'We apply explicit criteria that incorporate risk into forecasts. Even when people or markets change, decisions stay consistent and rational.',
+            },
+          },
+          products: {
+            b2b: {
+              tag: 'Core · B2B SaaS',
+              title: 'AI-powered financial analytics engine',
+              description:
+                'State-prediction AI automates institutional decisions. Deploy without disrupting existing systems — the engine strengthens as data accumulates.',
+              f1:
+                'Across finance: churn prevention, delinquency prediction, targeted marketing, and more',
+              f2: 'Adds a decision layer on top of existing analytics models',
+              f3: 'Securities, cards, banking, and insurance',
+            },
+            glab: {
+              tag: 'B2C service',
+              title: 'GLAB · 1:1 AI private banker',
+              description:
+                'Personal investment coaching powered by predictive analytics LLMs — professional-grade, tailored decisions regardless of ticket size.',
+              g1: 'Market state analysis → concrete action guidance',
+              g2: 'Hyper-personalized coaching for investor profile & psychology',
+              g3: 'Korea/US stocks, crypto, retirement accounts',
+            },
+            si: {
+              tag: 'IT SI/SM',
+              title: 'AI-centric IT services',
+              description:
+                'System integration (SI) and operations & management (SM) for finance and public sectors, powered by AI capabilities.',
+              s1: 'Design and build finance-domain AI systems',
+              s2: 'Experience with large-scale projects (e.g., LG CNS)',
+              s3: 'End-to-end from build to operations',
+            },
+            pipeline: {
+              label: 'Engine Pipeline',
+              predictSub: 'State transition prediction',
+              structureSub: 'Risk structuring',
+              decideSub: 'Decision output',
+            },
+          },
+          achievementsHeader: {
+            tag: 'Achievements',
+            title: 'Proven technology',
+          },
+          achievementsCards: {
+            ach1: {
+              title: 'Robo-advisor\nreview passed',
+              description:
+                'Completed four consecutive testbed reviews under the Financial Services Commission',
+            },
+            ach2: {
+              title: 'Downside prediction\n82.5% accuracy',
+              description: 'Early detection of market downturns with high accuracy',
+            },
+            ach3: {
+              title: 'Patent granted',
+              description: 'Patent on AI-based investment allocation methods',
+            },
+            ach4: {
+              title: 'Financial institution collaboration',
+              description: 'Projects with IBK, KB, BNK, and other institutions',
+            },
+          },
+          teamSection: {
+            tag: 'Team',
+            title: 'SNU-founded team,\nexperts who know the field',
+            lead:
+              'Joint research with statistics labs at Seoul National University and the University of Seoul —\na team with finance and engineering experience turns technology into products.',
+          },
+          teamMembers: {
+            m1: {
+              name: 'CEO · Research',
+              role: 'SNU B.S./M.S. · Ph.D. candidate',
+              description:
+                'Connects technology and business with hands-on experience in engineering and finance.',
+            },
+            m2: {
+              name: 'Joint research',
+              role: 'SNU & UoS statistics departments',
+              description:
+                'Co-validates academic soundness and industrial applicability of financial AI models.',
+            },
+            m3: {
+              name: 'Engineering team (7)',
+              role: 'Senior · full-stack',
+              description:
+                'Battle-tested team with experience in large SaaS projects.',
+            },
+          },
+          cta: {
+            title: 'Make better decisions,\nstarting now',
+            lead:
+              'Retail investors can start with GLAB; institutions can begin with a tailored consultation.',
+            secondaryDownload: 'Download tech overview',
+          },
+          footer: {
+            brandLine: 'Gwanak Lab.',
           },
         },
       },
