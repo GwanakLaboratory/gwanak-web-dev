@@ -43,7 +43,7 @@ const fontImports = css`
 `;
 
 /**
- * 관악연구소 리뉴얼 랜딩 (/renewal)
+ * 관악연구소 메인 랜딩 (/)
  *
  * 섹션 구성:
  * 1. Hero          — 회전 헤드라인 (i18n)
