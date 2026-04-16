@@ -53,16 +53,25 @@ function RenewalHero({ primaryCta, secondaryCta }: RenewalHeroProps) {
           >
             {t('landing.renewal.hero.titleLine1')}
             <br />
-            <span className="nhero-rotating-line">
-              <span className="nhero-rotating-wrap">
+            <span
+              className="nhero-rotating-line"
+              style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
+            >
+              <span className="nhero-rotating-wrap" style={{ textAlign: 'center' }}>
                 <span className="nhero-rw nhero-rw--1">
-                  {t('landing.newHero.rotatingWord1')}
+                  <span className="nhero-accent">
+                    {t('landing.newHero.rotatingWord1')}
+                  </span>
                 </span>
                 <span className="nhero-rw nhero-rw--2">
-                  {t('landing.newHero.rotatingWord2')}
+                  <span className="nhero-accent">
+                    {t('landing.newHero.rotatingWord2')}
+                  </span>
                 </span>
                 <span className="nhero-rw nhero-rw--3">
-                  {t('landing.newHero.rotatingWord3')}
+                  <span className="nhero-accent">
+                    {t('landing.newHero.rotatingWord3')}
+                  </span>
                 </span>
               </span>
             </span>

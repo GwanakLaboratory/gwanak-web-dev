@@ -280,7 +280,7 @@ export const LandingStylesBridge = styled.div`
 
   .nhero-headline {
     font-family: 'Outfit', 'Noto Sans KR', sans-serif;
-    font-size: clamp(36px, 5vw, 62px);
+    font-size: clamp(30px, 4.2vw, 46px);
     line-height: 1.12;
     font-weight: 900;
     letter-spacing: -0.04em;

@@ -18,7 +18,6 @@ import {
   renewalSolutionSectionCopy,
   renewalTeam,
   renewalTeamSectionCopy,
-  renewalTrustPartners,
 } from './renewal.content';
 import {
   PillarsSection,
@@ -32,7 +31,6 @@ import {
   RenewalNav,
   RenewalTeamSection,
   SolutionSection,
-  TrustBarSection,
 } from './components';
 
 const { PageRoot } = renewalS;
@@ -50,15 +48,14 @@ const fontImports = css`
  * 섹션 구성:
  * 1. Hero          — 회전 헤드라인 (i18n)
  * 2. Pillars       — 3대 사업 축
- * 3. TrustBar      — 협력 기관
- * 4. Problem       — 문제 제기
- * 5. Solution      — 기술 소개 + 캔버스 비주얼 (nhero-right 재사용)
- * 6. Products      — 비즈니스 (B2B 좌상단, SI/SM 좌하단, GLAB + 채팅 데모 우측)
- * 7. Achievements  — 4가지 검증 지표 카드
- * 8. History       — 연혁 + 보도자료 + 파트너 마퀴 (기존 AchievementsSection 재사용)
- * 9. Team          — 팀 소개
- * 10. CTA          — 문의 CTA
- * 11. Footer
+ * 3. Problem       — 문제 제기
+ * 4. Solution      — 기술 소개 + 캔버스 비주얼 (nhero-right 재사용)
+ * 5. Products      — 비즈니스 (B2B 좌상단, SI/SM 좌하단, GLAB + 채팅 데모 우측)
+ * 6. Achievements  — 4가지 검증 지표 카드
+ * 7. History       — 연혁 + 보도자료 + 파트너 마퀴 (기존 AchievementsSection 재사용)
+ * 8. Team          — 팀 소개
+ * 9. CTA           — 문의 CTA
+ * 10. Footer
  */
 function RenewalPage() {
   const { t } = useTranslation();
@@ -97,10 +94,7 @@ function RenewalPage() {
         {/* 2. Pillars */}
         <PillarsSection pillars={renewalPillars} />
 
-        {/* 3. TrustBar */}
-        <TrustBarSection partners={renewalTrustPartners} />
-
-        {/* 4. Problem */}
+        {/* 3. Problem */}
         <ProblemSection
           tag={renewalProblemSectionCopy.tag}
           title={renewalProblemSectionCopy.title}
@@ -108,7 +102,7 @@ function RenewalPage() {
           stats={renewalProblemStats}
         />
 
-        {/* 5. Solution + 캔버스 비주얼 */}
+        {/* 4. Solution + 캔버스 비주얼 */}
         <SolutionSection
           tag={renewalSolutionSectionCopy.tag}
           title={renewalSolutionSectionCopy.title}
@@ -116,7 +110,7 @@ function RenewalPage() {
           items={renewalSolutions}
         />
 
-        {/* 6. Products */}
+        {/* 5. Products */}
         <ProductsSection
           tag={renewalProductsSectionCopy.tag}
           title={renewalProductsSectionCopy.title}
@@ -125,17 +119,17 @@ function RenewalPage() {
           productCards={renewalProductCards}
         />
 
-        {/* 7. Achievements — 검증 지표 카드 */}
+        {/* 6. Achievements — 검증 지표 카드 */}
         <RenewalAchievementsSection
           tag={renewalAchievementsSectionCopy.tag}
           title={renewalAchievementsSectionCopy.title}
           items={renewalAchievements}
         />
 
-        {/* 8. History — 연혁 + 보도자료 (기존 AchievementsSection 재사용) */}
+        {/* 7. History — 연혁 + 보도자료 (기존 AchievementsSection 재사용) */}
         <RenewalHistorySection id="history" />
 
-        {/* 9. Team */}
+        {/* 8. Team */}
         <RenewalTeamSection
           tag={renewalTeamSectionCopy.tag}
           title={renewalTeamSectionCopy.title}
@@ -143,7 +137,7 @@ function RenewalPage() {
           members={renewalTeam}
         />
 
-        {/* 10. CTA */}
+        {/* 9. CTA */}
         <RenewalCtaSection
           title={renewalCtaCopy.title}
           lead={renewalCtaCopy.lead}
@@ -153,7 +147,7 @@ function RenewalPage() {
           })}
         />
 
-        {/* 11. Footer */}
+        {/* 10. Footer */}
         <RenewalFooter />
       </PageRoot>
     </>
