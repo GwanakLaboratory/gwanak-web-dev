@@ -4,8 +4,8 @@
  * 레이아웃:
  * ┌─────────────────────────┬──────────────────────────────┐
  * │  [왼쪽 컬럼]             │  [오른쪽 컬럼]               │
- * │  ① B2B SaaS (상단)      │  ① GLAB B2C                 │
- * │  ② IT SI/SM (하단)      │  ② GlabChatDemo (하단)      │
+ * │  ① B2B SaaS (상단)      │  GLAB B2C + 대화 예시(동일 카드) │
+ * │  ② IT SI/SM (하단)      │                              │
  * └─────────────────────────┴──────────────────────────────┘
  */
 import styled from '@emotion/styled';
@@ -65,7 +65,7 @@ const LeftStack = styled.div`
   gap: 20px;
 `;
 
-/* ── 오른쪽: GLAB 카드 + 채팅 데모 세로 배치 ── */
+/* ── 오른쪽: GLAB 카드(대화 예시 포함) ── */
 const RightStack = styled.div`
   display: flex;
   flex-direction: column;
@@ -196,12 +196,11 @@ const Arrow = styled.div`
   flex-shrink: 0;
 `;
 
-/* ── GLAB 채팅 데모 래퍼 ── */
-const ChatDemoCard = styled.div`
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 28px 28px 20px;
-  background: var(--surface);
+/* ── GLAB 카드 내부: 대화 예시 ── */
+const ChatDemoBlock = styled.div`
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
 `;
 
 const ChatDemoLabel = styled.div`
@@ -298,7 +297,7 @@ function ProductsSection({
           )}
         </LeftStack>
 
-        {/* ── 오른쪽: GLAB B2C (상단) + 채팅 데모 (하단) ── */}
+        {/* ── 오른쪽: GLAB B2C + 대화 예시(동일 카드) ── */}
         <RightStack>
           {b2cCard && (
             <Card>
@@ -310,20 +309,19 @@ function ProductsSection({
                   <Feature key={f.id}>{f.text}</Feature>
                 ))}
               </Features>
+
+              <ChatDemoBlock>
+                <ChatDemoLabel>
+                  {t('landing.service.demoTitle', {
+                    defaultValue: 'GLAB 대화 예시',
+                  })}
+                </ChatDemoLabel>
+                <LandingStylesBridge>
+                  <GlabChatDemo />
+                </LandingStylesBridge>
+              </ChatDemoBlock>
             </Card>
           )}
-
-          {/* GlabChatDemo — LandingStylesBridge로 CSS 클래스 주입 */}
-          <ChatDemoCard>
-            <ChatDemoLabel>
-              {t('landing.service.demoTitle', {
-                defaultValue: 'GLAB 대화 예시',
-              })}
-            </ChatDemoLabel>
-            <LandingStylesBridge>
-              <GlabChatDemo />
-            </LandingStylesBridge>
-          </ChatDemoCard>
         </RightStack>
       </TwoCol>
     </Section>

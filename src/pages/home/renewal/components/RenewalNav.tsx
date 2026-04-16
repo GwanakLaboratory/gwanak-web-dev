@@ -31,14 +31,24 @@ const Inner = styled.div`
   }
 `;
 
-const Logo = styled.div`
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  color: var(--text-primary);
+/** 기존 랜딩 네비와 동일 이미지 (`LandingNavBar`) */
+const LogoLink = styled.a`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+  cursor: pointer;
 
-  span {
-    color: var(--accent);
+  img {
+    height: 52px;
+    width: auto;
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    img {
+      height: 44px;
+    }
   }
 `;
 
@@ -167,9 +177,15 @@ const RenewalNav = forwardRef<HTMLElement, RenewalNavProps>(function RenewalNav(
   return (
     <NavRoot ref={ref} $shadow={navShadow}>
       <Inner>
-        <Logo>
-          <span>관악</span>연구소
-        </Logo>
+        <LogoLink
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
+          <img src="/gwanak-logo.png" alt="GWANAK LAB logo" />
+        </LogoLink>
         <Links>
           {links.map((item) => (
             <Link key={item.id} href={`#${item.id}`}>
