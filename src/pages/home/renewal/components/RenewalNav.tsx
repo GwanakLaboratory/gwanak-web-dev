@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { RenewalNavLink } from '../renewal.types';
 
@@ -80,6 +80,60 @@ const Cta = styled.a`
   }
 `;
 
+const Actions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const LangWrap = styled.div`
+  position: relative;
+`;
+
+const LangTrigger = styled.button<{ $open: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid
+    ${({ $open }) => ($open ? 'var(--accent)' : 'var(--border)')};
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+`;
+
+const LangMenu = styled.div`
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 84px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+  z-index: 120;
+`;
+
+const LangOption = styled.button<{ $active?: boolean }>`
+  width: 100%;
+  border: none;
+  border-radius: 7px;
+  background: ${({ $active }) =>
+    $active ? 'var(--accent-light)' : 'transparent'};
+  color: ${({ $active }) =>
+    $active ? 'var(--accent)' : 'var(--text-secondary)'};
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 8px;
+  text-align: left;
+  cursor: pointer;
+`;
+
 export type RenewalNavProps = {
   links: RenewalNavLink[];
   navShadow: boolean;
@@ -90,6 +144,25 @@ const RenewalNav = forwardRef<HTMLElement, RenewalNavProps>(function RenewalNav(
   ref,
 ) {
   const { t } = useTranslation();
+  const { i18n } = useTranslation();
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (!langRef.current) return;
+      if (!langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLangOpen(false);
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, []);
 
   return (
     <NavRoot ref={ref} $shadow={navShadow}>
@@ -106,9 +179,47 @@ const RenewalNav = forwardRef<HTMLElement, RenewalNavProps>(function RenewalNav(
             </Link>
           ))}
         </Links>
-        <Cta href="#contact">
-          {t('landing.renewal.nav.contact', { defaultValue: '문의하기' })}
-        </Cta>
+        <Actions>
+          <LangWrap ref={langRef}>
+            <LangTrigger
+              type="button"
+              $open={langOpen}
+              onClick={() => setLangOpen((v) => !v)}
+              aria-haspopup="listbox"
+              aria-expanded={langOpen}
+            >
+              {i18n.language === 'ko' ? '🇰🇷 KO' : '🇺🇸 EN'}{' '}
+              <span aria-hidden>▾</span>
+            </LangTrigger>
+            {langOpen && (
+              <LangMenu role="listbox" aria-label="Language">
+                <LangOption
+                  type="button"
+                  $active={i18n.language === 'ko'}
+                  onClick={() => {
+                    void i18n.changeLanguage('ko');
+                    setLangOpen(false);
+                  }}
+                >
+                  🇰🇷 KO
+                </LangOption>
+                <LangOption
+                  type="button"
+                  $active={i18n.language === 'en'}
+                  onClick={() => {
+                    void i18n.changeLanguage('en');
+                    setLangOpen(false);
+                  }}
+                >
+                  🇺🇸 EN
+                </LangOption>
+              </LangMenu>
+            )}
+          </LangWrap>
+          <Cta href="#contact">
+            {t('landing.renewal.nav.contact', { defaultValue: '문의하기' })}
+          </Cta>
+        </Actions>
       </Inner>
     </NavRoot>
   );
