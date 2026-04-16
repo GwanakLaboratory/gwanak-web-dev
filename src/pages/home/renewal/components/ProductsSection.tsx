@@ -262,21 +262,29 @@ function ProductsSection({
               ))}
             </Features>
             <PipelinePanel>
-              <PipelineLabel>Engine Pipeline</PipelineLabel>
+              <PipelineLabel>
+                {t('landing.renewal.products.pipeline.label')}
+              </PipelineLabel>
               <PipelineFlow>
                 <PipelineStep>
                   <PipelineStepTitle>Predict</PipelineStepTitle>
-                  <PipelineStepSub>상태 전이 예측</PipelineStepSub>
+                  <PipelineStepSub>
+                    {t('landing.renewal.products.pipeline.predictSub')}
+                  </PipelineStepSub>
                 </PipelineStep>
                 <Arrow>→</Arrow>
                 <PipelineStep>
                   <PipelineStepTitle>Structure</PipelineStepTitle>
-                  <PipelineStepSub>리스크 구조화</PipelineStepSub>
+                  <PipelineStepSub>
+                    {t('landing.renewal.products.pipeline.structureSub')}
+                  </PipelineStepSub>
                 </PipelineStep>
                 <Arrow>→</Arrow>
                 <PipelineStep>
                   <PipelineStepTitle>Decide</PipelineStepTitle>
-                  <PipelineStepSub>의사결정 도출</PipelineStepSub>
+                  <PipelineStepSub>
+                    {t('landing.renewal.products.pipeline.decideSub')}
+                  </PipelineStepSub>
                 </PipelineStep>
               </PipelineFlow>
             </PipelinePanel>

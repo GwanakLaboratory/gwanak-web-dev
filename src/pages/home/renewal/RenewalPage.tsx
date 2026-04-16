@@ -3,22 +3,8 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { renewalS } from './renewalStyles';
 import { useRenewalPageEffects } from './hooks/useRenewalPageEffects';
-import {
-  renewalAchievements,
-  renewalAchievementsSectionCopy,
-  renewalCtaCopy,
-  renewalNavLinks,
-  renewalPillars,
-  renewalProblemSectionCopy,
-  renewalProblemStats,
-  renewalProductB2B,
-  renewalProductCards,
-  renewalProductsSectionCopy,
-  renewalSolutions,
-  renewalSolutionSectionCopy,
-  renewalTeam,
-  renewalTeamSectionCopy,
-} from './renewal.content';
+import { useRenewalContent } from './hooks/useRenewalContent';
+import { renewalNavLinks } from './renewal.content';
 import {
   PillarsSection,
   ProblemSection,
@@ -45,25 +31,16 @@ const fontImports = css`
 /**
  * 관악연구소 메인 랜딩 (/)
  *
- * 섹션 구성:
- * 1. Hero          — 회전 헤드라인 (i18n)
- * 2. Pillars       — 3대 사업 축
- * 3. Problem       — 문제 제기
- * 4. Solution      — 기술 소개 + 캔버스 비주얼 (nhero-right 재사용)
- * 5. Products      — 비즈니스 (B2B 좌상단, SI/SM 좌하단, GLAB + 채팅 데모 우측)
- * 6. Achievements  — 4가지 검증 지표 카드
- * 7. History       — 연혁 + 보도자료 + 파트너 마퀴 (기존 AchievementsSection 재사용)
- * 8. Team          — 팀 소개
- * 9. CTA           — 문의 CTA
- * 10. Footer
+ * 카피는 `i18n/resources.ts` → `landing.renewal.*` + `useRenewalContent`
  */
 function RenewalPage() {
   const { t } = useTranslation();
   const { navRef, navShadow } = useRenewalPageEffects();
+  const rc = useRenewalContent();
 
   useEffect(() => {
-    document.title = '관악연구소 | AI 기반 금융 의사결정 엔진';
-  }, []);
+    document.title = rc.documentTitle;
+  }, [rc.documentTitle]);
 
   return (
     <>
@@ -75,79 +52,64 @@ function RenewalPage() {
           navShadow={navShadow}
         />
 
-        {/* 1. Hero */}
         <RenewalHero
           primaryCta={{
             href: '#contact',
-            label: t('landing.renewal.hero.ctaPrimary', {
-              defaultValue: '문의하기 →',
-            }),
+            label: t('landing.renewal.hero.ctaPrimary'),
           }}
           secondaryCta={{
             href: '#products',
-            label: t('landing.renewal.hero.ctaSecondary', {
-              defaultValue: '사업 영역 보기',
-            }),
+            label: t('landing.renewal.hero.ctaSecondary'),
           }}
         />
 
-        {/* 2. Pillars */}
-        <PillarsSection pillars={renewalPillars} />
+        <PillarsSection pillars={rc.pillars} />
 
-        {/* 3. Problem */}
         <ProblemSection
-          tag={renewalProblemSectionCopy.tag}
-          title={renewalProblemSectionCopy.title}
-          lead={renewalProblemSectionCopy.lead}
-          stats={renewalProblemStats}
+          tag={rc.problemSectionCopy.tag}
+          title={rc.problemSectionCopy.title}
+          lead={rc.problemSectionCopy.lead}
+          stats={rc.problemStats}
         />
 
-        {/* 4. Solution + 캔버스 비주얼 */}
         <SolutionSection
-          tag={renewalSolutionSectionCopy.tag}
-          title={renewalSolutionSectionCopy.title}
-          lead={renewalSolutionSectionCopy.lead}
-          items={renewalSolutions}
+          tag={rc.solutionSectionCopy.tag}
+          title={rc.solutionSectionCopy.title}
+          lead={rc.solutionSectionCopy.lead}
+          items={rc.solutions}
         />
 
-        {/* 5. Products */}
         <ProductsSection
-          tag={renewalProductsSectionCopy.tag}
-          title={renewalProductsSectionCopy.title}
-          lead={renewalProductsSectionCopy.lead}
-          productB2B={renewalProductB2B}
-          productCards={renewalProductCards}
+          tag={rc.productsSectionCopy.tag}
+          title={rc.productsSectionCopy.title}
+          lead={rc.productsSectionCopy.lead}
+          productB2B={rc.productB2B}
+          productCards={rc.productCards}
         />
 
-        {/* 6. Achievements — 검증 지표 카드 */}
         <RenewalAchievementsSection
-          tag={renewalAchievementsSectionCopy.tag}
-          title={renewalAchievementsSectionCopy.title}
-          items={renewalAchievements}
+          tag={rc.achievementsSectionCopy.tag}
+          title={rc.achievementsSectionCopy.title}
+          items={rc.achievements}
         />
 
-        {/* 7. History — 연혁 + 보도자료 (기존 AchievementsSection 재사용) */}
         <RenewalHistorySection id="history" />
 
-        {/* 8. Team */}
         <RenewalTeamSection
-          tag={renewalTeamSectionCopy.tag}
-          title={renewalTeamSectionCopy.title}
-          lead={renewalTeamSectionCopy.lead}
-          members={renewalTeam}
+          tag={rc.teamSectionCopy.tag}
+          title={rc.teamSectionCopy.title}
+          lead={rc.teamSectionCopy.lead}
+          members={rc.team}
         />
 
-        {/* 9. CTA */}
         <RenewalCtaSection
-          title={renewalCtaCopy.title}
-          lead={renewalCtaCopy.lead}
-          primaryHref={renewalCtaCopy.mailto}
-          primaryLabel={t('landing.renewal.hero.ctaPrimary', {
-            defaultValue: '문의하기 →',
-          })}
+          title={rc.ctaCopy.title}
+          lead={rc.ctaCopy.lead}
+          primaryHref={rc.ctaCopy.mailto}
+          primaryLabel={t('landing.renewal.hero.ctaPrimary')}
+          secondaryLabel={t('landing.renewal.cta.secondaryDownload')}
         />
 
-        {/* 10. Footer */}
         <RenewalFooter />
       </PageRoot>
     </>

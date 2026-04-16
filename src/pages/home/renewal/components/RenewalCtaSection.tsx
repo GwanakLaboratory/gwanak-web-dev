@@ -55,7 +55,7 @@ function RenewalCtaSection({
   primaryHref,
   primaryLabel,
   secondaryHref = '#',
-  secondaryLabel = '기술 소개서 다운로드',
+  secondaryLabel,
 }: RenewalCtaSectionProps) {
   return (
     <Section id={id}>
@@ -64,7 +64,9 @@ function RenewalCtaSection({
         <Lead>{lead}</Lead>
         <Actions>
           <BtnPrimary href={primaryHref}>{primaryLabel}</BtnPrimary>
-          <BtnSecondary href={secondaryHref}>{secondaryLabel}</BtnSecondary>
+          {secondaryLabel ? (
+            <BtnSecondary href={secondaryHref}>{secondaryLabel}</BtnSecondary>
+          ) : null}
         </Actions>
       </Inner>
     </Section>
