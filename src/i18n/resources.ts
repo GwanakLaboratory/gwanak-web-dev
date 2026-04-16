@@ -88,7 +88,8 @@ export const resources = {
         },
         about: {
           label: 'About',
-          title: '합리적인 의사결정은\n데이터의 맥락을 이해하는 것에서 시작됩니다',
+          title:
+            '합리적인 의사결정은\n데이터의 맥락을 이해하는 것에서 시작됩니다',
           problemTitle: '우리가 해결하는 문제',
           problemDesc:
             '금융 산업 전반에 데이터와 AI가 넘쳐나지만, 의사결정 자동화율은 여전히 약 5%에 불과합니다.',
@@ -207,18 +208,22 @@ export const resources = {
             news: '기사',
             patentItem1Title: '투자 비율 결정 장치 및 방법',
             patentItem1Sub: '제10-2803037호',
-            paperItem1Title: 'Generating High-Diversity Synthetic Tabular Data via Less-Constrained Prior',
+            paperItem1Title:
+              'Generating High-Diversity Synthetic Tabular Data via Less-Constrained Prior',
             paperItem1Sub: 'Anonymous Authors · IJCAI 2026',
             paperItem2Title:
               'Dynamic Higher-Order Relations and Event-Driven Temporal Modeling for Stock Price Forecasting',
             paperItem2Sub: 'Kijeong Park, Sungchul Hong, Jong-June Jeon · 2025',
-            newsItem1Title: "기업은행, 오픈 이노베이션 프로그램 'IBK 1st랩' 7기 참여기업 선정",
+            newsItem1Title:
+              "기업은행, 오픈 이노베이션 프로그램 'IBK 1st랩' 7기 참여기업 선정",
             newsItem1Sub: '디지털타임스',
-            newsItem2Title: "기보벤처캠프 18기, 'AI·그린' 스타트업 집결…산업 혁신 전면에",
+            newsItem2Title:
+              "기보벤처캠프 18기, 'AI·그린' 스타트업 집결…산업 혁신 전면에",
             newsItem2Sub: '머니투데이',
             newsItem3Title: "부산은행 '썸 인큐베이터 11기' 발대…스타트업 육성",
             newsItem3Sub: '연합뉴스',
-            newsItem4Title: '"단어 몇 개로 뚝딱"…LG CNS, 산돌에 이미지 생성 AI 제공',
+            newsItem4Title:
+              '"단어 몇 개로 뚝딱"…LG CNS, 산돌에 이미지 생성 AI 제공',
             newsItem4Sub: '디지털타임스',
           },
           group1Title: '기술 검증 · IP',
@@ -327,6 +332,35 @@ export const resources = {
           terms: '이용약관',
           privacy: '개인정보처리방침',
         },
+        renewal: {
+          hero: {
+            badge: 'AI-Powered Financial Intelligence',
+            titleLine1: '금융 AI,',
+            titleEm: '엔진부터 시스템까지',
+            description:
+              '핵심 엔진 기술을 중심으로 B2B SaaS, B2C 서비스, IT 구축까지\n금융 AI 전 영역을 커버합니다.',
+            ctaPrimary: '문의하기 →',
+            ctaSecondary: '사업 영역 보기',
+          },
+          nav: {
+            products: '사업 영역',
+            solution: '기술',
+            achievements: '성과',
+            history: '연혁',
+            team: '팀',
+            contact: '문의하기',
+          },
+          section: {
+            solutionTag: 'Technology',
+            solutionTitle: '예측을 넘어,\n판단까지 도달합니다',
+            solutionLead:
+              '관악연구소의 AI는 숫자를 예측하는 데서 멈추지 않습니다.\n상태를 정의하고, 변화를 읽고, 기준을 세워 — 실행 가능한 의사결정을 만듭니다.',
+            productsTag: 'Business',
+            productsTitle: '금융 AI의 모든 레이어를\n설계, 개발합니다',
+            productsLead:
+              '핵심 엔진 기술을 중심으로, B2B SaaS · B2C 서비스 · IT 구축까지\n금융 AI의 전 영역을 커버합니다.',
+          },
+        },
       },
       auth: {
         login: {
@@ -363,7 +397,8 @@ export const resources = {
           phoneInvalid: '전화번호 형식에 맞게 입력해주세요.',
           verify: '인증',
           verified: '인증완료',
-          verifyHint: '카카오톡에서 인증완료시 위의 인증완료 버튼을 눌러주세요.',
+          verifyHint:
+            '카카오톡에서 인증완료시 위의 인증완료 버튼을 눌러주세요.',
           agreement: '이용약관 및 개인정보수집방침에 동의합니다.',
           submit: '가입하기',
           hasAccount: '이미 계정이 있으신가요?',
@@ -404,7 +439,8 @@ export const resources = {
         title: '금융성향분석',
         breadcrumb: '포트폴리오 > 포트폴리오 만들기',
         mainTitle: '당신의 투자 성향을 알아보세요',
-        mainDesc: '관악연구소가 성향분석을 통해 꼭 맞는 투자 전략을 추천해드릴게요!',
+        mainDesc:
+          '관악연구소가 성향분석을 통해 꼭 맞는 투자 전략을 추천해드릴게요!',
         submit: '결과 확인하기',
         fillAll: '항목을 모두 채워주세요.',
         agree: '동의합니다.',
@@ -500,7 +536,8 @@ export const resources = {
             'Individual investors can start with GLAB, while companies can request tailored consultation.',
           cta: 'Contact us',
           modalTitle: 'Contact us',
-          modalBody: 'Reach us at the email below — we will respond as soon as we can.',
+          modalBody:
+            'Reach us at the email below — we will respond as soon as we can.',
           modalCopy: 'Copy address',
           modalMail: 'Open mail app',
           modalClose: 'Close',
@@ -508,7 +545,8 @@ export const resources = {
         },
         about: {
           label: 'About',
-          title: 'Rational decisions begin\nwith understanding the context in data',
+          title:
+            'Rational decisions begin\nwith understanding the context in data',
           problemTitle: 'The problem we solve',
           problemDesc:
             'Data and AI are everywhere in finance, but decision automation remains around 5%.',
@@ -627,17 +665,20 @@ export const resources = {
             news: 'News',
             patentItem1Title: 'Investment Ratio Decision Apparatus and Method',
             patentItem1Sub: 'No. 10-2803037',
-            paperItem1Title: 'Generating High-Diversity Synthetic Tabular Data via Less-Constrained Prior',
+            paperItem1Title:
+              'Generating High-Diversity Synthetic Tabular Data via Less-Constrained Prior',
             paperItem1Sub: 'Anonymous Authors · IJCAI 2026',
             paperItem2Title:
               'Dynamic Higher-Order Relations and Event-Driven Temporal Modeling for Stock Price Forecasting',
             paperItem2Sub: 'Kijeong Park, Sungchul Hong, Jong-June Jeon · 2025',
-            newsItem1Title: "IBK selects participants for 'IBK 1st Lab' 7th cohort",
+            newsItem1Title:
+              "IBK selects participants for 'IBK 1st Lab' 7th cohort",
             newsItem1Sub: 'Digital Times',
             newsItem2Title:
-              "KIBO Venture Camp 18th cohort brings together AI and green startups",
+              'KIBO Venture Camp 18th cohort brings together AI and green startups',
             newsItem2Sub: 'MoneyToday',
-            newsItem3Title: "BNK Busan Bank launches 'Sum Incubator' 11th cohort",
+            newsItem3Title:
+              "BNK Busan Bank launches 'Sum Incubator' 11th cohort",
             newsItem3Sub: 'Yonhap News',
             newsItem4Title:
               '"Done in a few words"... LG CNS provides image generation AI to Sandoll',
@@ -670,7 +711,8 @@ export const resources = {
             1: {
               role: 'CEO',
               title: 'CEO',
-              affil: 'SNU Materials Engineering B.S./M.S., Ph.D. candidate in TMEP',
+              affil:
+                'SNU Materials Engineering B.S./M.S., Ph.D. candidate in TMEP',
               desc: '5 years in development (C++, Flutter), 2 years in finance (private fund operations). Hands-on startup app development and operation.',
             },
             2: {
@@ -741,7 +783,7 @@ export const resources = {
             ai: 'Now is not the time to jump in. We are in a high-volatility phase, so preserving cash and waiting is safer.',
           },
           turn2: {
-            user: "Hyundai Motor is down 20% for me. Should I average down?",
+            user: 'Hyundai Motor is down 20% for me. Should I average down?',
             ai: 'It has already rolled over after a sharp rise. It may not be a simple dip, so avoid averaging down until downside risk is confirmed.',
           },
           send: 'Send',
@@ -749,6 +791,35 @@ export const resources = {
         footer: {
           terms: 'Terms of Service',
           privacy: 'Privacy Policy',
+        },
+        renewal: {
+          hero: {
+            badge: 'AI-Powered Financial Intelligence',
+            titleLine1: 'Financial AI,',
+            titleEm: 'from engine to system',
+            description:
+              'From the core engine to B2B SaaS, B2C services, and IT delivery —\nwe cover the entire spectrum of financial AI.',
+            ctaPrimary: 'Contact us →',
+            ctaSecondary: 'See business areas',
+          },
+          nav: {
+            products: 'Business',
+            solution: 'Technology',
+            achievements: 'Achievements',
+            history: 'History',
+            team: 'Team',
+            contact: 'Contact',
+          },
+          section: {
+            solutionTag: 'Technology',
+            solutionTitle: 'Beyond prediction,\nall the way to decisions',
+            solutionLead:
+              'Gwanak Lab AI does not stop at forecasting numbers.\nIt defines states, reads change, and sets criteria — creating actionable decisions.',
+            productsTag: 'Business',
+            productsTitle: 'Designing every layer\nof financial AI',
+            productsLead:
+              'Centered on a core engine, covering B2B SaaS, B2C services, and IT delivery\nacross the full stack of financial AI.',
+          },
         },
       },
       auth: {
@@ -768,7 +839,8 @@ export const resources = {
         },
         signup: {
           title: 'Sign up',
-          subtitle: 'Please provide your information to use Gwanak Lab services.',
+          subtitle:
+            'Please provide your information to use Gwanak Lab services.',
           email: 'Email',
           emailPlaceholder: 'Enter your email address',
           password: 'Password',
@@ -786,7 +858,8 @@ export const resources = {
           phoneInvalid: 'Please enter a valid phone number format.',
           verify: 'Verify',
           verified: 'Verified',
-          verifyHint: 'After KakaoTalk verification, click the verified button above.',
+          verifyHint:
+            'After KakaoTalk verification, click the verified button above.',
           agreement: 'I agree to the Terms and Privacy Policy.',
           submit: 'Create account',
           hasAccount: 'Already have an account?',
@@ -831,7 +904,8 @@ export const resources = {
         submit: 'View results',
         fillAll: 'Please fill out all fields.',
         agree: 'I agree.',
-        resultComment: 'AI will recommend a strategy based on your profile above.',
+        resultComment:
+          'AI will recommend a strategy based on your profile above.',
         retry: 'Analyze again',
         register: 'Apply',
       },

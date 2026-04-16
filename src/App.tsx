@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LandingPage from './pages/home/landing';
+import RenewalPage from './pages/home/renewal';
 import GlabStartGuidePage from './pages/home/glab-start-guide';
 import ForgotEmailPage from './pages/auth/forgot-email';
 import ForgotPasswordPage from './pages/auth/forgot-password';
@@ -25,6 +26,7 @@ const App = () => {
       element: <EventListenerManager />,
       children: [
         { index: true, element: <LandingPage /> },
+        { path: 'renewal', element: <RenewalPage /> },
         { path: 'glab-start', element: <GlabStartGuidePage /> },
         {
           path: 'auth',
