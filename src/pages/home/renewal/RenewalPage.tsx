@@ -1,6 +1,7 @@
 import { Global, css } from '@emotion/react';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import LandingContactModal from '../landing/components/LandingContactModal';
 import { renewalS } from './renewalStyles';
 import { useRenewalPageEffects } from './hooks/useRenewalPageEffects';
 import { useRenewalContent } from './hooks/useRenewalContent';
@@ -21,6 +22,9 @@ import {
 
 const { PageRoot } = renewalS;
 
+/** 기존 랜딩(`LandingPage`)과 동일 */
+const CONTACT_EMAIL = 'support@gwanaklab.co.kr';
+
 const fontImports = css`
   @import url('https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/variable/pretendardvariable.min.css');
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -37,6 +41,27 @@ function RenewalPage() {
   const { t } = useTranslation();
   const { navRef, navShadow } = useRenewalPageEffects();
   const rc = useRenewalContent();
+  const [contactOpen, setContactOpen] = useState(false);
+
+  const openContactModal = useCallback(() => {
+    setContactOpen(true);
+  }, []);
+
+  const copyEmailToClipboard = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+    } catch {
+      const temp = document.createElement('textarea');
+      temp.value = CONTACT_EMAIL;
+      temp.setAttribute('readonly', '');
+      temp.style.position = 'absolute';
+      temp.style.left = '-9999px';
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+    }
+  }, []);
 
   useEffect(() => {
     document.title = rc.documentTitle;
@@ -50,12 +75,13 @@ function RenewalPage() {
           ref={navRef}
           links={renewalNavLinks}
           navShadow={navShadow}
+          onContact={openContactModal}
         />
 
         <RenewalHero
           primaryCta={{
-            href: '#contact',
             label: t('landing.renewal.hero.ctaPrimary'),
+            onClick: openContactModal,
           }}
           secondaryCta={{
             href: '#products',
@@ -105,12 +131,19 @@ function RenewalPage() {
         <RenewalCtaSection
           title={rc.ctaCopy.title}
           lead={rc.ctaCopy.lead}
-          primaryHref={rc.ctaCopy.mailto}
+          onPrimaryClick={openContactModal}
           primaryLabel={t('landing.renewal.hero.ctaPrimary')}
           secondaryLabel={t('landing.renewal.cta.secondaryDownload')}
         />
 
         <RenewalFooter />
+
+        <LandingContactModal
+          isOpen={contactOpen}
+          email={CONTACT_EMAIL}
+          onClose={() => setContactOpen(false)}
+          onCopy={copyEmailToClipboard}
+        />
       </PageRoot>
     </>
   );

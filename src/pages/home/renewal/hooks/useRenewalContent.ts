@@ -208,7 +208,8 @@ export function useRenewalContent() {
     const ctaCopy = {
       title: t('landing.renewal.cta.title'),
       lead: t('landing.renewal.cta.lead'),
-      mailto: 'mailto:support@gwanaklab.com',
+      /** 기존 랜딩 `LandingPage` CONTACT_EMAIL 과 동일 */
+      mailto: 'mailto:support@gwanaklab.co.kr',
     };
 
     return {

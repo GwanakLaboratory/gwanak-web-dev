@@ -147,10 +147,12 @@ const LangOption = styled.button<{ $active?: boolean }>`
 export type RenewalNavProps = {
   links: RenewalNavLink[];
   navShadow: boolean;
+  /** 기존 랜딩과 동일 — 문의 모달 열기 */
+  onContact?: () => void;
 };
 
 const RenewalNav = forwardRef<HTMLElement, RenewalNavProps>(function RenewalNav(
-  { links, navShadow },
+  { links, navShadow, onContact },
   ref,
 ) {
   const { t } = useTranslation();
@@ -232,9 +234,15 @@ const RenewalNav = forwardRef<HTMLElement, RenewalNavProps>(function RenewalNav(
               </LangMenu>
             )}
           </LangWrap>
-          <Cta href="#contact">
-            {t('landing.renewal.nav.contact', { defaultValue: '문의하기' })}
-          </Cta>
+          {onContact ? (
+            <Cta as="button" type="button" onClick={onContact}>
+              {t('landing.renewal.nav.contact', { defaultValue: '문의하기' })}
+            </Cta>
+          ) : (
+            <Cta href="#contact">
+              {t('landing.renewal.nav.contact', { defaultValue: '문의하기' })}
+            </Cta>
+          )}
         </Actions>
       </Inner>
     </NavRoot>
