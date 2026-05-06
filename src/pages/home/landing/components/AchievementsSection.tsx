@@ -20,6 +20,7 @@ const TIMELINE_KEYS = [
   { date: '26.03', titleKey: 'timeline.i10' },
   { date: '26.03', titleKey: 'timeline.i11' },
   { date: '26.04', titleKey: 'timeline.i12' },
+  { date: '26.05', titleKey: 'timeline.i13' },
 ] as const;
 
 /** 연혁·소개에 맞춘 협력·연계 기관 (한 번만 정의) */

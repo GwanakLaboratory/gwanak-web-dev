@@ -201,6 +201,7 @@ export const resources = {
             i10: '한국핀테크지원센터 디지털 금융기술 내재화 사업 선정',
             i11: 'BNK썸 인큐베이터 11기 선정',
             i12: 'KB스타터스 선정',
+            i13: '서울 AI 허브 멤버십 기업 선정',
           },
           evidence: {
             patent: '특허',
@@ -818,6 +819,7 @@ export const resources = {
             i10: 'Selected for Korea Fintech Center digital finance internalization program',
             i11: 'Selected for BNK Sum Incubator 11th cohort',
             i12: 'Selected for KB Starters',
+            i13: 'Selected as a Seoul AI Hub membership company',
           },
           evidence: {
             patent: 'Patent',
