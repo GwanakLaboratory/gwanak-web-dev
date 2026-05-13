@@ -101,6 +101,11 @@ const AchievementsSection = () => {
       category: t('landing.achievements.evidence.news'),
       items: [
         {
+          title: t('landing.achievements.evidence.newsItem5Title'),
+          sub: t('landing.achievements.evidence.newsItem5Sub'),
+          href: 'https://www.nongaek.com/news/articleView.html?idxno=95334',
+        },
+        {
           title: t('landing.achievements.evidence.newsItem1Title'),
           sub: t('landing.achievements.evidence.newsItem1Sub'),
           href: 'https://www.dt.co.kr/article/12048079?ref=naver',

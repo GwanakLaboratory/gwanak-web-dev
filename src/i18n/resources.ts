@@ -226,6 +226,9 @@ export const resources = {
             newsItem4Title:
               '"단어 몇 개로 뚝딱"…LG CNS, 산돌에 이미지 생성 AI 제공',
             newsItem4Sub: '디지털타임스',
+            newsItem5Title:
+              'KB금융, AI·딥테크 등 혁신 스타트업과 협업 본격화',
+            newsItem5Sub: '논객닷컴',
           },
           group1Title: '기술 검증 · IP',
           g1i1Title: '로보어드바이저 운용심사 통과',
@@ -845,6 +848,9 @@ export const resources = {
             newsItem4Title:
               '"Done in a few words"... LG CNS provides image generation AI to Sandoll',
             newsItem4Sub: 'Digital Times',
+            newsItem5Title:
+              'KB Financial Group launches collaboration with AI and deep tech startups',
+            newsItem5Sub: 'Nongaek',
           },
           group1Title: 'Technology validation · IP',
           g1i1Title: 'Robo-advisor operation review passed',
