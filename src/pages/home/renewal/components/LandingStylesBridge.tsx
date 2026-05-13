@@ -343,6 +343,7 @@ export const LandingStylesBridge = styled.div`
     color: var(--text-muted);
     font-weight: 300;
     margin-bottom: 32px;
+    white-space: pre-line;
   }
 
   /* ── chat-msg (GlabChatDemo 내부) ────────────────────────────────────── */
