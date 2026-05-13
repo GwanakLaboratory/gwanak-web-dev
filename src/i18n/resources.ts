@@ -637,9 +637,9 @@ export const resources = {
           rotatingWord1: 'to risk structuring.',
           rotatingWord2: 'to decision optimization.',
           rotatingWord3: 'to operational automation.',
-          sub: 'Combining time-series prediction AI for state forecasting with a risk-minimization-focused layer to generate actionable decisions in financial environments.',
+          sub: 'We go beyond forecasting to surface the full story behind every decision. Gwanak Lab AI defines states, reads change, and sets criteria for action—time-series prediction plus risk-aware layers across the financial stack.',
           ctaPrimary: 'Contact us',
-          ctaSecondary: 'Tech Overview',
+          ctaSecondary: 'Explore applications',
           stat1Value: '82.5%',
           stat1Label: 'Downside segment identification',
           stat2Value: 'PoC',
@@ -682,7 +682,7 @@ export const resources = {
           titleLine1Accent: 'structure',
           titleLine1Suffix: 'financial decisions.',
           description:
-            'AI predicts outcomes, but deciding what to do still depends on human judgment. Gwanak Lab defines states, forecasts transitions, and structures decision criteria into financial decision infrastructure.',
+            'We turn predictions into decisive action. Gwanak Lab defines states, reads change, and structures criteria—going beyond the numbers to build financial decision infrastructure.',
           metric1Label: 'Downside segment identification accuracy',
           metric2Value: 'Patent Granted',
           metric2Label: 'Investment ratio decision method',
@@ -710,10 +710,10 @@ export const resources = {
             'Rational decisions begin\nwith understanding the context in data',
           problemTitle: 'The problem we solve',
           problemDesc:
-            'Data and AI are everywhere in finance, but decision automation remains around 5%.',
+            'AI can forecast outcomes with precision in finance, yet high-stakes decisions—when to buy, how to retain, where to hedge—still rely on fragmented intuition. Even with clear data, teams disagree on meaning, react to a snapshot without trajectory, and keep logic outside the system, so consistency cannot scale.',
           approachTitle: 'Our approach',
           approachDesc:
-            'Gwanak Lab collaborates with statistics labs at SNU and UOS to build a State-based AI decision engine applicable across investment, card, and insurance domains.',
+            'An SNU-founded team of industry experts, rooted in research with leading statistics labs (SNU and UOS), combining finance and engineering to ship practical products—a State-based decision engine across investment, card, and insurance.',
           step1Title: 'State representation layer',
           step1Desc:
             'Transforms raw data into context-aware state representations. When variables change, only operational phrasing needs adjustment.',
@@ -727,7 +727,7 @@ export const resources = {
         service: {
           label: 'Engine · Services',
           title: 'One engine, two markets',
-          desc: 'We provide battle-tested investment technology to both retail investors (GLAB) and institutional clients (GLOV).',
+          desc: 'From core infrastructure to the end-user experience, we build the engine behind B2B SaaS, B2C services, and seamless delivery across the financial stack—designing every layer of financial intelligence for GLAB and GLOV.',
           b2cLabel: 'GLAB — B2C',
           b2cColumnDesc:
             'GLAB, portfolio engine, and education & community for retail investors.',
@@ -790,7 +790,7 @@ export const resources = {
         },
         achievements: {
           label: 'Achievements',
-          title: 'Gwanak Lab milestones',
+          title: 'Our progress and impact',
           timelineTitle: 'Timeline',
           evidenceTitle: 'Press · Documents',
           partnersTitle: 'Partners & institutions',
@@ -963,12 +963,12 @@ export const resources = {
             titleLine1: 'Financial AI,',
             titleEm: 'from engine to system',
             description:
-              'From the core engine to B2B SaaS, B2C services, and IT delivery —\nwe cover the entire spectrum of financial AI.',
-            ctaPrimary: 'Contact us →',
-            ctaSecondary: 'See business areas',
+              'From the core engine to B2B SaaS and consumer services,\nwe cover the entire spectrum from raw numbers to final decisions.',
+            ctaPrimary: 'Get in touch →',
+            ctaSecondary: 'Explore applications',
           },
           nav: {
-            products: 'Business',
+            products: 'Applications',
             solution: 'Technology',
             achievements: 'Achievements',
             history: 'History',
@@ -977,38 +977,38 @@ export const resources = {
           },
           section: {
             solutionTag: 'Technology',
-            solutionTitle: 'Beyond prediction,\nall the way to decisions',
+            solutionTitle: 'Transforming predictions into decisive action.',
             solutionLead:
-              'Gwanak Lab AI does not stop at forecasting numbers.\nIt defines states, reads change, and sets criteria — creating actionable decisions.',
+              'Instead of simply forecasting the future, see the full story behind every decision. Gwanak Lab AI goes beyond numbers by defining states, reading change, and setting the criteria for actionable decisions.',
             productsTag: 'Business',
-            productsTitle: 'Designing every layer\nof financial AI',
+            productsTitle: 'Designing every layer of financial intelligence',
             productsLead:
-              'Centered on a core engine, covering B2B SaaS, B2C services, and IT delivery\nacross the full stack of financial AI.',
+              'From core infrastructure to the end-user experience.\nWe build the engine that powers B2B SaaS, B2C services, and seamless IT delivery across the entire financial stack.',
           },
           problem: {
             tag: 'Problem',
             title:
-              'AI is everywhere —\nbut there is still no answer to “what should we do?”',
+              'AI makes the data clear.\nWhy is the choice still difficult?',
             lead:
-              'In finance, AI can analyze data and forecast outcomes.\nYet the decisions that matter — whether to buy now, how to retain this customer, how to assess this risk —\nstill depend on human intuition and experience.',
+              'In finance, AI can forecast outcomes with precision. Yet the high-stakes decisions—when to buy, how to retain, where to hedge—still rely on fragmented human intuition and experience.',
             stats: {
               stat1: {
-                number: 'Same data,\ndifferent conclusions',
-                label: 'No shared state definition',
+                number: 'Interpretation',
+                label: 'What does this mean?',
                 description:
-                  'People interpret the same numbers differently because there is no structure that defines what situation you are in.',
+                  'Even with the numbers, we disagree on the meaning because everyone has different perceptions.',
               },
               stat2: {
-                number: 'Is it getting better\nor worse?',
-                label: 'Direction is unclear',
+                number: 'Trajectory',
+                label: 'Where is this going?',
                 description:
-                  'Decisions rely on a snapshot of “now,” without knowing where the situation came from or where it is heading.',
+                  'We react to a snapshot of “now” without knowing if the situation is improving or decaying.',
               },
               stat3: {
-                number: 'Different decisions\nby different owners',
-                label: 'No explicit decision criteria',
+                number: 'Logic',
+                label: 'How do we respond?',
                 description:
-                  'Even with the same forecast, people decide differently because criteria live only in their heads — no consistency or scale.',
+                  'Decision-making lives in our heads, not in a system—making consistency impossible to scale.',
               },
             },
           },
@@ -1113,9 +1113,9 @@ export const resources = {
           },
           teamSection: {
             tag: 'Team',
-            title: 'SNU-founded team,\nexperts who know the field',
+            title: 'An SNU-founded team of industry experts',
             lead:
-              'Joint research with statistics labs at Seoul National University and the University of Seoul —\na team with finance and engineering experience turns technology into products.',
+              'Rooted in research with top statistics labs, we combine finance and engineering expertise to turn advanced technology into practical products.',
           },
           teamMembers: {
             m1: {
