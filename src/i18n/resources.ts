@@ -211,10 +211,10 @@ export const resources = {
             patentItem1Sub: '제10-2803037호',
             paperItem1Title:
               'Generating High-Diversity Synthetic Tabular Data via Less-Constrained Prior',
-            paperItem1Sub: 'Anonymous Authors · IJCAI 2026',
+            paperItem1Sub: 'Sanghun Park, Jaesung Lim, Jong-June Jeon, Seunghwan An · IJCAI 2026',
             paperItem2Title:
               'Dynamic Higher-Order Relations and Event-Driven Temporal Modeling for Stock Price Forecasting',
-            paperItem2Sub: 'Kijeong Park, Sungchul Hong, Jong-June Jeon · 2025',
+            paperItem2Sub: 'Kijeong Park, Sungchul Hong, Jong-June Jeon · IJCAI 2025',
             newsItem1Title:
               "기업은행, 오픈 이노베이션 프로그램 'IBK 1st랩' 7기 참여기업 선정",
             newsItem1Sub: '디지털타임스',
@@ -832,10 +832,10 @@ export const resources = {
             patentItem1Sub: 'No. 10-2803037',
             paperItem1Title:
               'Generating High-Diversity Synthetic Tabular Data via Less-Constrained Prior',
-            paperItem1Sub: 'Anonymous Authors · IJCAI 2026',
+            paperItem1Sub: 'Sanghun Park, Jaesung Lim, Jong-June Jeon, Seunghwan An · IJCAI 2026',
             paperItem2Title:
               'Dynamic Higher-Order Relations and Event-Driven Temporal Modeling for Stock Price Forecasting',
-            paperItem2Sub: 'Kijeong Park, Sungchul Hong, Jong-June Jeon · 2025',
+            paperItem2Sub: 'Kijeong Park, Sungchul Hong, Jong-June Jeon · IJCAI 2025',
             newsItem1Title:
               "IBK selects participants for 'IBK 1st Lab' 7th cohort",
             newsItem1Sub: 'Digital Times',
