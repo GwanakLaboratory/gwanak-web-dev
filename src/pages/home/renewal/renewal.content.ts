@@ -9,6 +9,9 @@ import type {
   RenewalTeamMember,
 } from './renewal.types';
 
+/** B2C GLAB 웹 서비스 (공개 URL) */
+export const GLAB_SERVICE_URL = 'https://glab.gwanaklab.com/';
+
 /** Problem 섹션 카피 */
 export const renewalProblemSectionCopy = {
   tag: 'Problem',

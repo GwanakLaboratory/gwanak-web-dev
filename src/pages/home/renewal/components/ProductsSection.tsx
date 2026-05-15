@@ -12,8 +12,8 @@ import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
 import { renewalS } from '../renewalStyles';
 import type { RenewalProductB2B, RenewalProductCard } from '../renewal.types';
-import { LandingStylesBridge } from './LandingStylesBridge';
-import GlabChatDemo from '../../landing/components/GlabChatDemo';
+import { GLAB_SERVICE_URL } from '../renewal.content';
+import GlabProductCarousel from './GlabProductCarousel';
 
 const { SectionTag, FadeBlock } = renewalS;
 
@@ -212,6 +212,64 @@ const ChatDemoLabel = styled.div`
   margin-bottom: 16px;
 `;
 
+/** GLAB 카드: 제목과 CTA를 한 줄(또는 래핑)로 묶음 */
+const GlabTitleRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 10px;
+`;
+
+const GlabCardTitle = styled.h3`
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.5px;
+  flex: 1 1 auto;
+  min-width: min(100%, 12rem);
+  word-break: keep-all;
+`;
+
+const GlabServiceButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 10px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset;
+
+  &:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(26, 86, 219, 0.28);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    order: 3;
+  }
+`;
+
 /* ────────────────────────────────────────────────────── */
 
 export type ProductsSectionProps = {
@@ -310,7 +368,17 @@ function ProductsSection({
           {b2cCard && (
             <Card>
               <ProductTag $variant="b2c">{b2cCard.tag}</ProductTag>
-              <ProductTitle>{b2cCard.title}</ProductTitle>
+              <GlabTitleRow>
+                <GlabCardTitle>{b2cCard.title}</GlabCardTitle>
+                <GlabServiceButton
+                  href={GLAB_SERVICE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t('landing.renewal.products.glabOpenService')}
+                  <span aria-hidden>↗</span>
+                </GlabServiceButton>
+              </GlabTitleRow>
               <ProductDesc>{b2cCard.description}</ProductDesc>
               <Features>
                 {b2cCard.features.map((f) => (
@@ -320,13 +388,9 @@ function ProductsSection({
 
               <ChatDemoBlock>
                 <ChatDemoLabel>
-                  {t('landing.service.demoTitle', {
-                    defaultValue: 'GLAB 대화 예시',
-                  })}
+                  {t('landing.renewal.products.glabPreviewLabel')}
                 </ChatDemoLabel>
-                <LandingStylesBridge>
-                  <GlabChatDemo />
-                </LandingStylesBridge>
+                <GlabProductCarousel />
               </ChatDemoBlock>
             </Card>
           )}

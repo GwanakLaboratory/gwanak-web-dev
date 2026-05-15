@@ -24,6 +24,11 @@ const Section = styled(FadeBlock)`
 const BridgeWrap = styled(LandingStylesBridge)`
   /* 섹션 기본 패딩 유지 */
   section#achievements {
+    max-width: 1200px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
     padding: 96px 48px;
     min-height: unset;
     scroll-snap-align: unset;

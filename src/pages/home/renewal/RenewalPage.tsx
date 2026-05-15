@@ -5,7 +5,7 @@ import LandingContactModal from '../landing/components/LandingContactModal';
 import { renewalS } from './renewalStyles';
 import { useRenewalPageEffects } from './hooks/useRenewalPageEffects';
 import { useRenewalContent } from './hooks/useRenewalContent';
-import { renewalNavLinks } from './renewal.content';
+import { GLAB_SERVICE_URL, renewalNavLinks } from './renewal.content';
 import {
   PillarsSection,
   ProblemSection,
@@ -86,6 +86,10 @@ function RenewalPage() {
           secondaryCta={{
             href: '#products',
             label: t('landing.renewal.hero.ctaSecondary'),
+          }}
+          glabCta={{
+            href: GLAB_SERVICE_URL,
+            label: t('landing.renewal.hero.ctaGlab'),
           }}
         />
 
