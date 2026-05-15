@@ -28,15 +28,35 @@ const Actions = styled.div`
   flex-wrap: wrap;
 `;
 
+const GlabHeroLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.85;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+`;
+
 export type RenewalHeroProps = {
   /** `onClick`이 있으면 모달 등 — 앵커 대신 버튼으로 렌더 */
   primaryCta:
     | { label: string; href: string }
     | { label: string; onClick: () => void };
   secondaryCta: { href: string; label: string };
+  /** GLAB B2C 웹 — 메인 배너에서 바로 연결 */
+  glabCta: { href: string; label: string };
 };
 
-function RenewalHero({ primaryCta, secondaryCta }: RenewalHeroProps) {
+function RenewalHero({ primaryCta, secondaryCta, glabCta }: RenewalHeroProps) {
   const { t } = useTranslation();
 
   return (
@@ -104,6 +124,11 @@ function RenewalHero({ primaryCta, secondaryCta }: RenewalHeroProps) {
             {secondaryCta.label}
           </BtnSecondary>
         </Actions>
+
+        <GlabHeroLink href={glabCta.href} target="_blank" rel="noopener noreferrer">
+          {glabCta.label}
+          <span aria-hidden>↗</span>
+        </GlabHeroLink>
       </Content>
     </Hero>
   );
