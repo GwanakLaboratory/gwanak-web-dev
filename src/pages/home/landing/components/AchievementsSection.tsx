@@ -21,6 +21,7 @@ const TIMELINE_KEYS = [
   { date: '26.03', titleKey: 'timeline.i11' },
   { date: '26.04', titleKey: 'timeline.i12' },
   { date: '26.05', titleKey: 'timeline.i13' },
+  { date: '26.05', titleKey: 'timeline.i14' },
 ] as const;
 
 /** 연혁·소개에 맞춘 협력·연계 기관 (한 번만 정의) */
@@ -100,6 +101,16 @@ const AchievementsSection = () => {
     {
       category: t('landing.achievements.evidence.news'),
       items: [
+        {
+          title: t('landing.achievements.evidence.newsItem7Title'),
+          sub: t('landing.achievements.evidence.newsItem7Sub'),
+          href: 'https://www.seoul.co.kr/news/economy/2026/05/21/20260521500132',
+        },
+        {
+          title: t('landing.achievements.evidence.newsItem6Title'),
+          sub: t('landing.achievements.evidence.newsItem6Sub'),
+          href: 'https://www.mk.co.kr/news/business/12023683',
+        },
         {
           title: t('landing.achievements.evidence.newsItem5Title'),
           sub: t('landing.achievements.evidence.newsItem5Sub'),

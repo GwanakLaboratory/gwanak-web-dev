@@ -202,6 +202,7 @@ export const resources = {
             i11: 'BNK썸 인큐베이터 11기 선정',
             i12: 'KB스타터스 선정',
             i13: '서울 AI 허브 멤버십 기업 선정',
+            i14: '한국핀테크지원센터, 2026년 D-테스트베드 선정',
           },
           evidence: {
             patent: '특허',
@@ -229,6 +230,12 @@ export const resources = {
             newsItem5Title:
               'KB금융, AI·딥테크 등 혁신 스타트업과 협업 본격화',
             newsItem5Sub: '논객닷컴',
+            newsItem6Title:
+              "2026년 D-테스트베드 사업설명회 '핀테크 아이디어 검증의 기회'",
+            newsItem6Sub: '매일경제',
+            newsItem7Title:
+              "한국핀테크지원센터, '2026 핀테크 큐브 및 금융기술 내재화 사업' 통합 출범",
+            newsItem7Sub: '서울신문',
           },
           group1Title: '기술 검증 · IP',
           g1i1Title: '로보어드바이저 운용심사 통과',
@@ -837,6 +844,7 @@ export const resources = {
             i11: 'Selected for BNK Sum Incubator 11th cohort',
             i12: 'Selected for KB Starters',
             i13: 'Selected as a Seoul AI Hub membership company',
+            i14: 'Selected for Korea Fintech Support Center 2026 D-Testbed',
           },
           evidence: {
             patent: 'Patent',
@@ -865,6 +873,12 @@ export const resources = {
             newsItem5Title:
               'KB Financial Group launches collaboration with AI and deep tech startups',
             newsItem5Sub: 'Nongaek',
+            newsItem6Title:
+              "2026 D-Testbed business briefing offers 'opportunity to validate fintech ideas'",
+            newsItem6Sub: 'Maeil Business Newspaper',
+            newsItem7Title:
+              "Korea Fintech Support Center launches integrated '2026 Fintech Cube and Financial Technology Internalization Program'",
+            newsItem7Sub: 'Seoul Shinmun',
           },
           group1Title: 'Technology validation · IP',
           g1i1Title: 'Robo-advisor operation review passed',
